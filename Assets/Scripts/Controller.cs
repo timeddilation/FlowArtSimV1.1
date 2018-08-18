@@ -10,8 +10,9 @@ public class Controller : MonoBehaviour
     public Text thisSimulationName;
     public Text thisSimulationDescription;
     [Header("Spinner Prefabs")]
-    public GameObject spinnerWallPlain;
-    public GameObject spinnerWheelPlain;
+    public Dropdown propDropdown;
+    public GameObject spinnerWallPlane;
+    public GameObject spinnerWheelPlane;
     [Header("Viewing Camera")]
     public Camera cam;
 
@@ -23,20 +24,20 @@ public class Controller : MonoBehaviour
 
     private float trailSpeedModifier = 1f;
 
-    private bool setupAntiSpinWallPlainFlower = false;
-    private bool doingAntiSpinWallPlainFlower = false;
+    private bool setupAntiSpinWallPlaneFlower = false;
+    private bool doingAntiSpinWallPlaneFlower = false;
 
-    private bool setupInspinAntispinWheelPlainFlowerSplitOps = false;
-    private bool doingInspinAntispinWheelPlainFlowerSplitOps = false;
+    private bool setupInspinAntispinWheelPlaneFlowerSplitOps = false;
+    private bool doingInspinAntispinWheelPlaneFlowerSplitOps = false;
 
-    private bool setupInspinAntispinWheelPlainFlowerSameOps = false;
-    private bool doingInspinAntispinWheelPlainFlowerSameOps = false;
+    private bool setupInspinAntispinWheelPlaneFlowerSameOps = false;
+    private bool doingInspinAntispinWheelPlaneFlowerSameOps = false;
 
-    private bool setupInspinAntispinWheelPlainFlowerSameSame = false;
-    private bool doingInspinAntispinWheelPlainFlowerSameSame = false;
+    private bool setupInspinAntispinWheelPlaneFlowerSameSame = false;
+    private bool doingInspinAntispinWheelPlaneFlowerSameSame = false;
 
-    private bool setupInspinAntispinWheelPlainFlowerSplitSame = false;
-    private bool doingInspinAntispinWheelPlainFlowerSplitSame = false;
+    private bool setupInspinAntispinWheelPlaneFlowerSplitSame = false;
+    private bool doingInspinAntispinWheelPlaneFlowerSplitSame = false;
 
     private int trickStage = 0;
     private float zeroPointProximitySensitivity = 0.5f;
@@ -44,7 +45,12 @@ public class Controller : MonoBehaviour
 
     private void Start()
     {
-        thisSpinner = GameObject.FindGameObjectWithTag("Player");       
+        thisSpinner = GameObject.FindGameObjectWithTag("Player");
+
+        propDropdown.onValueChanged.AddListener(delegate
+        {
+            DropdownValueChanged(propDropdown);
+        });
 
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
@@ -55,43 +61,43 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        #region Antispin Wall Plain Flower 
-        //Antispin wall plain flower
+        #region Antispin Wall Plane Flower 
+        //Antispin wall Plane flower
         if (Input.GetKeyDown("e"))
         {
             ClearSpinner();
-            SetSpinner(spinnerWallPlain);
-            setupAntiSpinWallPlainFlower = true;
+            SetSpinner(spinnerWallPlane);
+            setupAntiSpinWallPlaneFlower = true;
         }
-        if (doingAntiSpinWallPlainFlower)
+        if (doingAntiSpinWallPlaneFlower)
         {
-            AntiSpinWallPlainFlower();
+            AntiSpinWallPlaneFlower();
         }
-        if (setupAntiSpinWallPlainFlower)
+        if (setupAntiSpinWallPlaneFlower)
         {
             //set poi trail speed
             UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
-            doingAntiSpinWallPlainFlower = true;
-            setupAntiSpinWallPlainFlower = false;
+            doingAntiSpinWallPlaneFlower = true;
+            setupAntiSpinWallPlaneFlower = false;
 
-            thisSimulationName.text = "Wall Plain Antispin Flower";
+            thisSimulationName.text = "Wall Plane Antispin Flower";
         }
         #endregion
 
-        #region Inspin vs antispin wheel plain flower Split/Ops
-        //Inspin vs antispin wheel plain flower Split/Ops
+        #region Inspin vs antispin wheel Plane flower Split/Ops
+        //Inspin vs antispin wheel Plane flower Split/Ops
         if (Input.GetKeyDown("r"))
         {
             ClearSpinner();
-            SetSpinner(spinnerWheelPlain);
-            setupInspinAntispinWheelPlainFlowerSplitOps = true;
+            SetSpinner(spinnerWheelPlane);
+            setupInspinAntispinWheelPlaneFlowerSplitOps = true;
         }
-        if (doingInspinAntispinWheelPlainFlowerSplitOps)
+        if (doingInspinAntispinWheelPlaneFlowerSplitOps)
         {
-            InspinAntispinWheelPlainFlowerOpsDirection();
+            InspinAntispinWheelPlaneFlowerOpsDirection();
         }
-        if (setupInspinAntispinWheelPlainFlowerSplitOps)
+        if (setupInspinAntispinWheelPlaneFlowerSplitOps)
         {
             //double length of trails
             trailSpeedModifier = 2f;
@@ -100,26 +106,26 @@ public class Controller : MonoBehaviour
             //set poi trail speed
             UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlainFlowerSplitOps = false;
-            doingInspinAntispinWheelPlainFlowerSplitOps = true;
+            setupInspinAntispinWheelPlaneFlowerSplitOps = false;
+            doingInspinAntispinWheelPlaneFlowerSplitOps = true;
 
-            thisSimulationName.text = "Wheel Plain Inspin vs. Antispin Flower";
+            thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Split Time / Opposite Direction";
         }
         #endregion
 
-        #region Inspin vs antispin wheel plain flower Same/Ops
+        #region Inspin vs antispin wheel Plane flower Same/Ops
         if (Input.GetKeyDown("t"))
         {
             ClearSpinner();
-            SetSpinner(spinnerWheelPlain);
-            setupInspinAntispinWheelPlainFlowerSameOps = true;
+            SetSpinner(spinnerWheelPlane);
+            setupInspinAntispinWheelPlaneFlowerSameOps = true;
         }
-        if (doingInspinAntispinWheelPlainFlowerSameOps)
+        if (doingInspinAntispinWheelPlaneFlowerSameOps)
         {
-            InspinAntispinWheelPlainFlowerOpsDirection();
+            InspinAntispinWheelPlaneFlowerOpsDirection();
         }
-        if (setupInspinAntispinWheelPlainFlowerSameOps)
+        if (setupInspinAntispinWheelPlaneFlowerSameOps)
         {
             //double length of trails
             trailSpeedModifier = 2f;
@@ -131,27 +137,27 @@ public class Controller : MonoBehaviour
             //set poi trail speed
             UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlainFlowerSameOps = false;
-            doingInspinAntispinWheelPlainFlowerSameOps = true;
+            setupInspinAntispinWheelPlaneFlowerSameOps = false;
+            doingInspinAntispinWheelPlaneFlowerSameOps = true;
 
-            thisSimulationName.text = "Wheel Plain Inspin vs. Antispin Flower";
+            thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Same Time / Opposite Direction";
         }
         #endregion
 
-        #region Inspin vs antispin wheel plain flower Same/Same
-        //Inspin vs antispin wheel plain flower Same/Same
+        #region Inspin vs antispin wheel Plane flower Same/Same
+        //Inspin vs antispin wheel Plane flower Same/Same
         if (Input.GetKeyDown("u"))
         {
             ClearSpinner();
-            SetSpinner(spinnerWheelPlain);
-            setupInspinAntispinWheelPlainFlowerSameSame = true;
+            SetSpinner(spinnerWheelPlane);
+            setupInspinAntispinWheelPlaneFlowerSameSame = true;
         }
-        if (doingInspinAntispinWheelPlainFlowerSameSame)
+        if (doingInspinAntispinWheelPlaneFlowerSameSame)
         {
-            InspinAntispinWheelPlainFlowerSameDirection();
+            InspinAntispinWheelPlaneFlowerSameDirection();
         }
-        if (setupInspinAntispinWheelPlainFlowerSameSame)
+        if (setupInspinAntispinWheelPlaneFlowerSameSame)
         {
             //double length of trails
             trailSpeedModifier = 2f;
@@ -161,27 +167,27 @@ public class Controller : MonoBehaviour
             //set poi trail speed
             UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlainFlowerSameSame = false;
-            doingInspinAntispinWheelPlainFlowerSameSame = true;
+            setupInspinAntispinWheelPlaneFlowerSameSame = false;
+            doingInspinAntispinWheelPlaneFlowerSameSame = true;
 
-            thisSimulationName.text = "Wheel Plain Inspin vs. Antispin Flower";
+            thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Same Time / Same Direction";
         }
         #endregion
 
-        #region Inspin vs antispin wheel plain flower Split/Same
-        //Inspin vs antispin wheel plain flower Split/Same
+        #region Inspin vs antispin wheel Plane flower Split/Same
+        //Inspin vs antispin wheel Plane flower Split/Same
         if (Input.GetKeyDown("y"))
         {
             ClearSpinner();
-            SetSpinner(spinnerWheelPlain);
-            setupInspinAntispinWheelPlainFlowerSplitSame = true;
+            SetSpinner(spinnerWheelPlane);
+            setupInspinAntispinWheelPlaneFlowerSplitSame = true;
         }
-        if (doingInspinAntispinWheelPlainFlowerSplitSame)
+        if (doingInspinAntispinWheelPlaneFlowerSplitSame)
         {
-            InspinAntispinWheelPlainFlowerSameDirection();
+            InspinAntispinWheelPlaneFlowerSameDirection();
         }
-        if (setupInspinAntispinWheelPlainFlowerSplitSame)
+        if (setupInspinAntispinWheelPlaneFlowerSplitSame)
         {
             //double length of trails
             trailSpeedModifier = 2f;
@@ -193,16 +199,16 @@ public class Controller : MonoBehaviour
             //set poi trail speed
             UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlainFlowerSplitSame = false;
-            doingInspinAntispinWheelPlainFlowerSplitSame = true;
+            setupInspinAntispinWheelPlaneFlowerSplitSame = false;
+            doingInspinAntispinWheelPlaneFlowerSplitSame = true;
 
-            thisSimulationName.text = "Wheel Plain Inspin vs. Antispin Flower";
+            thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Split Time / Same Direction";
         }
         #endregion
     }
 
-    private void AntiSpinWallPlainFlower()
+    private void AntiSpinWallPlaneFlower()
     {
         SetZeroPointProximitySensitivity();
 
@@ -242,7 +248,7 @@ public class Controller : MonoBehaviour
         
     }
 
-    private void InspinAntispinWheelPlainFlowerSameDirection()
+    private void InspinAntispinWheelPlaneFlowerSameDirection()
     {
         //set poi speed modifier to 4 to get 4 zero points on each arm rotation
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
@@ -255,7 +261,7 @@ public class Controller : MonoBehaviour
         bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
     }
 
-    private void InspinAntispinWheelPlainFlowerOpsDirection()
+    private void InspinAntispinWheelPlaneFlowerOpsDirection()
     {
         //set poi speed modifier to 4 to get 4 zero points on each arm rotation
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
@@ -266,6 +272,27 @@ public class Controller : MonoBehaviour
         //rotate shoulders
         bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
         bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
+    }
+
+    private void DropdownValueChanged(Dropdown change)
+    {
+        SetSpinnerProps(change.captionText.text);
+        ClearSpinner();
+        SetSpinner(spinnerWallPlane);
+    }
+
+    private void SetSpinnerProps(string propName)
+    {
+        if (propName == "Hoops")
+        {
+            spinnerWallPlane = envVariables.hooperWallPlane;
+            spinnerWheelPlane = envVariables.hooperWheelPlane;
+        }
+        else if (propName == "Poi")
+        {
+            spinnerWallPlane = envVariables.poiWallPlane;
+            spinnerWheelPlane = envVariables.poiWheelPlane;
+        }
     }
 
     private void ClearSpinner()
@@ -279,13 +306,13 @@ public class Controller : MonoBehaviour
 
             trailSpeedModifier = 1f;
             trickStage = 0;
-            doingAntiSpinWallPlainFlower = false;
-            doingInspinAntispinWheelPlainFlowerSplitOps = false;
-            doingInspinAntispinWheelPlainFlowerSameOps = false;
-            doingInspinAntispinWheelPlainFlowerSameSame = false;
-            doingInspinAntispinWheelPlainFlowerSplitSame = false;
+            doingAntiSpinWallPlaneFlower = false;
+            doingInspinAntispinWheelPlaneFlowerSplitOps = false;
+            doingInspinAntispinWheelPlaneFlowerSameOps = false;
+            doingInspinAntispinWheelPlaneFlowerSameSame = false;
+            doingInspinAntispinWheelPlaneFlowerSplitSame = false;
 
-            thisSimulationName.text = "";
+            thisSimulationName.text = "Not Currently Simulating";
             thisSimulationDescription.text = "";
         }
     }
@@ -297,12 +324,12 @@ public class Controller : MonoBehaviour
         bodyParts = BodyParts.instance;
         cardinalPoints = CardinalPoints.instance;
 
-        if (spinnerPrefab == spinnerWheelPlain)
+        if (spinnerPrefab == spinnerWheelPlane)
         {
             cam.gameObject.transform.position = new Vector3(0f, 20f, -120f);
             cam.orthographicSize = 70f;
         }
-        else if (spinnerPrefab == spinnerWallPlain)
+        else if (spinnerPrefab == spinnerWallPlane)
         {
             cam.gameObject.transform.position = new Vector3(0f, 20f, -160f);
             cam.orthographicSize = 75;
