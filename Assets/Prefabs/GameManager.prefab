@@ -54,10 +54,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisSimulationName: {fileID: 0}
   thisSimulationDescription: {fileID: 0}
-  propDropdown: {fileID: 0}
-  spinnerWallPlain: {fileID: 1585958377616954, guid: 079c2cb616525624f83c6ba9bdb96dab,
+  propDropDropdown: {fileID: 0}
+  spinnerWallPlane: {fileID: 1240433403522898, guid: 2678cc3c88c8b754aa8b0008303598d4,
     type: 2}
-  spinnerWheelPlain: {fileID: 1356233197963650, guid: edd4bd978ec793740b26f62ee1367e3e,
+  spinnerWheelPlane: {fileID: 1345048230657648, guid: 1a6b509923b63d84188d3dfd64667291,
     type: 2}
   cam: {fileID: 0}
 --- !u!114 &114899438636291528
@@ -72,13 +72,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalSpeed: 0.5
-  poiTrailSpeed: 3
+  propTrailSpeed: 3
   spinnerProps: Hoops
-  hooperWallPlain: {fileID: 1585958377616954, guid: 079c2cb616525624f83c6ba9bdb96dab,
+  globalSpeedSlider: {fileID: 0}
+  trailSpeedSlider: {fileID: 0}
+  hooperWallPlane: {fileID: 1240433403522898, guid: 2678cc3c88c8b754aa8b0008303598d4,
     type: 2}
-  hooperWheelPlain: {fileID: 1356233197963650, guid: edd4bd978ec793740b26f62ee1367e3e,
+  hooperWheelPlane: {fileID: 1345048230657648, guid: 1a6b509923b63d84188d3dfd64667291,
     type: 2}
-  poiWallPlain: {fileID: 1792278278874448, guid: 749cf76894cd34f47818948dc1522599,
+  poiWallPlane: {fileID: 1505051613699848, guid: 5d986e0fe1f602243a066eedf6b585f1,
     type: 2}
-  poiWheelPlain: {fileID: 1644397966585778, guid: 769d67c13231519468e18dc538fad735,
+  poiWheelPlane: {fileID: 1629828770615508, guid: 6e2a37205ce09c5479643123b83ae222,
     type: 2}

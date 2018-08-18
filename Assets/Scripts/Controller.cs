@@ -10,7 +10,7 @@ public class Controller : MonoBehaviour
     public Text thisSimulationName;
     public Text thisSimulationDescription;
     [Header("Spinner Prefabs")]
-    public Dropdown propDropdown;
+    public Dropdown propDropDropdown;
     public GameObject spinnerWallPlane;
     public GameObject spinnerWheelPlane;
     [Header("Viewing Camera")]
@@ -47,20 +47,20 @@ public class Controller : MonoBehaviour
     {
         thisSpinner = GameObject.FindGameObjectWithTag("Player");
 
-        propDropdown.onValueChanged.AddListener(delegate
+        propDropDropdown.onValueChanged.AddListener(delegate
         {
-            DropdownValueChanged(propDropdown);
+            PropDropdownValueChanged(propDropDropdown);
         });
 
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
         cardinalPoints = CardinalPoints.instance;
-
-        InvokeRepeating("UpdatePoiTrailSpeed", 0f, 1f);
     }
 
     private void Update()
     {
+        UpdatePoiTrailSpeed();
+
         #region Antispin Wall Plane Flower 
         //Antispin wall Plane flower
         if (Input.GetKeyDown("e"))
@@ -274,7 +274,7 @@ public class Controller : MonoBehaviour
         bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
     }
 
-    private void DropdownValueChanged(Dropdown change)
+    private void PropDropdownValueChanged(Dropdown change)
     {
         SetSpinnerProps(change.captionText.text);
         ClearSpinner();
@@ -338,8 +338,8 @@ public class Controller : MonoBehaviour
 
     private void UpdatePoiTrailSpeed()
     {
-        bodyParts.leftPropTrail.time = envVariables.poiTrailSpeed * trailSpeedModifier;
-        bodyParts.rightPropTrail.time = envVariables.poiTrailSpeed * trailSpeedModifier;
+        bodyParts.leftPropTrail.time = envVariables.propTrailSpeed * trailSpeedModifier;
+        bodyParts.rightPropTrail.time = envVariables.propTrailSpeed * trailSpeedModifier;
     }
 
     private void SetZeroPointProximitySensitivity()
