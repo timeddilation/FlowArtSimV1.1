@@ -72,7 +72,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   globalSpeed: 0.5
-  propTrailSpeed: 3
+  propTrailSpeed: 6
   spinnerProps: Hoops
   globalSpeedSlider: {fileID: 0}
   trailSpeedSlider: {fileID: 0}
@@ -84,3 +84,4 @@ MonoBehaviour:
     type: 2}
   poiWheelPlane: {fileID: 1629828770615508, guid: 6e2a37205ce09c5479643123b83ae222,
     type: 2}
+  bodyParts: {fileID: 0}

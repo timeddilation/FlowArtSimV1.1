@@ -20,9 +20,7 @@ public class Controller : MonoBehaviour
 
     private EnvironmentVariables envVariables;
     private BodyParts bodyParts;
-    private CardinalPoints cardinalPoints;
-
-    private float trailSpeedModifier = 1f;
+    //private CardinalPoints cardinalPoints;
 
     private bool setupAntiSpinWallPlaneFlower = false;
     private bool doingAntiSpinWallPlaneFlower = false;
@@ -54,13 +52,11 @@ public class Controller : MonoBehaviour
 
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
-        cardinalPoints = CardinalPoints.instance;
+        //cardinalPoints = CardinalPoints.instance;
     }
 
     private void Update()
     {
-        UpdatePoiTrailSpeed();
-
         #region Antispin Wall Plane Flower 
         //Antispin wall Plane flower
         if (Input.GetKeyDown("e"))
@@ -75,8 +71,6 @@ public class Controller : MonoBehaviour
         }
         if (setupAntiSpinWallPlaneFlower)
         {
-            //set poi trail speed
-            UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
             doingAntiSpinWallPlaneFlower = true;
             setupAntiSpinWallPlaneFlower = false;
@@ -99,12 +93,8 @@ public class Controller : MonoBehaviour
         }
         if (setupInspinAntispinWheelPlaneFlowerSplitOps)
         {
-            //double length of trails
-            trailSpeedModifier = 2f;
             //put left hand (inSpin hand) in Inspin starting location
             bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
-            //set poi trail speed
-            UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
             setupInspinAntispinWheelPlaneFlowerSplitOps = false;
             doingInspinAntispinWheelPlaneFlowerSplitOps = true;
@@ -127,15 +117,11 @@ public class Controller : MonoBehaviour
         }
         if (setupInspinAntispinWheelPlaneFlowerSameOps)
         {
-            //double length of trails
-            trailSpeedModifier = 2f;
             //put left hand (inSpin hand) in Inspin starting location
             bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
             //rotate shoulders to have right hand down and left hand up
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
-            //set poi trail speed
-            UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
             setupInspinAntispinWheelPlaneFlowerSameOps = false;
             doingInspinAntispinWheelPlaneFlowerSameOps = true;
@@ -159,13 +145,9 @@ public class Controller : MonoBehaviour
         }
         if (setupInspinAntispinWheelPlaneFlowerSameSame)
         {
-            //double length of trails
-            trailSpeedModifier = 2f;
             //rotate shoulders to lower position
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), -90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
-            //set poi trail speed
-            UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
             setupInspinAntispinWheelPlaneFlowerSameSame = false;
             doingInspinAntispinWheelPlaneFlowerSameSame = true;
@@ -189,15 +171,11 @@ public class Controller : MonoBehaviour
         }
         if (setupInspinAntispinWheelPlaneFlowerSplitSame)
         {
-            //double length of trails
-            trailSpeedModifier = 2f;
             //put left hand (inSpin hand) in Inspin starting location
             bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
             //rotate shoulders to lower position
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), -90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
-            //set poi trail speed
-            UpdatePoiTrailSpeed();
             //need to give it a cycle for the new spinner to be instantiated
             setupInspinAntispinWheelPlaneFlowerSplitSame = false;
             doingInspinAntispinWheelPlaneFlowerSplitSame = true;
@@ -301,10 +279,10 @@ public class Controller : MonoBehaviour
         {
             BodyParts.instance = null;
             CardinalPoints.instance = null;
+            envVariables.bodyParts = null;
             Destroy(thisSpinner);
             thisSpinner = null;
 
-            trailSpeedModifier = 1f;
             trickStage = 0;
             doingAntiSpinWallPlaneFlower = false;
             doingInspinAntispinWheelPlaneFlowerSplitOps = false;
@@ -322,7 +300,8 @@ public class Controller : MonoBehaviour
         thisSpinner = Instantiate(spinnerPrefab);
         thisSpinner.SetActive(true);
         bodyParts = BodyParts.instance;
-        cardinalPoints = CardinalPoints.instance;
+        //cardinalPoints = CardinalPoints.instance;
+        envVariables.bodyParts = BodyParts.instance;
 
         if (spinnerPrefab == spinnerWheelPlane)
         {
@@ -334,12 +313,6 @@ public class Controller : MonoBehaviour
             cam.gameObject.transform.position = new Vector3(0f, 20f, -160f);
             cam.orthographicSize = 75;
         }
-    }
-
-    private void UpdatePoiTrailSpeed()
-    {
-        bodyParts.leftPropTrail.time = envVariables.propTrailSpeed * trailSpeedModifier;
-        bodyParts.rightPropTrail.time = envVariables.propTrailSpeed * trailSpeedModifier;
     }
 
     private void SetZeroPointProximitySensitivity()

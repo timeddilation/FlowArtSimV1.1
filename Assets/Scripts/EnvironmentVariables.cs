@@ -7,7 +7,7 @@ public class EnvironmentVariables : MonoBehaviour
 {
     [Header("Simulation Tweaks")]
     public float globalSpeed = 1f;
-    public float propTrailSpeed = 3f;
+    public float propTrailSpeed = 6f;
     public string spinnerProps = "Hoops";
     public Slider globalSpeedSlider;
     public Slider trailSpeedSlider;
@@ -18,6 +18,9 @@ public class EnvironmentVariables : MonoBehaviour
     public GameObject poiWallPlane;
     public GameObject poiWheelPlane;
 
+    [Header("Unity Gernerated Things")]
+    public BodyParts bodyParts;
+
     public static EnvironmentVariables instance;
 
     private void Awake()
@@ -27,6 +30,8 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void Start()
     {
+        bodyParts = BodyParts.instance;
+
         globalSpeedSlider.value = globalSpeed;
         globalSpeedSlider.onValueChanged.AddListener(delegate
         {
@@ -40,6 +45,11 @@ public class EnvironmentVariables : MonoBehaviour
         });
     }
 
+    private void Update()
+    {
+        UpdatePoiTrailSpeed();
+    }
+
     private void GlobalSpeedSliderChanged(Slider slider)
     {
         globalSpeed = slider.value;
@@ -48,5 +58,11 @@ public class EnvironmentVariables : MonoBehaviour
     private void TrailSpeedSliderChanged(Slider slider)
     {
         propTrailSpeed = slider.value;
+    }
+
+    private void UpdatePoiTrailSpeed()
+    {
+        bodyParts.leftPropTrail.time = propTrailSpeed;
+        bodyParts.rightPropTrail.time = propTrailSpeed;
     }
 }
