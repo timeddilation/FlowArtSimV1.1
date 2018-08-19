@@ -28,11 +28,17 @@ public class BodyParts : MonoBehaviour
     public TrailRenderer leftPropTrail;
     public Vector2 leftPropPos;
     public ShoulderSpins leftShoulderSpin;
+    public ForearmSpins leftForearmSpin;
+    public ArmSpins leftArmSpin;
+    public HandSpins leftHandSpin;
     [Header("Right Arm Spins (Unity Sets)")]
     public PropSpins rightPropSpin;
     public TrailRenderer rightPropTrail;
     public Vector2 rightPropPos;
     public ShoulderSpins rightShoulderSpin;
+    public ForearmSpins rightForearmSpin;
+    public ArmSpins rightArmSpin;
+    public HandSpins rightHandSpin;
 
     private void Awake()
     {
@@ -47,10 +53,16 @@ public class BodyParts : MonoBehaviour
         leftPropSpin = leftProp.GetComponent<PropSpins>();
         leftPropTrail = leftProp.GetComponent<TrailRenderer>();
         leftShoulderSpin = leftShoulder.GetComponent<ShoulderSpins>();
+        leftForearmSpin = leftForeArm.GetComponent<ForearmSpins>();
+        leftArmSpin = leftArm.GetComponent<ArmSpins>();
+        leftHandSpin = leftHand.GetComponent<HandSpins>();
         //right side spins
         rightPropSpin = rightProp.GetComponent<PropSpins>();
         rightPropTrail = rightProp.GetComponent<TrailRenderer>();
         rightShoulderSpin = rightShoulder.GetComponent<ShoulderSpins>();
+        rightForearmSpin = rightForeArm.GetComponent<ForearmSpins>();
+        rightArmSpin = rightArm.GetComponent<ArmSpins>();
+        rightHandSpin = rightHand.GetComponent<HandSpins>();
     }
 
     private void Start()

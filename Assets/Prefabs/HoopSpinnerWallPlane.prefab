@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 33297358160165014}
   - component: {fileID: 23993114216542172}
   - component: {fileID: 136737820155589406}
+  - component: {fileID: 114340467215021130}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -241,6 +242,7 @@ GameObject:
   - component: {fileID: 33086650202308604}
   - component: {fileID: 23981895372580964}
   - component: {fileID: 136711049357025056}
+  - component: {fileID: 114391614512916580}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -280,6 +282,7 @@ GameObject:
   - component: {fileID: 33497838049728108}
   - component: {fileID: 23226560030269332}
   - component: {fileID: 65184699141892230}
+  - component: {fileID: 114537087576157534}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -454,6 +457,7 @@ GameObject:
   - component: {fileID: 33721405131472174}
   - component: {fileID: 23702052617108534}
   - component: {fileID: 65038146513937176}
+  - component: {fileID: 114346480049623666}
   m_Layer: 0
   m_Name: ForeArm
   m_TagString: Untagged
@@ -544,6 +548,7 @@ GameObject:
   - component: {fileID: 33881881321837136}
   - component: {fileID: 23046229412029918}
   - component: {fileID: 65464046985464984}
+  - component: {fileID: 114956469613004674}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -562,6 +567,7 @@ GameObject:
   - component: {fileID: 33070591931881270}
   - component: {fileID: 23750978532581506}
   - component: {fileID: 65756674692783996}
+  - component: {fileID: 114952713712603738}
   m_Layer: 0
   m_Name: ForeArm
   m_TagString: Untagged
@@ -2863,6 +2869,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 100
   rotationSpeedModifier: 1
+--- !u!114 &114340467215021130
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1178311974861454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e768ebccc4cf45440a53b601e3a4e643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114346480049623666
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1903417890600776}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04693282d8e3ba24ba5cade848aad70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114391614512916580
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1431758848892852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e768ebccc4cf45440a53b601e3a4e643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114428679079594204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2893,10 +2938,16 @@ MonoBehaviour:
   leftPropTrail: {fileID: 0}
   leftPropPos: {x: 0, y: 0}
   leftShoulderSpin: {fileID: 0}
+  leftForearmSpin: {fileID: 0}
+  leftArmSpin: {fileID: 0}
+  leftHandSpin: {fileID: 0}
   rightPropSpin: {fileID: 0}
   rightPropTrail: {fileID: 0}
   rightPropPos: {x: 0, y: 0}
   rightShoulderSpin: {fileID: 0}
+  rightForearmSpin: {fileID: 0}
+  rightArmSpin: {fileID: 0}
+  rightHandSpin: {fileID: 0}
 --- !u!114 &114524723890291678
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2906,6 +2957,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b96cf8e55cc5ed4493deb24ea69ffbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114537087576157534
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1553376920807568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3f4fa96388a0b4b9f08ebb6ac68d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 100
@@ -3027,12 +3091,6 @@ MonoBehaviour:
   localDown: {fileID: 1929070469998124}
   localForward: {fileID: 1779249520069000}
   localBack: {fileID: 1807722706514532}
-  localLeftXY: {x: 0, y: 0}
-  localRightXY: {x: 0, y: 0}
-  localUpXY: {x: 0, y: 0}
-  localDownXY: {x: 0, y: 0}
-  localForwardXY: {x: 0, y: 0}
-  localBackXY: {x: 0, y: 0}
 --- !u!114 &114852394718550264
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3067,6 +3125,32 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d97622b13ac7841488f7526f800a2333, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114952713712603738
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1996020034693610}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04693282d8e3ba24ba5cade848aad70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114956469613004674
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1981661046807840}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3f4fa96388a0b4b9f08ebb6ac68d66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 100

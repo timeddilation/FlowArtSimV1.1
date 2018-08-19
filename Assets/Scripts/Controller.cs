@@ -26,6 +26,9 @@ public class Controller : MonoBehaviour
     private bool setupAntiSpinWallPlaneFlower = false;
     private bool doingAntiSpinWallPlaneFlower = false;
 
+    private bool setupButterflyTaceVertical = false;
+    private bool doingButterflyTaceVertical = false;
+
     private bool setupInspinAntispinWheelPlaneFlowerSplitOps = false;
     private bool doingInspinAntispinWheelPlaneFlowerSplitOps = false;
 
@@ -83,6 +86,10 @@ public class Controller : MonoBehaviour
         {
             InspinAntispinWheelPlaneFlowerSplitSame();
         }
+        else if (setupButterflyTaceVertical || doingButterflyTaceVertical)
+        {
+            ButterflyTaceVertical();
+        }
         else
         {
             return;
@@ -109,8 +116,8 @@ public class Controller : MonoBehaviour
                 bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
                 bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
                 //spin poi
-                bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "forward");
-                bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "forward");
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, "forward");
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, "forward");
                 //rotate shoulders
                 bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
@@ -129,7 +136,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
 
                 //right hand is at lower position
-                if (cardinalPoints.CheckLocaDownProximity(bodyParts.rightShoulder.gameObject, zeroPointProximitySensitivity))
+                if (cardinalPoints.CheckLocalDownProximity(bodyParts.rightShoulder.gameObject, zeroPointProximitySensitivity))
                 {
                     trickStage = 0;
                 }
@@ -146,6 +153,68 @@ public class Controller : MonoBehaviour
 
         
         
+    }
+
+    public void ButterflyTaceVertical()
+    {
+        if (!setupButterflyTaceVertical && !doingButterflyTaceVertical)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWallPlane);
+            setupButterflyTaceVertical = true;
+        }
+        if (doingButterflyTaceVertical)
+        {
+            SetZeroPointProximitySensitivity();
+
+            if (trickStage == 0)
+            {
+                //rotate arms up
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, "right");
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, "right");
+                //rotate hands against arm rotation to keep props in plane
+                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, "left");
+                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, "left");
+                //rotate props
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, "forward");
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, "back");
+
+                if (cardinalPoints.CheckLocalUpProximity(bodyParts.leftProp, zeroPointProximitySensitivity))
+                {
+                    ++trickStage;
+                }
+            }
+            if (trickStage == 1)
+            {
+                //rotate arms down
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, "left");
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, "left");
+                //rotate hands against arm rotation to keep props in plane
+                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, "right");
+                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, "right");
+                //rotate props
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, "forward");
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, "back");
+
+                if (cardinalPoints.CheckLocalDownProximity(bodyParts.leftProp, zeroPointProximitySensitivity))
+                {
+                    trickStage = 0;
+                }
+            }
+        }
+        if (setupButterflyTaceVertical)
+        {
+            //rotate shoulders to lower position
+            bodyParts.leftArm.transform.RotateAround(bodyParts.leftShoulder.transform.position, new Vector3(0, 0, 1f), -105);
+            bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, new Vector3(0, 0, 1f), 105f);
+            //rotate props to match additional rotation of arms
+            bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 1f), 15f);
+            bodyParts.rightProp.transform.RotateAround(bodyParts.rightHand.transform.position, new Vector3(0, 0, 1f), -15f);
+
+            setupButterflyTaceVertical = false;
+            doingButterflyTaceVertical = true;
+            thisSimulationName.text = "Butterfly Tracing Vertically";
+        }
     }
 
     public void InspinAntispinWheelPlaneFlowerSplitOps()
@@ -261,8 +330,8 @@ public class Controller : MonoBehaviour
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
         bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
         //spin prop around hand
-        bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "back");
-        bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "back");
+        bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, "back");
+        bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, "back");
         //rotate shoulders
         bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
         bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
@@ -274,8 +343,8 @@ public class Controller : MonoBehaviour
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
         bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
         //spin prop around hand
-        bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "back");
-        bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "forward");
+        bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, "back");
+        bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, "forward");
         //rotate shoulders
         bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
         bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
@@ -318,6 +387,7 @@ public class Controller : MonoBehaviour
             doingInspinAntispinWheelPlaneFlowerSameOps = false;
             doingInspinAntispinWheelPlaneFlowerSameSame = false;
             doingInspinAntispinWheelPlaneFlowerSplitSame = false;
+            doingButterflyTaceVertical = false;
 
             thisSimulationName.text = "Not Currently Simulating";
             thisSimulationDescription.text = "";

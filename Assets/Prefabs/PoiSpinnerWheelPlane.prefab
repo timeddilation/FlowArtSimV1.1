@@ -70,6 +70,7 @@ GameObject:
   - component: {fileID: 33877671361855526}
   - component: {fileID: 23128318662581716}
   - component: {fileID: 65591509771563896}
+  - component: {fileID: 114515132180458268}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -103,6 +104,7 @@ GameObject:
   - component: {fileID: 33022499967088940}
   - component: {fileID: 23465254644843370}
   - component: {fileID: 65504055440534280}
+  - component: {fileID: 114014952557118460}
   m_Layer: 0
   m_Name: ForeArm
   m_TagString: Untagged
@@ -154,6 +156,7 @@ GameObject:
   - component: {fileID: 33836629715349348}
   - component: {fileID: 23113496890965056}
   - component: {fileID: 136976235514874134}
+  - component: {fileID: 114818795418549414}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -295,6 +298,7 @@ GameObject:
   - component: {fileID: 33476323487892884}
   - component: {fileID: 23522573527855788}
   - component: {fileID: 65896722713834344}
+  - component: {fileID: 114691762092941244}
   m_Layer: 0
   m_Name: ForeArm
   m_TagString: Untagged
@@ -364,6 +368,7 @@ GameObject:
   - component: {fileID: 33271958504212576}
   - component: {fileID: 23307725455638144}
   - component: {fileID: 136991930254099662}
+  - component: {fileID: 114762684582005484}
   m_Layer: 0
   m_Name: Hand
   m_TagString: Untagged
@@ -402,6 +407,7 @@ GameObject:
   - component: {fileID: 33118793998477310}
   - component: {fileID: 23639609770152074}
   - component: {fileID: 65481741636763952}
+  - component: {fileID: 114554620663031750}
   m_Layer: 0
   m_Name: Arm
   m_TagString: Untagged
@@ -1758,6 +1764,19 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
+--- !u!114 &114014952557118460
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1164340402261050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04693282d8e3ba24ba5cade848aad70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114145755872878848
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1784,6 +1803,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 100
   rotationSpeedModifier: 1
+--- !u!114 &114515132180458268
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1074744405503596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3f4fa96388a0b4b9f08ebb6ac68d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114554620663031750
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1937084880112908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d3f4fa96388a0b4b9f08ebb6ac68d66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114581467563086310
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1801,12 +1846,6 @@ MonoBehaviour:
   localDown: {fileID: 1547094111696384}
   localForward: {fileID: 1117070087314882}
   localBack: {fileID: 1504666678196006}
-  localLeftXY: {x: 0, y: 0}
-  localRightXY: {x: 0, y: 0}
-  localUpXY: {x: 0, y: 0}
-  localDownXY: {x: 0, y: 0}
-  localForwardXY: {x: 0, y: 0}
-  localBackXY: {x: 0, y: 0}
 --- !u!114 &114588757372143796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1837,10 +1876,29 @@ MonoBehaviour:
   leftPropTrail: {fileID: 0}
   leftPropPos: {x: 0, y: 0}
   leftShoulderSpin: {fileID: 0}
+  leftForearmSpin: {fileID: 0}
+  leftArmSpin: {fileID: 0}
+  leftHandSpin: {fileID: 0}
   rightPropSpin: {fileID: 0}
   rightPropTrail: {fileID: 0}
   rightPropPos: {x: 0, y: 0}
   rightShoulderSpin: {fileID: 0}
+  rightForearmSpin: {fileID: 0}
+  rightArmSpin: {fileID: 0}
+  rightHandSpin: {fileID: 0}
+--- !u!114 &114691762092941244
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1579986932585706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04693282d8e3ba24ba5cade848aad70f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114703761524177902
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1854,6 +1912,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 100
   rotationSpeedModifier: 1
+--- !u!114 &114762684582005484
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1852919009938378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e768ebccc4cf45440a53b601e3a4e643, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114765987250164472
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1863,6 +1934,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0b96cf8e55cc5ed4493deb24ea69ffbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114818795418549414
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1335892950904158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e768ebccc4cf45440a53b601e3a4e643, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   rotationSpeed: 100

@@ -61,12 +61,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\ArmSpins.cs" />
     <Compile Include="Assets\Scripts\BodyParts.cs" />
     <Compile Include="Assets\Scripts\CamControls.cs" />
     <Compile Include="Assets\Scripts\CardinalPoints.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
     <Compile Include="Assets\Scripts\EnvironmentVariables.cs" />
+    <Compile Include="Assets\Scripts\ForearmSpins.cs" />
     <Compile Include="Assets\Scripts\FreeMovementCam.cs" />
+    <Compile Include="Assets\Scripts\HandSpins.cs" />
     <Compile Include="Assets\Scripts\MenuControls.cs" />
     <Compile Include="Assets\Scripts\PropSpins.cs" />
     <Compile Include="Assets\Scripts\ShoulderSpins.cs" />

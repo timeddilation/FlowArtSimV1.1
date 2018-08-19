@@ -14,7 +14,7 @@ public class PropSpins : MonoBehaviour
         environmentVariables = EnvironmentVariables.instance;
     }
 
-    public void SpinPoi(GameObject holdingHand, string dir)
+    public void SpinProp(GameObject holdingHand, string dir)
     {
         if (dir == "forward")
         {
