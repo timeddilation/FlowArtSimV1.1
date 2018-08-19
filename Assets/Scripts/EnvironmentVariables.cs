@@ -25,6 +25,10 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void Awake()
     {
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one EnvironmentVariables instance!");
+        }
         instance = this;
     }
 

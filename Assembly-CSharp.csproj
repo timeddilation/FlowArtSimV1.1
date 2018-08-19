@@ -62,9 +62,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BodyParts.cs" />
+    <Compile Include="Assets\Scripts\CamControls.cs" />
     <Compile Include="Assets\Scripts\CardinalPoints.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
     <Compile Include="Assets\Scripts\EnvironmentVariables.cs" />
+    <Compile Include="Assets\Scripts\FreeMovementCam.cs" />
     <Compile Include="Assets\Scripts\MenuControls.cs" />
     <Compile Include="Assets\Scripts\PoiSpins.cs" />
     <Compile Include="Assets\Scripts\ShoulderSpins.cs" />

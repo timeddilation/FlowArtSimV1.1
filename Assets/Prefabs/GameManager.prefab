@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4332220213660040}
   - component: {fileID: 114899438636291528}
   - component: {fileID: 114031227305784338}
+  - component: {fileID: 114636997953517698}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -60,6 +61,20 @@ MonoBehaviour:
   spinnerWheelPlane: {fileID: 1345048230657648, guid: 1a6b509923b63d84188d3dfd64667291,
     type: 2}
   cam: {fileID: 0}
+--- !u!114 &114636997953517698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025997839596168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 586539dc657029949ac0f00723cc00b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 0}
+  angledCamera: {fileID: 0}
+  secondCameraView: {fileID: 8400000, guid: 05787c7cee2559d4a8d5319744cf286d, type: 2}
 --- !u!114 &114899438636291528
 MonoBehaviour:
   m_ObjectHideFlags: 1

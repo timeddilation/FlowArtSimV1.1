@@ -37,6 +37,10 @@ public class BodyParts : MonoBehaviour
     private void Awake()
     {
         torso = gameObject;
+        if (instance != null)
+        {
+            Debug.LogWarning("More than one BodyParts instance!");
+        }
         instance = this;
 
         //left side spins
@@ -47,7 +51,10 @@ public class BodyParts : MonoBehaviour
         rightPropSpin = rightProp.GetComponent<PoiSpins>();
         rightPropTrail = rightProp.GetComponent<TrailRenderer>();
         rightShoulderSpin = rightShoulder.GetComponent<ShoulderSpins>();
+    }
 
+    private void Start()
+    {
         GetVector2PoiPosition();
     }
 
