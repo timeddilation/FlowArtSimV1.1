@@ -3,11 +3,13 @@ Unity Simulation for flow arts
 
 [Get Unity](https://unity3d.com/get-unity/download) for free, open this project in Unity.
 
-Current, only 4 moves programmed, and are toggled by (e, r, t, y), until I get a menu in.
+Current, only 5 moves programmed in. 
+There is a button list showing all moves that can be selected, which work for both Poi and Hoops Spinner models. 
+Better organization for the movesets will need to be implemented as items are added.
 
 The models for both hoops and poi are setup, and functional. 
-you can switch betwween hoops and poi for all tricks setup. 
+You can switch betwween hoops and poi for all tricks setup. 
 In theory, if you setup the spinner model correctly, the same code should work on all spinners and do all of the same tricks correctly.
 
-The prop object and the should are setup for rotation. 
+The prop object and the shoulder are setup for rotation. 
 TODO: setup forearm for rotation around elbow.
