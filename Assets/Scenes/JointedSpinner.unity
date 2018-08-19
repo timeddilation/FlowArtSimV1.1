@@ -512,6 +512,11 @@ Prefab:
       propertyPath: cam
       value: 
       objectReference: {fileID: 431360402}
+    - target: {fileID: 114031227305784338, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
+        type: 2}
+      propertyPath: canvas
+      value: 
+      objectReference: {fileID: 1597279907}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd, type: 2}
   m_IsPrefabAsset: 0
@@ -678,6 +683,11 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e2a37205ce09c5479643123b83ae222, type: 2}
   m_IsPrefabAsset: 0
+--- !u!223 &1597279907 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 223393411179766962, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+    type: 2}
+  m_PrefabInternal: {fileID: 47774844}
 --- !u!114 &1686481639 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114636997953517698, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,

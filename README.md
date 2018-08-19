@@ -1,7 +1,8 @@
 # FlowArtSimV1.1
 Unity Simulation for flow arts
 
-[Get Unity](https://unity3d.com/get-unity/download) for free, open this project in Unity.
+[Get Unity](https://unity3d.com/get-unity/download) for free, open this project in Unity. 
+Currently using Unity Version 2018.2.4f1 Personal.
 
 Current, only 5 moves programmed in. 
 There is a button list showing all moves that can be selected, which work for both Poi and Hoops Spinner models. 
