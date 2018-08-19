@@ -57,17 +57,105 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        #region Antispin Wall Plane Flower 
         //Antispin wall Plane flower
         if (Input.GetKeyDown("e"))
+        {
+            AntiSpinWallPlaneFlower();
+        }
+        //Inspin vs antispin wheel Plane flower Split/Ops
+        if (Input.GetKeyDown("r"))
+        {
+            InspinAntispinWheelPlaneFlowerSplitOps();
+        }
+        //Inspin vs antispin wheel Plane flower Same/Ops
+        if (Input.GetKeyDown("t"))
+        {
+            InspinAntispinWheelPlaneFlowerSameOps();
+        }
+        //Inspin vs antispin wheel Plane flower Same/Same
+        if (Input.GetKeyDown("u"))
+        {
+            InspinAntispinWheelPlaneFlowerSameSame();
+        }
+        //Inspin vs antispin wheel Plane flower Split/Same
+        if (Input.GetKeyDown("y"))
+        {
+            InspinAntispinWheelPlaneFlowerSplitSame();
+        }
+
+        if (setupAntiSpinWallPlaneFlower || doingAntiSpinWallPlaneFlower)
+        {
+            AntiSpinWallPlaneFlower();
+        }
+        else if (setupInspinAntispinWheelPlaneFlowerSplitOps || doingInspinAntispinWheelPlaneFlowerSplitOps)
+        {
+            InspinAntispinWheelPlaneFlowerSplitOps();
+        }
+        else if (setupInspinAntispinWheelPlaneFlowerSameOps || doingInspinAntispinWheelPlaneFlowerSameOps)
+        {
+            InspinAntispinWheelPlaneFlowerSameOps();
+        }
+        else if (setupInspinAntispinWheelPlaneFlowerSameSame || doingInspinAntispinWheelPlaneFlowerSameSame)
+        {
+            InspinAntispinWheelPlaneFlowerSameSame();
+        }
+        else if (setupInspinAntispinWheelPlaneFlowerSplitSame || doingInspinAntispinWheelPlaneFlowerSplitSame)
+        {
+            InspinAntispinWheelPlaneFlowerSplitSame();
+        }
+        else
+        {
+            return;
+        }
+    }
+
+    public void AntiSpinWallPlaneFlower()
+    {
+        if (!setupAntiSpinWallPlaneFlower && !doingAntiSpinWallPlaneFlower)
         {
             ClearSpinner();
             SetSpinner(spinnerWallPlane);
             setupAntiSpinWallPlaneFlower = true;
-        }
+        }       
+
         if (doingAntiSpinWallPlaneFlower)
         {
-            AntiSpinWallPlaneFlower();
+            //faster global speeds means less sensitivity to phase points. Otherwise, it may skip stage increments
+            SetZeroPointProximitySensitivity();
+
+            if (trickStage == 0)
+            {
+                //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+                //spin poi
+                bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "forward");
+                bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "forward");
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
+                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
+
+                //right hand is at upper position           
+                if ((270 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) < zeroPointProximitySensitivity
+                    && (270 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) > -zeroPointProximitySensitivity)
+                {
+                    ++trickStage;
+                }
+            }
+            else if (trickStage == 1)
+            {
+                //no need to apply rotation force to poi, we want them to follow the hands, relative velocity is zero
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
+                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
+
+                //right hand is at lower position
+                if ((90 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) > -zeroPointProximitySensitivity
+                    && (90 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) < zeroPointProximitySensitivity)
+                {
+                    trickStage = 0;
+                }
+            }
         }
         if (setupAntiSpinWallPlaneFlower)
         {
@@ -77,11 +165,14 @@ public class Controller : MonoBehaviour
 
             thisSimulationName.text = "Wall Plane Antispin Flower";
         }
-        #endregion
 
-        #region Inspin vs antispin wheel Plane flower Split/Ops
-        //Inspin vs antispin wheel Plane flower Split/Ops
-        if (Input.GetKeyDown("r"))
+        
+        
+    }
+
+    public void InspinAntispinWheelPlaneFlowerSplitOps()
+    {
+        if (!setupInspinAntispinWheelPlaneFlowerSplitOps && !doingInspinAntispinWheelPlaneFlowerSplitOps)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
@@ -102,10 +193,11 @@ public class Controller : MonoBehaviour
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Split Time / Opposite Direction";
         }
-        #endregion
+    }
 
-        #region Inspin vs antispin wheel Plane flower Same/Ops
-        if (Input.GetKeyDown("t"))
+    public void InspinAntispinWheelPlaneFlowerSameOps()
+    {
+        if (!setupInspinAntispinWheelPlaneFlowerSameOps && !doingInspinAntispinWheelPlaneFlowerSameOps)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
@@ -129,11 +221,11 @@ public class Controller : MonoBehaviour
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Same Time / Opposite Direction";
         }
-        #endregion
+    }
 
-        #region Inspin vs antispin wheel Plane flower Same/Same
-        //Inspin vs antispin wheel Plane flower Same/Same
-        if (Input.GetKeyDown("u"))
+    public void InspinAntispinWheelPlaneFlowerSameSame()
+    {
+        if (!setupInspinAntispinWheelPlaneFlowerSameSame && !doingInspinAntispinWheelPlaneFlowerSameSame)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
@@ -155,11 +247,11 @@ public class Controller : MonoBehaviour
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Same Time / Same Direction";
         }
-        #endregion
+    }
 
-        #region Inspin vs antispin wheel Plane flower Split/Same
-        //Inspin vs antispin wheel Plane flower Split/Same
-        if (Input.GetKeyDown("y"))
+    public void InspinAntispinWheelPlaneFlowerSplitSame()
+    {
+        if (!setupInspinAntispinWheelPlaneFlowerSplitSame && !doingInspinAntispinWheelPlaneFlowerSplitSame)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
@@ -183,47 +275,6 @@ public class Controller : MonoBehaviour
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Split Time / Same Direction";
         }
-        #endregion
-    }
-
-    private void AntiSpinWallPlaneFlower()
-    {
-        SetZeroPointProximitySensitivity();
-
-        if (trickStage == 0)
-        {
-            //set poi speed modifier to 4 to get 4 zero points on each arm rotation
-            bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
-            bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
-            //spin poi
-            bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "forward");
-            bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "forward");
-            //rotate shoulders
-            bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
-            bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
-
-            //right hand is at upper position           
-            if ((270 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) < zeroPointProximitySensitivity
-                && (270 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) > -zeroPointProximitySensitivity)
-            {
-                ++trickStage;
-            }
-        }
-        else if (trickStage == 1)
-        {
-            //no need to apply rotation force to poi, we want them to follow the hands, relative velocity is zero
-            //rotate shoulders
-            bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
-            bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
-
-            //right hand is at lower position
-            if ((90 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) > -zeroPointProximitySensitivity
-                && (90 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) < zeroPointProximitySensitivity)
-            {
-                trickStage = 0;
-            }
-        }
-        
     }
 
     private void InspinAntispinWheelPlaneFlowerSameDirection()

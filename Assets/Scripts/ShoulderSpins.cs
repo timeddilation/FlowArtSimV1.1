@@ -9,7 +9,7 @@ public class ShoulderSpins : MonoBehaviour
     public float rotationSpeed = 100f;
     public float rotationSpeedModifier = 1f;
 
-    private void Start()
+    private void Awake()
     {
         environmentVariables = EnvironmentVariables.instance;
     }
