@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class FreeMovementCam : MonoBehaviour
 {
-    public float zoomSpeed = 7f;
-    public float dragSpeed = 2f;
-    public float rotateSpeed = 3f;
+    public float zoomSpeed = 8000f;
+    public float dragSpeed = 200f;
+    public float rotateSpeed = 150f;
     public float rotationDampening = 15f;
 
     private float lookX = 0;
@@ -28,22 +28,22 @@ public class FreeMovementCam : MonoBehaviour
         if (EventSystem.current.IsPointerOverGameObject()) { return; }
 
         //zoom in and out based on scroll wheel
-        float cameraTransposeMagnitude = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed;
+        float cameraTransposeMagnitude = Input.GetAxis("Mouse ScrollWheel") * zoomSpeed * Time.deltaTime;
         transform.Translate(0, 0, cameraTransposeMagnitude, Space.Self);
 
         //drag camera around 2D XY plane
         if (Input.GetMouseButton(0))
         {
-            float dragX = Input.GetAxis("Mouse X") * dragSpeed;
-            float dragY = Input.GetAxis("Mouse Y") * dragSpeed;
+            float dragX = Input.GetAxis("Mouse X") * dragSpeed * Time.deltaTime;
+            float dragY = Input.GetAxis("Mouse Y") * dragSpeed * Time.deltaTime;
             transform.Translate(-dragX, -dragY, 0);
         }
         //rotate camera, but disallowed when holding left click too
         else if (Input.GetMouseButton(1))
         {
             //be sure to grab the current rotation as starting point.
-            lookX += Input.GetAxis("Mouse X") * rotateSpeed;
-            lookY -= Input.GetAxis("Mouse Y") * rotateSpeed;
+            lookX += Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime;
+            lookY -= Input.GetAxis("Mouse Y") * rotateSpeed * Time.deltaTime;
 
             //set camera rotation 
             currentRotation = transform.rotation;
