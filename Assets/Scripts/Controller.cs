@@ -9,6 +9,7 @@ public class Controller : MonoBehaviour
     [Header("Display Texts")]
     public Text thisSimulationName;
     public Text thisSimulationDescription;
+    public Canvas canvas;
     [Header("Spinner Prefabs")]
     public Dropdown propDropDropdown;
     public GameObject spinnerWallPlane;
@@ -57,30 +58,9 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        //Antispin wall Plane flower
-        if (Input.GetKeyDown("e"))
+        if (Input.GetKeyDown("f1"))
         {
-            AntiSpinWallPlaneFlower();
-        }
-        //Inspin vs antispin wheel Plane flower Split/Ops
-        if (Input.GetKeyDown("r"))
-        {
-            InspinAntispinWheelPlaneFlowerSplitOps();
-        }
-        //Inspin vs antispin wheel Plane flower Same/Ops
-        if (Input.GetKeyDown("t"))
-        {
-            InspinAntispinWheelPlaneFlowerSameOps();
-        }
-        //Inspin vs antispin wheel Plane flower Same/Same
-        if (Input.GetKeyDown("u"))
-        {
-            InspinAntispinWheelPlaneFlowerSameSame();
-        }
-        //Inspin vs antispin wheel Plane flower Split/Same
-        if (Input.GetKeyDown("y"))
-        {
-            InspinAntispinWheelPlaneFlowerSplitSame();
+            canvas.enabled = !canvas.enabled;
         }
 
         if (setupAntiSpinWallPlaneFlower || doingAntiSpinWallPlaneFlower)

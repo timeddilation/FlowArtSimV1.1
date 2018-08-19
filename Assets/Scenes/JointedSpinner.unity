@@ -210,16 +210,41 @@ Prefab:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 114183979929254620, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+    - target: {fileID: 114394325959500288, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1686481639}
+      objectReference: {fileID: 1065727621}
+    - target: {fileID: 114652060892838956, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1065727621}
+    - target: {fileID: 114711176936726830, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1065727621}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1065727621}
+    - target: {fileID: 114725931938893716, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1065727621}
     - target: {fileID: 223393411179766962, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 431360402}
+    - target: {fileID: 114183979929254620, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 2}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1686481639}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3ecbc1bad09f0a743a08019b58f3f21a, type: 2}
   m_IsPrefabAsset: 0
@@ -490,6 +515,12 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd, type: 2}
   m_IsPrefabAsset: 0
+--- !u!114 &1065727621 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114031227305784338, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
+    type: 2}
+  m_PrefabInternal: {fileID: 952626235}
+  m_Script: {fileID: 11500000, guid: 63a565f1f97068343ae44166dd067d58, type: 3}
 --- !u!1 &1108886731
 GameObject:
   m_ObjectHideFlags: 0

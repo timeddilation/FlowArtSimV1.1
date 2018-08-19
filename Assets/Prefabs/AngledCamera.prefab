@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af316aefe9bc70b46840fbc46579d263, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomSpeed: 7
-  dragSpeed: 2
-  rotateSpeed: 3
+  zoomSpeed: 8000
+  dragSpeed: 200
+  rotateSpeed: 150
   rotationDampening: 15
