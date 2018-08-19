@@ -16,6 +16,7 @@ public class Controller : MonoBehaviour
     public GameObject spinnerWheelPlane;
     [Header("Viewing Camera")]
     public Camera cam;
+    private Transform camTransform;
 
     private GameObject thisSpinner;
 
@@ -48,6 +49,8 @@ public class Controller : MonoBehaviour
     private void Start()
     {
         thisSpinner = GameObject.FindGameObjectWithTag("Player");
+
+        camTransform = cam.gameObject.transform;
 
         propDropDropdown.onValueChanged.AddListener(delegate
         {
@@ -404,12 +407,12 @@ public class Controller : MonoBehaviour
 
         if (spinnerPrefab == spinnerWheelPlane)
         {
-            cam.gameObject.transform.position = new Vector3(0f, 20f, -120f);
+            cam.gameObject.transform.position = camTransform.position;
             cam.orthographicSize = 70f;
         }
         else if (spinnerPrefab == spinnerWallPlane)
         {
-            cam.gameObject.transform.position = new Vector3(0f, 20f, -160f);
+            cam.gameObject.transform.position = camTransform.position + new Vector3(0f, 0f, -20f);
             cam.orthographicSize = 75;
         }
     }
