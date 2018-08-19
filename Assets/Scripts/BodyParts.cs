@@ -24,12 +24,12 @@ public class BodyParts : MonoBehaviour
     public GameObject torso;
     public static BodyParts instance;
     [Header("Left Arm Spins (Unity Sets)")]
-    public PoiSpins leftPropSpin;
+    public PropSpins leftPropSpin;
     public TrailRenderer leftPropTrail;
     public Vector2 leftPropPos;
     public ShoulderSpins leftShoulderSpin;
     [Header("Right Arm Spins (Unity Sets)")]
-    public PoiSpins rightPropSpin;
+    public PropSpins rightPropSpin;
     public TrailRenderer rightPropTrail;
     public Vector2 rightPropPos;
     public ShoulderSpins rightShoulderSpin;
@@ -44,11 +44,11 @@ public class BodyParts : MonoBehaviour
         instance = this;
 
         //left side spins
-        leftPropSpin = leftProp.GetComponent<PoiSpins>();
+        leftPropSpin = leftProp.GetComponent<PropSpins>();
         leftPropTrail = leftProp.GetComponent<TrailRenderer>();
         leftShoulderSpin = leftShoulder.GetComponent<ShoulderSpins>();
         //right side spins
-        rightPropSpin = rightProp.GetComponent<PoiSpins>();
+        rightPropSpin = rightProp.GetComponent<PropSpins>();
         rightPropTrail = rightProp.GetComponent<TrailRenderer>();
         rightShoulderSpin = rightShoulder.GetComponent<ShoulderSpins>();
     }

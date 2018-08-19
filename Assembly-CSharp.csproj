@@ -68,7 +68,7 @@
     <Compile Include="Assets\Scripts\EnvironmentVariables.cs" />
     <Compile Include="Assets\Scripts\FreeMovementCam.cs" />
     <Compile Include="Assets\Scripts\MenuControls.cs" />
-    <Compile Include="Assets\Scripts\PoiSpins.cs" />
+    <Compile Include="Assets\Scripts\PropSpins.cs" />
     <Compile Include="Assets\Scripts\ShoulderSpins.cs" />
     <Compile Include="Assets\Scripts\ToggleTrailActivity.cs" />
     <Reference Include="UnityEditor.StandardEvents">

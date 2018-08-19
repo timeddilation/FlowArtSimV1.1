@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoiSpins : MonoBehaviour
+public class PropSpins : MonoBehaviour
 {
     private EnvironmentVariables environmentVariables;
 

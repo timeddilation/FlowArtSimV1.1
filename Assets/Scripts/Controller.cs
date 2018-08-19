@@ -279,10 +279,10 @@ public class Controller : MonoBehaviour
 
     private void InspinAntispinWheelPlaneFlowerSameDirection()
     {
-        //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+        //set prop speed modifier to 4 on right hand to get 4 zero points on each arm rotation, 2 on left hand to get 2 for inspins
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
         bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
-        //spin poi
+        //spin prop around hand
         bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "back");
         bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "back");
         //rotate shoulders
@@ -292,10 +292,10 @@ public class Controller : MonoBehaviour
 
     private void InspinAntispinWheelPlaneFlowerOpsDirection()
     {
-        //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+        //set prop speed modifier to 4 on right hand to get 4 zero points on each arm rotation, 2 on left hand to get 2 for inspins
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
         bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
-        //spin poi
+        //spin prop around hand
         bodyParts.leftPropSpin.SpinPoi(bodyParts.leftHand, "back");
         bodyParts.rightPropSpin.SpinPoi(bodyParts.rightHand, "forward");
         //rotate shoulders
