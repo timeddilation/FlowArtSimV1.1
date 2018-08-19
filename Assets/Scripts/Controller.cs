@@ -21,7 +21,7 @@ public class Controller : MonoBehaviour
 
     private EnvironmentVariables envVariables;
     private BodyParts bodyParts;
-    //private CardinalPoints cardinalPoints;
+    private CardinalPoints cardinalPoints;
 
     private bool setupAntiSpinWallPlaneFlower = false;
     private bool doingAntiSpinWallPlaneFlower = false;
@@ -53,7 +53,7 @@ public class Controller : MonoBehaviour
 
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
-        //cardinalPoints = CardinalPoints.instance;
+        cardinalPoints = CardinalPoints.instance;
     }
 
     private void Update()
@@ -116,8 +116,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "back");
 
                 //right hand is at upper position           
-                if ((270 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) < zeroPointProximitySensitivity
-                    && (270 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) > -zeroPointProximitySensitivity)
+                if (cardinalPoints.CheckLocalUpProximity(bodyParts.rightShoulder.gameObject, zeroPointProximitySensitivity))
                 {
                     ++trickStage;
                 }
@@ -130,8 +129,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, "forward");
 
                 //right hand is at lower position
-                if ((90 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) > -zeroPointProximitySensitivity
-                    && (90 - bodyParts.rightShoulder.gameObject.transform.rotation.eulerAngles.z) < zeroPointProximitySensitivity)
+                if (cardinalPoints.CheckLocaDownProximity(bodyParts.rightShoulder.gameObject, zeroPointProximitySensitivity))
                 {
                     trickStage = 0;
                 }

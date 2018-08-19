@@ -40,4 +40,30 @@ public class CardinalPoints : MonoBehaviour
         localForwardXY.y = localForward.transform.position.y;
         localBackXY.y = localBack.transform.position.y;
     }
+
+    public bool CheckLocalUpProximity(GameObject bodyPart, float sensitivity)
+    {
+        if ((270 - bodyPart.transform.rotation.eulerAngles.z) < sensitivity
+            && (270 - bodyPart.transform.rotation.eulerAngles.z) > -sensitivity)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool CheckLocaDownProximity(GameObject bodyPart, float sensitivity)
+    {
+        if ((90 - bodyPart.transform.rotation.eulerAngles.z) > -sensitivity
+            && (90 - bodyPart.transform.rotation.eulerAngles.z) < sensitivity)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }
