@@ -55,6 +55,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thisSimulationName: {fileID: 0}
   thisSimulationDescription: {fileID: 0}
+  canvas: {fileID: 0}
+  debugMenu: {fileID: 0}
   propDropDropdown: {fileID: 0}
   spinnerWallPlane: {fileID: 1240433403522898, guid: 2678cc3c88c8b754aa8b0008303598d4,
     type: 2}

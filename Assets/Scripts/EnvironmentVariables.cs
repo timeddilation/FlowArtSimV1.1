@@ -3,6 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum SpinDirections
+{
+    None = 0,
+    Forward = 1,
+    Backward = 2,
+    Left = 3,
+    Right = 4,
+    Up = 5,
+    Down = 6
+}
+
+public enum ZeroPointRegion
+{
+    None = 0,
+    LocalForward = 1,
+    LocalBackward = 2,
+    LocalLeft = 3,
+    LocalRight = 4,
+    LocalUp = 5,
+    LocalDown = 6
+}
+
 public class EnvironmentVariables : MonoBehaviour
 {
     [Header("Simulation Tweaks")]
