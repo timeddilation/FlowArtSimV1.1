@@ -37,6 +37,12 @@ public class Controller : MonoBehaviour
     private bool setupButterflyTaceVertical = false;
     private bool doingButterflyTaceVertical = false;
 
+    private bool setupAntispinWheelPlaneFlowerSameOps = false;
+    private bool doingAntispinWheelPlaneFlowerSameOps = false;
+
+    private bool setupAntispinWheelPlaneFlowerSplitSame = false;
+    private bool doingAntispinWheelPlaneFlowerSplitSame = false;
+
     private bool setupInspinAntispinWheelPlaneFlowerSplitOps = false;
     private bool doingInspinAntispinWheelPlaneFlowerSplitOps = false;
 
@@ -90,6 +96,14 @@ public class Controller : MonoBehaviour
         {
             AntiSpinWallPlaneFlower();
         }
+        else if (setupAntispinWheelPlaneFlowerSameOps || doingAntispinWheelPlaneFlowerSameOps)
+        {
+            AntispinWheelPlaneFlowerSameOps();
+        }
+        else if (setupAntispinWheelPlaneFlowerSplitSame || doingAntispinWheelPlaneFlowerSplitSame)
+        {
+            AntispinWheelPlaneFlowerSplitSame();
+        }
         else if (setupInspinAntispinWheelPlaneFlowerSplitOps || doingInspinAntispinWheelPlaneFlowerSplitOps)
         {
             InspinAntispinWheelPlaneFlowerSplitOps();
@@ -123,6 +137,7 @@ public class Controller : MonoBehaviour
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
             setupAntiSpinPointsSameOps = true;
+            envVariables.halfTrailSpeed = true;
         }
 
         if (doingAntiSpinPointsSameOps)
@@ -132,9 +147,6 @@ public class Controller : MonoBehaviour
                 //set poi speed modifier to 4 to get 4 zero points on each arm rotation
                 bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
                 bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
-                //normal velocity of arm rotation
-                bodyParts.leftShoulderSpin.rotationSpeedModifier = 1f;
-                bodyParts.rightShoulderSpin.rotationSpeedModifier = 1f;
                 //spin poi
                 bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
@@ -153,9 +165,6 @@ public class Controller : MonoBehaviour
                 //kill velocity on both props
                 bodyParts.leftPropSpin.rotationSpeedModifier = 0f;
                 bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
-                //increase velocity of arm rotation
-                bodyParts.leftShoulderSpin.rotationSpeedModifier = 1.25f;
-                bodyParts.rightShoulderSpin.rotationSpeedModifier = 1.25f;
                 //rotate shoulders in opposite directions
                 bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
@@ -188,6 +197,7 @@ public class Controller : MonoBehaviour
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
             setupAntiSpinPointsSplitOps = true;
+            envVariables.halfTrailSpeed = true;
         }
         if (doingAntiSpinPointsSplitOps)
         {
@@ -255,8 +265,6 @@ public class Controller : MonoBehaviour
 
         if (doingAntiSpinWallPlaneFlower)
         {
-            //faster global speeds means less sensitivity to phase points. Otherwise, it may skip stage increments
-            //SetZeroPointProximitySensitivity();
 
             if (trickStage == 0)
             {
@@ -307,11 +315,10 @@ public class Controller : MonoBehaviour
             ClearSpinner();
             SetSpinner(spinnerWallPlane);
             setupButterflyTaceVertical = true;
+            envVariables.halfTrailSpeed = true;
         }
         if (doingButterflyTaceVertical)
         {
-            SetZeroPointProximitySensitivity();
-
             if (trickStage == 0)
             {
                 //rotate arms up
@@ -324,7 +331,8 @@ public class Controller : MonoBehaviour
                 bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
 
-                if (cardinalPoints.CheckLocalUpProximity(bodyParts.leftProp, zeroPointProximitySensitivity))
+                //right hand is at upper position           
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
                     ++trickStage;
                 }
@@ -341,7 +349,8 @@ public class Controller : MonoBehaviour
                 bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
 
-                if (cardinalPoints.CheckLocalDownProximity(bodyParts.leftProp, zeroPointProximitySensitivity))
+                //right hand is at lower position
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
                 {
                     trickStage = 0;
                 }
@@ -359,6 +368,68 @@ public class Controller : MonoBehaviour
             setupButterflyTaceVertical = false;
             doingButterflyTaceVertical = true;
             thisSimulationName.text = "Butterfly Tracing Vertically";
+        }
+    }
+
+    public void AntispinWheelPlaneFlowerSameOps()
+    {
+        if (!setupAntispinWheelPlaneFlowerSameOps && !doingAntispinWheelPlaneFlowerSameOps)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupAntispinWheelPlaneFlowerSameOps = true;
+            envVariables.halfTrailSpeed = true;
+        }
+        if (doingAntispinWheelPlaneFlowerSameOps)
+        {
+            //set prop speed modifier to 4 to get 4 zero points
+            bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+            bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+            //rotate arms around shoulders in opposite directions
+            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+            bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Backward);
+            //spin props in opposite directions to get antispin
+            bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Forward);
+        }
+        if (setupAntispinWheelPlaneFlowerSameOps)
+        {
+            setupAntispinWheelPlaneFlowerSameOps = false;
+            doingAntispinWheelPlaneFlowerSameOps = true;
+
+            thisSimulationName.text = "Wheel Plaine Antispine Flower";
+            thisSimulationDescription.text = "Same Time / Opposite Direction";
+        }
+    }
+
+    public void AntispinWheelPlaneFlowerSplitSame()
+    {
+        if (!setupAntispinWheelPlaneFlowerSplitSame && !doingAntispinWheelPlaneFlowerSplitSame)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupAntispinWheelPlaneFlowerSplitSame = true;
+            envVariables.halfTrailSpeed = true;
+        }
+        if (doingAntispinWheelPlaneFlowerSplitSame)
+        {
+            //set prop speed modifier to 4 to get 4 zero points
+            bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+            bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+            //rotate arms around shoulders in same directions
+            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+            bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Forward);
+            //spin props in opposite directions to get antispin
+            bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+        }
+        if (setupAntispinWheelPlaneFlowerSplitSame)
+        {
+            setupAntispinWheelPlaneFlowerSplitSame = false;
+            doingAntispinWheelPlaneFlowerSplitSame = true;
+
+            thisSimulationName.text = "Wheel Plaine Antispine Flower";
+            thisSimulationDescription.text = "Split Time / Same Direction";
         }
     }
 
@@ -525,11 +596,16 @@ public class Controller : MonoBehaviour
             envVariables.bodyParts = null;
             Destroy(thisSpinner);
             thisSpinner = null;
+            envVariables.halfTrailSpeed = false;
+            envVariables.halfTrailSpeedUsed = false;
+            envVariables.propTrailSpeed = envVariables.trailSpeedSlider.value;
 
             trickStage = 0;
             doingAntiSpinPointsSameOps = false;
             doingAntiSpinPointsSplitOps = false;
             doingAntiSpinWallPlaneFlower = false;
+            doingAntispinWheelPlaneFlowerSameOps = false;
+            doingAntispinWheelPlaneFlowerSplitSame = false;
             doingInspinAntispinWheelPlaneFlowerSplitOps = false;
             doingInspinAntispinWheelPlaneFlowerSameOps = false;
             doingInspinAntispinWheelPlaneFlowerSameSame = false;
@@ -558,16 +634,6 @@ public class Controller : MonoBehaviour
         {
             cam.gameObject.transform.position = camTransform.position + new Vector3(0f, 0f, -20f);
             cam.orthographicSize = 75;
-        }
-    }
-
-    private void SetZeroPointProximitySensitivity()
-    {
-        zeroPointProximitySensitivity = envVariables.globalSpeed;
-        zeroPointProximitySensitivity = zeroPointProximitySensitivity * 0.8f;
-        if (zeroPointProximitySensitivity < 0.5f)
-        {
-            zeroPointProximitySensitivity = 0.5f;
         }
     }
 

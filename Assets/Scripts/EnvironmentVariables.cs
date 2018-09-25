@@ -50,6 +50,8 @@ public class EnvironmentVariables : MonoBehaviour
 
     [Header("Unity Gernerated Things")]
     public BodyParts bodyParts;
+    public bool halfTrailSpeed = false;
+    public bool halfTrailSpeedUsed = false;
 
     public static EnvironmentVariables instance;
 
@@ -94,10 +96,17 @@ public class EnvironmentVariables : MonoBehaviour
     {
         propTrailSpeed = slider.value;
         UpdateTrickDirection();
+        halfTrailSpeedUsed = false;
     }
 
     private void UpdatePoiTrailSpeed()
     {
+        if (halfTrailSpeed && !halfTrailSpeedUsed)
+        {
+            propTrailSpeed = propTrailSpeed / 2;
+            halfTrailSpeedUsed = true;
+        }
+
         bodyParts.leftPropTrail.time = propTrailSpeed;
         bodyParts.rightPropTrail.time = propTrailSpeed;
     }
