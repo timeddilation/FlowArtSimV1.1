@@ -25,6 +25,13 @@ public enum ZeroPointRegion
     LocalDown = 6
 }
 
+public enum PropSide
+{
+    None = 0,
+    Left = 1,
+    Right = 2
+}
+
 public class EnvironmentVariables : MonoBehaviour
 {
     [Header("Simulation Tweaks")]

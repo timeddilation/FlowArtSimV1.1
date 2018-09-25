@@ -99,11 +99,11 @@ public class BodyParts : MonoBehaviour
     {
         GetVector2PoiPosition();
 
-        leftPropRegion = TrackZeroPointRegion(leftPropPos, "left");
-        rightPropRegion = TrackZeroPointRegion(rightPropPos, "right");
+        leftPropRegion = TrackZeroPointRegion(leftPropPos, PropSide.Left);
+        rightPropRegion = TrackZeroPointRegion(rightPropPos, PropSide.Right);
 
-        leftPropZeroPointRegionDebugText = TrackZeroPointsDebugText(leftPropPos, "left");
-        rightPropZeroPointRegionDebugText = TrackZeroPointsDebugText(rightPropPos, "right");
+        leftPropZeroPointRegionDebugText = "";
+        rightPropZeroPointRegionDebugText = "";
     }
 
     private void GetVector2PoiPosition()
@@ -112,7 +112,7 @@ public class BodyParts : MonoBehaviour
         rightPropPos = new Vector2(rightProp.transform.position.x, rightProp.transform.position.y);
     }
 
-    private ZeroPointRegion TrackZeroPointRegion(Vector2 propPosition, string side)
+    private ZeroPointRegion TrackZeroPointRegion(Vector2 propPosition, PropSide side)
     {
         ZeroPointRegion region = ZeroPointRegion.None;
         zeroPointStageUpdate = false;
@@ -143,7 +143,7 @@ public class BodyParts : MonoBehaviour
         }
 
         //track positions of both props at all times
-        if (side == "left")
+        if (side == PropSide.Left)
         {
             //temporarily store previous XY values last frame
             previousLeftX = posLeftX;
@@ -163,7 +163,7 @@ public class BodyParts : MonoBehaviour
                 zeroPointStageUpdate = true;
             }
         }
-        else if (side == "right")
+        else if (side == PropSide.Right)
         {
             //temporarily store previous XY values last frame
             previousRightX = posRightX;
@@ -185,79 +185,5 @@ public class BodyParts : MonoBehaviour
         }
 
             return region;
-    }
-
-    private string TrackZeroPointsDebugText(Vector2 propPosition, string side)
-    {
-        string region = "";
-
-        //check for local right
-        if ((propPosition.x < localRightStart.x && propPosition.y > localRightStart.y)
-            || (propPosition.x < localRightEnd.x && propPosition.y < localRightEnd.y))
-        {
-            region += "Local Right" + " " + posLeftX.ToString() + " , " + posLeftY.ToString();
-        }
-        //check for local left
-        else if((propPosition.x > localLeftStart.x && propPosition.y > localLeftStart.y)
-            || (propPosition.x > localLeftEnd.x && propPosition.y < localLeftEnd.y))
-        {
-            region = "Local Left" + " " + posLeftX.ToString() + " , " + posLeftY.ToString();
-        }
-        //check for local down
-        else if ((propPosition.x > localDownStart.x && propPosition.y < localDownStart.y)
-            || (propPosition.x < localDownEnd.x && propPosition.y < localDownEnd.y))
-        {
-            region = "Local Down" + " " + posLeftX.ToString() + " , " + posLeftY.ToString();
-        }
-        //check for local up
-        else if ((propPosition.x > localUpStart.x && propPosition.y > localUpStart.y)
-            || (propPosition.x < localUpEnd.x && propPosition.y > localUpEnd.y))
-        {
-            region = "Local Up" + " " + posLeftX.ToString() + " , " + posLeftY.ToString();
-        }
-
-        //track positions of both props at all times
-        if (side == "left")
-        {
-            //temporarily store previous XY values last frame
-            previousLeftX = posLeftX;
-            previousLeftY = posLeftY;
-            //update positions to current values this frame
-            posLeftX = propPosition.x;
-            posLeftY = propPosition.y;
-
-            if ((leftPropRegion == ZeroPointRegion.LocalRight || leftPropRegion == ZeroPointRegion.LocalLeft)
-                && ((posRightY > 0 && previousRightY < 0) || (posRightY < 0 && previousRightY > 0)))
-            {
-                region += "ZERO POINT ";
-            }
-            else if ((leftPropRegion == ZeroPointRegion.LocalUp || leftPropRegion == ZeroPointRegion.LocalDown)
-                && ((posRightX > 0 && previousRightX < 0) || (posRightX < 0 && previousRightX > 0)))
-            {
-                region += "ZERO POINT ";
-            }
-        }
-        else if (side == "right")
-        {
-            //temporarily store previous XY values last frame
-            previousRightX = posRightX;
-            previousRightY = posRightY;
-            //update positions to current values this frame
-            posRightX = propPosition.x;
-            posRightY = propPosition.y;
-
-            if ((rightPropRegion == ZeroPointRegion.LocalRight || rightPropRegion == ZeroPointRegion.LocalLeft)
-                && ((posRightY > 0 && previousRightY < 0) || (posRightY < 0 && previousRightY > 0)))
-            {
-                region += "ZERO POINT ";
-            }
-            else if ((rightPropRegion == ZeroPointRegion.LocalUp || rightPropRegion == ZeroPointRegion.LocalDown)
-                && ((posRightX > 0 && previousRightX < 0) || (posRightX < 0 && previousRightX > 0)))
-            {
-                region += "ZERO POINT ";
-            }
-        }
-
-        return region;
     }
 }
