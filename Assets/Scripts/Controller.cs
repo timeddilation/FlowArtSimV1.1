@@ -64,6 +64,8 @@ public class Controller : MonoBehaviour
     private bool doingThreeDimDrills = false;
 
     private int trickStage = 0;
+    private int trickCycles = 0;
+    private float intermidiateStageRotationCounter = 0f;
     #endregion
 
     private void Start()
@@ -620,29 +622,142 @@ public class Controller : MonoBehaviour
         }
         if (doingThreeDimDrills)
         {
+            //set speed modifier on props to 4 to get 4 zeropoint
+            bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+            bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+
             if (trickStage == 0)
             {
                 //right prop: from back to down
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Forward);
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+
+                //spin prop anti to arms
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+
+                ////smooth hand rotation into position
+                //if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && intermidiateStageRotationCounter < 90)
+                //{
+                //    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.down, 15f);
+                //    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.down, 15f);
+
+                //    intermidiateStageRotationCounter += 15;
+                //}
+
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+
+                    //rotate hands
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.down, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.down, 90f);
+                }
             }
             else if (trickStage == 1)
-            {
+            {                
                 //right prop: from down to out
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Right);
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Right);
+
+                //spin prop anti to arms
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Left);
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Left);
+
+                if (bodyParts.rightPropRegionYZ == ZeroPointRegion.LocalForward && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                    bodyParts.zeroPointPosition = -8f;
+                    //rotate hands
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.forward, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.forward, 90f);
+                }
             }
             else if (trickStage == 2)
             {
                 //right prop: from out to forward
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Down);
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Down);
+
+                //spin prop anti to arms
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Up);
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Up);
+
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalLeft && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                    bodyParts.zeroPointPosition = 0f;
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.left, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.left, 90f);
+                }
             }
             else if (trickStage == 3)
             {
                 //right prop: forward to up
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Forward);
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+
+                //spin prop anti to arms
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                    //rotate hands
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.up, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.up, 90f);
+                }
             }
             else if (trickStage == 4)
             {
                 //right prop: up to out
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Left);
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Left);
+
+                //spin prop anti to arms
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Right);
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Right);
+
+                if (bodyParts.rightPropRegionYZ == ZeroPointRegion.LocalForward && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                    bodyParts.zeroPointPosition = -8f;
+                    //rotate hands
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.forward, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.forward, 90f);
+                }
             }
             else if (trickStage == 5)
             {
                 //right prop: out to back
+                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Up);
+                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Up);
+
+                //spin prop anti to arms
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Down);
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Down);
+
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalRight && bodyParts.zeroPointStageUpdate)
+                {
+                    trickStage = 0;
+                    ++trickCycles;
+                    bodyParts.zeroPointPosition = 0f;
+                    if (trickCycles == 2)
+                    {
+                        doingThreeDimDrills = false;
+                        ThreeDimDrills();
+                        return;
+                    }
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.right, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.right, 90f);
+                }
             }
         }
         if (setupThreeDimDrills)
@@ -709,6 +824,7 @@ public class Controller : MonoBehaviour
     {
         if (thisSpinner != null)
         {
+            bodyParts.zeroPointPosition = 0f;
             BodyParts.instance = null;
             CardinalPoints.instance = null;
             envVariables.bodyParts = null;
@@ -719,6 +835,7 @@ public class Controller : MonoBehaviour
             envVariables.propTrailSpeed = envVariables.trailSpeedSlider.value;
 
             trickStage = 0;
+            trickCycles = 0;
             doingAntiSpinPointsSameOps = false;
             doingAntiSpinPointsSplitOps = false;
             doingAntiSpinWallPlaneFlower = false;
