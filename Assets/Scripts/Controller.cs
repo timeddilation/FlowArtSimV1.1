@@ -20,10 +20,12 @@ public class Controller : MonoBehaviour
     private Transform camTransform;
 
     private GameObject thisSpinner;
-
     private EnvironmentVariables envVariables;
     private BodyParts bodyParts;
     private CardinalPoints cardinalPoints;
+    #endregion
+    #region State Engine
+    //TODO: Build state engine
 
     private bool setupAntiSpinPointsSameOps = false;
     private bool doingAntiSpinPointsSameOps = false;
@@ -56,7 +58,6 @@ public class Controller : MonoBehaviour
     private bool doingInspinAntispinWheelPlaneFlowerSplitSame = false;
 
     private int trickStage = 0;
-    private float zeroPointProximitySensitivity = 0.5f;
     #endregion
 
     private void Start()
@@ -370,6 +371,11 @@ public class Controller : MonoBehaviour
             thisSimulationName.text = "Butterfly Tracing Vertically";
         }
     }
+
+    //public void PendulumStall()
+    //{
+
+    //}
 
     public void AntispinWheelPlaneFlowerSameOps()
     {
