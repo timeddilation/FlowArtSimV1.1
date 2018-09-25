@@ -51,8 +51,9 @@ public class BodyParts : MonoBehaviour
     private Vector2 localUpStart = new Vector2(-1, 55);
     private Vector2 localUpEnd = new Vector2(1, 55);
 
-    private ZeroPointRegion leftPropRegion;
-    private ZeroPointRegion rightPropRegion;
+    public ZeroPointRegion leftPropRegion;
+    public ZeroPointRegion rightPropRegion;
+    public bool zeroPointStageUpdate = false;
 
     private float posLeftX = 0f;
     private float posLeftY = 0f;
@@ -63,8 +64,6 @@ public class BodyParts : MonoBehaviour
     private float previousLeftY = 0f;
     private float previousRightX = 0f;
     private float previousRightY = 0f;
-
-    bool zeroPointStageUpdate = false;
 
     private void Awake()
     {

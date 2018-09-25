@@ -25,6 +25,12 @@ public class Controller : MonoBehaviour
     private BodyParts bodyParts;
     private CardinalPoints cardinalPoints;
 
+    private bool setupAntiSpinPointsSameOps = false;
+    private bool doingAntiSpinPointsSameOps = false;
+
+    private bool setupAntiSpinPointsSplitOps = false;
+    private bool doingAntiSpinPointsSplitOps = false;
+
     private bool setupAntiSpinWallPlaneFlower = false;
     private bool doingAntiSpinWallPlaneFlower = false;
 
@@ -72,7 +78,15 @@ public class Controller : MonoBehaviour
             canvas.enabled = !canvas.enabled;
         }
 
-        if (setupAntiSpinWallPlaneFlower || doingAntiSpinWallPlaneFlower)
+        if (setupAntiSpinPointsSameOps || doingAntiSpinPointsSameOps)
+        {
+            AntiSpinPointsSameOps();
+        }
+        else if (setupAntiSpinPointsSplitOps || doingAntiSpinPointsSplitOps)
+        {
+            AntiSpinPointsSplitOps();
+        }
+        else if (setupAntiSpinWallPlaneFlower || doingAntiSpinWallPlaneFlower)
         {
             AntiSpinWallPlaneFlower();
         }
@@ -102,6 +116,134 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void AntiSpinPointsSameOps()
+    {
+        if (!setupAntiSpinPointsSameOps && !doingAntiSpinPointsSameOps)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupAntiSpinPointsSameOps = true;
+        }
+
+        if (doingAntiSpinPointsSameOps)
+        {
+            if (trickStage == 0)
+            {
+                //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+                //normal velocity of arm rotation
+                bodyParts.leftShoulderSpin.rotationSpeedModifier = 1f;
+                bodyParts.rightShoulderSpin.rotationSpeedModifier = 1f;
+                //spin poi
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+
+                //right hand is at upper position           
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                }
+            }
+            else if (trickStage == 1)
+            {
+                //kill velocity on both props
+                bodyParts.leftPropSpin.rotationSpeedModifier = 0f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
+                //increase velocity of arm rotation
+                bodyParts.leftShoulderSpin.rotationSpeedModifier = 1.25f;
+                bodyParts.rightShoulderSpin.rotationSpeedModifier = 1.25f;
+                //rotate shoulders in opposite directions
+                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+
+                //right hand is at lower position
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                {
+                    trickStage = 0;
+                }
+            }
+        }
+        if (setupAntiSpinPointsSameOps)
+        {
+            //need to give it a cycle for the new spinner to be instantiated
+            doingAntiSpinPointsSameOps = true;
+            setupAntiSpinPointsSameOps = false;
+            //rotate shoulders to have right hand down and left hand up
+            bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+            bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+
+            thisSimulationName.text = "Antispin Points";
+            thisSimulationDescription.text = "Same Time / Opposite Direction";
+        }
+    }
+
+    public void AntiSpinPointsSplitOps()
+    {
+        if (!setupAntiSpinPointsSplitOps && !doingAntiSpinPointsSplitOps)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupAntiSpinPointsSplitOps = true;
+        }
+        if (doingAntiSpinPointsSplitOps)
+        {
+            if (trickStage == 0)
+            {
+                //set poi speed modifier to 4 to get 4 zero points on left arm rotation
+                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+                //kill velocity on right arm
+                bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
+                //spin poi
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+
+                //right hand is at upper position           
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                }
+            }
+            else if (trickStage == 1)
+            {
+                //kill velocity on left prop
+                bodyParts.leftPropSpin.rotationSpeedModifier = 0f;
+                //set poi speed modifier to 4 to get 4 zero points on right arm rotation
+                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+                //spin poit
+                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Forward);
+                //rotate shoulders in opposite directions
+                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+
+                //right hand is at lower position
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                {
+                    trickStage = 0;
+                }
+            }
+        }
+        if (setupAntiSpinPointsSplitOps)
+        {
+            //need to give it a cycle for the new spinner to be instantiated
+            doingAntiSpinPointsSplitOps = true;
+            setupAntiSpinPointsSplitOps = false;
+            //rotate shoulders to have right hand down and left hand up
+            bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+            bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+
+            thisSimulationName.text = "Antispin Points";
+            thisSimulationDescription.text = "Split Time / Opposite Direction";
+        }
+    }
+
     public void AntiSpinWallPlaneFlower()
     {
         if (!setupAntiSpinWallPlaneFlower && !doingAntiSpinWallPlaneFlower)
@@ -114,7 +256,7 @@ public class Controller : MonoBehaviour
         if (doingAntiSpinWallPlaneFlower)
         {
             //faster global speeds means less sensitivity to phase points. Otherwise, it may skip stage increments
-            SetZeroPointProximitySensitivity();
+            //SetZeroPointProximitySensitivity();
 
             if (trickStage == 0)
             {
@@ -129,7 +271,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at upper position           
-                if (cardinalPoints.CheckLocalUpProximity(bodyParts.rightShoulder.gameObject, zeroPointProximitySensitivity))
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
                     ++trickStage;
                 }
@@ -142,7 +284,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at lower position
-                if (cardinalPoints.CheckLocalDownProximity(bodyParts.rightShoulder.gameObject, zeroPointProximitySensitivity))
+                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
                 {
                     trickStage = 0;
                 }
@@ -155,10 +297,7 @@ public class Controller : MonoBehaviour
             setupAntiSpinWallPlaneFlower = false;
 
             thisSimulationName.text = "Wall Plane Antispin Flower";
-        }
-
-        
-        
+        }       
     }
 
     public void ButterflyTaceVertical()
@@ -388,6 +527,8 @@ public class Controller : MonoBehaviour
             thisSpinner = null;
 
             trickStage = 0;
+            doingAntiSpinPointsSameOps = false;
+            doingAntiSpinPointsSplitOps = false;
             doingAntiSpinWallPlaneFlower = false;
             doingInspinAntispinWheelPlaneFlowerSplitOps = false;
             doingInspinAntispinWheelPlaneFlowerSameOps = false;
