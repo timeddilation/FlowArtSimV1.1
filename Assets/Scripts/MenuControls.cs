@@ -7,7 +7,7 @@ public class MenuControls : MonoBehaviour
 {
     [Header("Menu Open and Close")]
     public float menuCollapseSpeed = 5f;
-    public float collapsedMenuBufferSize = 120f;
+    public float collapsedMenuBufferSize = 150;
 
     [Header("Static Unity Objects")]
     public ScrollRect scrollbarRect;

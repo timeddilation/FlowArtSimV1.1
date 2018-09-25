@@ -40,6 +40,7 @@ public class EnvironmentVariables : MonoBehaviour
     public string spinnerProps = "Hoops";
     public Slider globalSpeedSlider;
     public Slider trailSpeedSlider;
+    public Toggle reverseDirectionToggle;
 
     [Header("Spinner Prefabs")]
     public GameObject hooperWallPlane;
@@ -81,6 +82,7 @@ public class EnvironmentVariables : MonoBehaviour
     private void Update()
     {
         UpdatePoiTrailSpeed();
+        UpdateTrickDirection();
     }
 
     private void GlobalSpeedSliderChanged(Slider slider)
@@ -91,11 +93,24 @@ public class EnvironmentVariables : MonoBehaviour
     private void TrailSpeedSliderChanged(Slider slider)
     {
         propTrailSpeed = slider.value;
+        UpdateTrickDirection();
     }
 
     private void UpdatePoiTrailSpeed()
     {
         bodyParts.leftPropTrail.time = propTrailSpeed;
         bodyParts.rightPropTrail.time = propTrailSpeed;
+    }
+
+    private void UpdateTrickDirection()
+    {
+        if (reverseDirectionToggle.isOn && globalSpeed > 0)
+        {
+            globalSpeed = globalSpeed * -1;
+        }
+        else if (!reverseDirectionToggle.isOn && globalSpeed < 0)
+        {
+            globalSpeed = globalSpeed * -1;
+        }
     }
 }

@@ -93,6 +93,7 @@ MonoBehaviour:
   spinnerProps: Hoops
   globalSpeedSlider: {fileID: 0}
   trailSpeedSlider: {fileID: 0}
+  reverseDirectionToggle: {fileID: 0}
   hooperWallPlane: {fileID: 1240433403522898, guid: 2678cc3c88c8b754aa8b0008303598d4,
     type: 2}
   hooperWheelPlane: {fileID: 1345048230657648, guid: 1a6b509923b63d84188d3dfd64667291,

@@ -102,8 +102,8 @@ public class BodyParts : MonoBehaviour
         leftPropRegion = TrackZeroPointRegion(leftPropPos, PropSide.Left);
         rightPropRegion = TrackZeroPointRegion(rightPropPos, PropSide.Right);
 
-        leftPropZeroPointRegionDebugText = "";
-        rightPropZeroPointRegionDebugText = "";
+        leftPropZeroPointRegionDebugText = leftPropPos.x.ToString() + " , " + leftPropPos.y.ToString();
+        rightPropZeroPointRegionDebugText = rightPropPos.x.ToString() + " , " + rightPropPos.y.ToString();
     }
 
     private void GetVector2PoiPosition()
@@ -151,14 +151,23 @@ public class BodyParts : MonoBehaviour
             //update positions to current values this frame
             posLeftX = propPosition.x;
             posLeftY = propPosition.y;
+            //if prop not in a region, no need to check for passing zero points
+            if (region == ZeroPointRegion.None)
+            {
+                return region;
+            }
+            //check for passing zero points
+            bool inLeftOrRightRegion = (leftPropRegion == ZeroPointRegion.LocalRight || leftPropRegion == ZeroPointRegion.LocalLeft);
+            bool inUpOrDownRegion = (leftPropRegion == ZeroPointRegion.LocalUp || leftPropRegion == ZeroPointRegion.LocalDown);
 
-            if ((leftPropRegion == ZeroPointRegion.LocalRight || leftPropRegion == ZeroPointRegion.LocalLeft)
-                && ((posRightY > 0 && previousRightY < 0) || (posRightY < 0 && previousRightY > 0)))
+            bool passedZeroPointX = ((posLeftX > 0 && previousLeftX < 0) || (posLeftX < 0 && previousLeftX > 0));
+            bool passedZeroPointY = ((posLeftY > 0 && previousLeftY < 0) || (posLeftY < 0 && previousLeftY > 0));
+
+            if (inLeftOrRightRegion && passedZeroPointY)
             {
                 zeroPointStageUpdate = true;
             }
-            else if ((leftPropRegion == ZeroPointRegion.LocalUp || leftPropRegion == ZeroPointRegion.LocalDown)
-                && ((posRightX > 0 && previousRightX < 0) || (posRightX < 0 && previousRightX > 0)))
+            else if (inUpOrDownRegion && passedZeroPointX)
             {
                 zeroPointStageUpdate = true;
             }
@@ -171,19 +180,28 @@ public class BodyParts : MonoBehaviour
             //update positions to current values this frame
             posRightX = propPosition.x;
             posRightY = propPosition.y;
+            //if prop not in a region, no need to check for passing zero points
+            if (region == ZeroPointRegion.None)
+            {
+                return region;
+            }
+            //check for passing zero points
+            bool inLeftOrRightRegion = (rightPropRegion == ZeroPointRegion.LocalRight || rightPropRegion == ZeroPointRegion.LocalLeft);
+            bool inUpOrDownRegion = (rightPropRegion == ZeroPointRegion.LocalUp || rightPropRegion == ZeroPointRegion.LocalDown);
 
-            if ((rightPropRegion == ZeroPointRegion.LocalRight || rightPropRegion == ZeroPointRegion.LocalLeft)
-                && ((posRightY > 0 && previousRightY < 0) || (posRightY < 0 && previousRightY > 0)))
+            bool passedZeroPointX = ((posRightX > 0 && previousRightX < 0) || (posRightX < 0 && previousRightX > 0));
+            bool passedZeroPointY = ((posRightY > 0 && previousRightY < 0) || (posRightY < 0 && previousRightY > 0));
+
+            if (inLeftOrRightRegion && passedZeroPointY)
             {
                 zeroPointStageUpdate = true;
             }
-            else if ((rightPropRegion == ZeroPointRegion.LocalUp || rightPropRegion == ZeroPointRegion.LocalDown)
-               && ((posRightX > 0 && previousRightX < 0) || (posRightX < 0 && previousRightX > 0)))
+            else if (inUpOrDownRegion && passedZeroPointX)
             {
                 zeroPointStageUpdate = true;
             }
         }
 
-            return region;
+        return region;
     }
 }
