@@ -57,6 +57,9 @@ public class Controller : MonoBehaviour
     private bool setupInspinAntispinWheelPlaneFlowerSplitSame = false;
     private bool doingInspinAntispinWheelPlaneFlowerSplitSame = false;
 
+    private bool setupThreeDimFlowerXZ = false;
+    private bool doingThreeDimFlowerXZ = false;
+
     private int trickStage = 0;
     #endregion
 
@@ -124,6 +127,10 @@ public class Controller : MonoBehaviour
         else if (setupButterflyTaceVertical || doingButterflyTaceVertical)
         {
             ButterflyTaceVertical();
+        }
+        else if(setupThreeDimFlowerXZ || doingThreeDimFlowerXZ)
+        {
+            ThreeDimFlowerXZ();
         }
         else
         {
@@ -326,8 +333,8 @@ public class Controller : MonoBehaviour
                 bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Right);
                 bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Right);
                 //rotate hands against arm rotation to keep props in plane
-                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, "left");
-                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, "left");
+                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, SpinDirections.Left);
+                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, SpinDirections.Left);
                 //rotate props
                 bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
@@ -344,8 +351,8 @@ public class Controller : MonoBehaviour
                 bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Left);
                 bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Left);
                 //rotate hands against arm rotation to keep props in plane
-                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, "right");
-                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, "right");
+                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, SpinDirections.Right);
+                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, SpinDirections.Right);
                 //rotate props
                 bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
@@ -546,6 +553,59 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void ThreeDimFlowerXZ()
+    {
+        if (!setupThreeDimFlowerXZ && !doingThreeDimFlowerXZ)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupThreeDimFlowerXZ = true;
+        }
+        if (doingThreeDimFlowerXZ)
+        {
+            //set speed modifiers on both props to 4 to get our 4 stall/zero points
+            bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+            bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+            //rotate shoulders around torse
+            bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Down);
+            bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Down);
+            //rotate left arm around shoulder joint to counter rotation around torso
+            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Up);           
+            //rotate left arm back
+            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+            //rotate left props to get antispin
+            bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Up);
+        }
+        if (setupThreeDimFlowerXZ)
+        {
+            //rotate right hand 90degrees to hold prop on Z plane
+            bodyParts.rightHand.transform.RotateAround(
+                bodyParts.rightWrist.transform.position,
+                Vector3.right,
+                90f);
+            //rotate right arm outward
+            bodyParts.rightArm.transform.RotateAround(
+                bodyParts.rightShoulder.transform.position,
+                Vector3.down,
+                90f);
+            //rotate left arm to up position
+            bodyParts.leftArm.transform.RotateAround(
+                bodyParts.leftShoulder.transform.position,
+                Vector3.forward,
+                90f);
+
+            setupThreeDimFlowerXZ = false;
+            doingThreeDimFlowerXZ = true;
+
+            thisSimulationName.text = "3D Flower XZ-Planes";
+            thisSimulationDescription.text = "";
+        }
+    }
+
+
+
+
     private void InspinAntispinWheelPlaneFlowerSameDirection()
     {
         //set prop speed modifier to 4 on right hand to get 4 zero points on each arm rotation, 2 on left hand to get 2 for inspins
@@ -571,6 +631,8 @@ public class Controller : MonoBehaviour
         bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
         bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
     }
+
+
 
     private void PropDropdownValueChanged(Dropdown change)
     {
@@ -617,6 +679,7 @@ public class Controller : MonoBehaviour
             doingInspinAntispinWheelPlaneFlowerSameSame = false;
             doingInspinAntispinWheelPlaneFlowerSplitSame = false;
             doingButterflyTaceVertical = false;
+            doingThreeDimFlowerXZ = false;
 
             thisSimulationName.text = "Not Currently Simulating";
             thisSimulationDescription.text = "";

@@ -14,44 +14,44 @@ public class HandSpins : MonoBehaviour
         environmentVariables = EnvironmentVariables.instance;
     }
 
-    public void SpinHandAroundWrist(GameObject wrist, string dir)
+    public void SpinHandAroundWrist(GameObject wrist, SpinDirections dir)
     {
-        if (dir == "forward")
+        if (dir == SpinDirections.Forward)
         {
             gameObject.transform.RotateAround(
                 wrist.transform.position,
                 Vector3.forward,
                 (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
         }
-        else if (dir == "back")
+        else if (dir == SpinDirections.Backward)
         {
             gameObject.transform.RotateAround(
                 wrist.transform.position,
                 Vector3.back,
                 (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
         }
-        else if (dir == "left")
+        else if (dir == SpinDirections.Left)
         {
             gameObject.transform.RotateAround(
                 wrist.transform.position,
                 Vector3.left,
                 (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
         }
-        else if (dir == "right")
+        else if (dir == SpinDirections.Right)
         {
             gameObject.transform.RotateAround(
                 wrist.transform.position,
                 Vector3.right,
                 (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
         }
-        else if (dir == "up")
+        else if (dir == SpinDirections.Up)
         {
             gameObject.transform.RotateAround(
                 wrist.transform.position,
                 Vector3.up,
                 (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
         }
-        else if (dir == "down")
+        else if (dir == SpinDirections.Down)
         {
             gameObject.transform.RotateAround(
                 wrist.transform.position,
