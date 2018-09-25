@@ -26,7 +26,8 @@ public class BodyParts : MonoBehaviour
     [Header("Left Arm Spins (Unity Sets)")]
     public PropSpins leftPropSpin;
     public TrailRenderer leftPropTrail;
-    public Vector2 leftPropPos;
+    public Vector2 leftPropPosXY;
+    public Vector2 leftPropPosXZ;
     public ShoulderSpins leftShoulderSpin;
     public ForearmSpins leftForearmSpin;
     public ArmSpins leftArmSpin;
@@ -34,7 +35,8 @@ public class BodyParts : MonoBehaviour
     [Header("Right Arm Spins (Unity Sets)")]
     public PropSpins rightPropSpin;
     public TrailRenderer rightPropTrail;
-    public Vector2 rightPropPos;
+    public Vector2 rightPropPosXY;
+    public Vector2 rightPropPosXZ;
     public ShoulderSpins rightShoulderSpin;
     public ForearmSpins rightForearmSpin;
     public ArmSpins rightArmSpin;
@@ -42,28 +44,46 @@ public class BodyParts : MonoBehaviour
     [Header("other")]
     public string leftPropZeroPointRegionDebugText = "";
     public string rightPropZeroPointRegionDebugText = "";
-    private Vector2 localRightStart = new Vector2(-55, -1);
-    private Vector2 localRightEnd = new Vector2(-55, 1);
-    private Vector2 localLeftStart = new Vector2(55, -1);
-    private Vector2 localLeftEnd = new Vector2(55, 1);
+    //XY coords
+    private Vector2 localRightStartXY = new Vector2(-55, -1);
+    private Vector2 localRightEndXY = new Vector2(-55, 1);
+    private Vector2 localLeftStartXY = new Vector2(55, -1);
+    private Vector2 localLeftEndXY = new Vector2(55, 1);
     private Vector2 localDownStart = new Vector2(-1, -55);
     private Vector2 localDownEnd = new Vector2(1, -55);
     private Vector2 localUpStart = new Vector2(-1, 55);
     private Vector2 localUpEnd = new Vector2(1, 55);
+    //XZ coords
+    private Vector2 localRightStartXZ = new Vector2(-55, -1);
+    private Vector2 localRightEndXZ = new Vector2(-55, 1);
+    private Vector2 localLeftStartXZ = new Vector2(55, -1);
+    private Vector2 localLeftEndXZ = new Vector2(55, -1);
+    private Vector2 localForwardStart = new Vector2(-1, -55);
+    private Vector2 localForwardEnd = new Vector2(1, -55);
+    private Vector2 localBackStart = new Vector2(-1, 55);
+    private Vector2 localBackEnd = new Vector2(1, 55);
 
-    public ZeroPointRegion leftPropRegion;
-    public ZeroPointRegion rightPropRegion;
+    public ZeroPointRegion leftPropRegionXY;
+    public ZeroPointRegion leftPropRegionXZ;
+    public ZeroPointRegion rightPropRegionXY;
+    public ZeroPointRegion rightPropRegionXZ;
     public bool zeroPointStageUpdate = false;
 
     private float posLeftX = 0f;
     private float posLeftY = 0f;
-    private float posRightX = 0f;
+    private float posLeftZ = 0f;
+    private float posRightX_XY = 0f;
+    private float posRightX_XZ = 0f;
     private float posRightY = 0f;
+    private float posRightZ = 0f;
 
     private float previousLeftX = 0f;
     private float previousLeftY = 0f;
-    private float previousRightX = 0f;
+    private float previosLeftZ = 0f;
+    private float previousRightX_XY = 0f;
+    private float previousRightX_XZ = 0f;
     private float previousRightY = 0f;
+    private float previousRightZ = 0f;
 
     private void Awake()
     {
@@ -99,33 +119,39 @@ public class BodyParts : MonoBehaviour
     {
         GetVector2PoiPosition();
 
-        leftPropRegion = TrackZeroPointRegion(leftPropPos, PropSide.Left);
-        rightPropRegion = TrackZeroPointRegion(rightPropPos, PropSide.Right);
+        leftPropRegionXY = TrackZeroPointRegionXY(leftPropPosXY, PropSide.Left);
+        rightPropRegionXY = TrackZeroPointRegionXY(rightPropPosXY, PropSide.Right);
 
-        leftPropZeroPointRegionDebugText = leftPropPos.x.ToString() + " , " + leftPropPos.y.ToString();
-        rightPropZeroPointRegionDebugText = rightPropPos.x.ToString() + " , " + rightPropPos.y.ToString();
+        rightPropRegionXZ = TrackZeroPointRegionXZ(rightPropPosXZ, PropSide.Right);
+
+        leftPropZeroPointRegionDebugText = leftPropPosXY.x.ToString() + " , " + leftPropPosXY.y.ToString();
+        rightPropZeroPointRegionDebugText = rightPropPosXY.x.ToString() + " , " + rightPropPosXZ.y.ToString();
+        //rightPropZeroPointRegionDebugText = rightProp.transform.position.x.ToString() + " , " + rightProp.transform.position.y.ToString() + " , " + rightProp.transform.position.z.ToString();
     }
 
     private void GetVector2PoiPosition()
     {
-        leftPropPos = new Vector2(leftProp.transform.position.x, leftProp.transform.position.y);
-        rightPropPos = new Vector2(rightProp.transform.position.x, rightProp.transform.position.y);
+        leftPropPosXY = new Vector2(leftProp.transform.position.x, leftProp.transform.position.y);
+        rightPropPosXY = new Vector2(rightProp.transform.position.x, rightProp.transform.position.y);
+
+        leftPropPosXZ = new Vector2(leftProp.transform.position.x, leftProp.transform.position.z);
+        rightPropPosXZ = new Vector2(rightProp.transform.position.x, rightProp.transform.position.z);
     }
 
-    private ZeroPointRegion TrackZeroPointRegion(Vector2 propPosition, PropSide side)
+    private ZeroPointRegion TrackZeroPointRegionXY(Vector2 propPosition, PropSide side)
     {
         ZeroPointRegion region = ZeroPointRegion.None;
         zeroPointStageUpdate = false;
 
         //check for local right
-        if ((propPosition.x < localRightStart.x && propPosition.y > localRightStart.y)
-            || (propPosition.x < localRightEnd.x && propPosition.y < localRightEnd.y))
+        if ((propPosition.x < localRightStartXY.x && propPosition.y > localRightStartXY.y)
+            || (propPosition.x < localRightEndXY.x && propPosition.y < localRightEndXY.y))
         {
             region = ZeroPointRegion.LocalRight;
         }
         //check for local left
-        else if ((propPosition.x > localLeftStart.x && propPosition.y > localLeftStart.y)
-            || (propPosition.x > localLeftEnd.x && propPosition.y < localLeftEnd.y))
+        else if ((propPosition.x > localLeftStartXY.x && propPosition.y > localLeftStartXY.y)
+            || (propPosition.x > localLeftEndXY.x && propPosition.y < localLeftEndXY.y))
         {
             region = ZeroPointRegion.LocalLeft;
         }
@@ -157,8 +183,8 @@ public class BodyParts : MonoBehaviour
                 return region;
             }
             //check for passing zero points
-            bool inLeftOrRightRegion = (leftPropRegion == ZeroPointRegion.LocalRight || leftPropRegion == ZeroPointRegion.LocalLeft);
-            bool inUpOrDownRegion = (leftPropRegion == ZeroPointRegion.LocalUp || leftPropRegion == ZeroPointRegion.LocalDown);
+            bool inLeftOrRightRegion = (leftPropRegionXY == ZeroPointRegion.LocalRight || leftPropRegionXY == ZeroPointRegion.LocalLeft);
+            bool inUpOrDownRegion = (leftPropRegionXY == ZeroPointRegion.LocalUp || leftPropRegionXY == ZeroPointRegion.LocalDown);
 
             bool passedZeroPointX = ((posLeftX > 0 && previousLeftX < 0) || (posLeftX < 0 && previousLeftX > 0));
             bool passedZeroPointY = ((posLeftY > 0 && previousLeftY < 0) || (posLeftY < 0 && previousLeftY > 0));
@@ -175,10 +201,10 @@ public class BodyParts : MonoBehaviour
         else if (side == PropSide.Right)
         {
             //temporarily store previous XY values last frame
-            previousRightX = posRightX;
+            previousRightX_XY = posRightX_XY;
             previousRightY = posRightY;
             //update positions to current values this frame
-            posRightX = propPosition.x;
+            posRightX_XY = propPosition.x;
             posRightY = propPosition.y;
             //if prop not in a region, no need to check for passing zero points
             if (region == ZeroPointRegion.None)
@@ -186,10 +212,10 @@ public class BodyParts : MonoBehaviour
                 return region;
             }
             //check for passing zero points
-            bool inLeftOrRightRegion = (rightPropRegion == ZeroPointRegion.LocalRight || rightPropRegion == ZeroPointRegion.LocalLeft);
-            bool inUpOrDownRegion = (rightPropRegion == ZeroPointRegion.LocalUp || rightPropRegion == ZeroPointRegion.LocalDown);
+            bool inLeftOrRightRegion = (rightPropRegionXY == ZeroPointRegion.LocalRight || rightPropRegionXY == ZeroPointRegion.LocalLeft);
+            bool inUpOrDownRegion = (rightPropRegionXY == ZeroPointRegion.LocalUp || rightPropRegionXY == ZeroPointRegion.LocalDown);
 
-            bool passedZeroPointX = ((posRightX > 0 && previousRightX < 0) || (posRightX < 0 && previousRightX > 0));
+            bool passedZeroPointX = ((posRightX_XY > 0 && previousRightX_XY < 0) || (posRightX_XY < 0 && previousRightX_XY > 0));
             bool passedZeroPointY = ((posRightY > 0 && previousRightY < 0) || (posRightY < 0 && previousRightY > 0));
 
             if (inLeftOrRightRegion && passedZeroPointY)
@@ -202,6 +228,67 @@ public class BodyParts : MonoBehaviour
             }
         }
 
+        return region;
+    }
+
+    private ZeroPointRegion TrackZeroPointRegionXZ(Vector2 propPosition, PropSide side)
+    {
+        ZeroPointRegion region = ZeroPointRegion.None;
+        
+        //check for local forward
+        if ((propPosition.x > localForwardStart.x && propPosition.y < localForwardStart.y)
+            || (propPosition.x < localForwardEnd.x && propPosition.y < localForwardEnd.y))
+        {
+            region = ZeroPointRegion.LocalForward;
+        }
+        //check for local back
+        else if ((propPosition.x > localBackStart.x && propPosition.y > localBackStart.y)
+            || (propPosition.x < localBackEnd.x && propPosition.y > localBackEnd.y))
+        {
+            region = ZeroPointRegion.LocalBackward;
+        }
+        //check for local left
+        else if ((propPosition.x > localLeftStartXZ.x && propPosition.y > localLeftStartXZ.y)
+            || (propPosition.x > localLeftEndXZ.x && propPosition.y < localLeftEndXZ.y))
+        {
+            region = ZeroPointRegion.LocalLeft;
+        }
+        //check for local right
+        else if ((propPosition.x < localRightStartXZ.x && propPosition.y > localRightStartXZ.y)
+            || (propPosition.x < localRightEndXZ.x && propPosition.y < localRightEndXZ.y))
+        {
+            region = ZeroPointRegion.LocalRight;
+        }
+
+        if (side == PropSide.Right)
+        {
+            //temporarily store previous XY values last frame
+            previousRightX_XZ = posRightX_XZ;
+            previousRightZ = posRightZ;
+            //update positions to current values this frame
+            posRightX_XZ = propPosition.x;
+            posRightZ = propPosition.y;
+
+            if (region == ZeroPointRegion.None)
+            {
+                return region;
+            }
+            //check for passing zero points
+            bool inLeftOrRightRegion = (rightPropRegionXY == ZeroPointRegion.LocalRight || rightPropRegionXY == ZeroPointRegion.LocalLeft);
+            bool inForwardOrBackRegion = (rightPropRegionXZ == ZeroPointRegion.LocalForward || rightPropRegionXZ == ZeroPointRegion.LocalBackward);
+
+            bool passedZeroPointX = ((posRightX_XZ > 0 && previousRightX_XZ < 0) || (posRightX_XZ < 0 && previousRightX_XZ > 0));
+            bool passedZeroPointZ = ((posRightZ > 0 && previousRightZ < 0) || (posRightZ < 0 && previousRightZ > 0));
+
+            if (inForwardOrBackRegion && passedZeroPointX)
+            {
+                zeroPointStageUpdate = true;
+            }
+            else if (inLeftOrRightRegion && passedZeroPointZ)
+            {
+                zeroPointStageUpdate = true;
+            }
+        }
         return region;
     }
 }

@@ -60,6 +60,9 @@ public class Controller : MonoBehaviour
     private bool setupThreeDimFlowerXZ = false;
     private bool doingThreeDimFlowerXZ = false;
 
+    private bool setupThreeDimDrills = false;
+    private bool doingThreeDimDrills = false;
+
     private int trickStage = 0;
     #endregion
 
@@ -132,6 +135,10 @@ public class Controller : MonoBehaviour
         {
             ThreeDimFlowerXZ();
         }
+        else if(setupThreeDimDrills || doingThreeDimDrills)
+        {
+            ThreeDimDrills();
+        }
         else
         {
             return;
@@ -163,7 +170,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at upper position           
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
                     ++trickStage;
                 }
@@ -178,7 +185,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at lower position
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
                 {
                     trickStage = 0;
                 }
@@ -223,7 +230,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at upper position           
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
                     ++trickStage;
                 }
@@ -242,7 +249,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at lower position
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
                 {
                     trickStage = 0;
                 }
@@ -287,7 +294,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at upper position           
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
                     ++trickStage;
                 }
@@ -300,7 +307,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at lower position
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
                 {
                     trickStage = 0;
                 }
@@ -340,7 +347,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
 
                 //right hand is at upper position           
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
                     ++trickStage;
                 }
@@ -358,7 +365,7 @@ public class Controller : MonoBehaviour
                 bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
 
                 //right hand is at lower position
-                if (bodyParts.rightPropRegion == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
                 {
                     trickStage = 0;
                 }
@@ -603,7 +610,50 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void ThreeDimDrills()
+    {
+        if (!setupThreeDimDrills && !doingThreeDimDrills)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupThreeDimDrills = true;
+        }
+        if (doingThreeDimDrills)
+        {
+            if (trickStage == 0)
+            {
+                //right prop: from back to down
+            }
+            else if (trickStage == 1)
+            {
+                //right prop: from down to out
+            }
+            else if (trickStage == 2)
+            {
+                //right prop: from out to forward
+            }
+            else if (trickStage == 3)
+            {
+                //right prop: forward to up
+            }
+            else if (trickStage == 4)
+            {
+                //right prop: up to out
+            }
+            else if (trickStage == 5)
+            {
+                //right prop: out to back
+            }
+        }
+        if (setupThreeDimDrills)
+        {
+            setupThreeDimDrills = false;
+            doingThreeDimDrills = true;
 
+            thisSimulationName.text = "3D Drills";
+            thisSimulationDescription.text = "";
+        }
+    }
 
 
     private void InspinAntispinWheelPlaneFlowerSameDirection()
@@ -680,6 +730,7 @@ public class Controller : MonoBehaviour
             doingInspinAntispinWheelPlaneFlowerSplitSame = false;
             doingButterflyTaceVertical = false;
             doingThreeDimFlowerXZ = false;
+            doingThreeDimDrills = false;
 
             thisSimulationName.text = "Not Currently Simulating";
             thisSimulationDescription.text = "";
