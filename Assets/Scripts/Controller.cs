@@ -165,11 +165,11 @@ public class Controller : MonoBehaviour
                 bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
                 bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
                 //spin poi
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
                 //rotate shoulders
-                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
-                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at upper position           
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
@@ -183,8 +183,8 @@ public class Controller : MonoBehaviour
                 bodyParts.leftPropSpin.rotationSpeedModifier = 0f;
                 bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
                 //rotate shoulders in opposite directions
-                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
-                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at lower position
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
@@ -225,11 +225,11 @@ public class Controller : MonoBehaviour
                 //kill velocity on right arm
                 bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
                 //spin poi
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
                 //rotate shoulders
-                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
-                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at upper position           
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
@@ -244,11 +244,11 @@ public class Controller : MonoBehaviour
                 //set poi speed modifier to 4 to get 4 zero points on right arm rotation
                 bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
                 //spin poit
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Forward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
                 //rotate shoulders in opposite directions
-                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
-                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at lower position
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
@@ -289,11 +289,11 @@ public class Controller : MonoBehaviour
                 bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
                 bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
                 //spin poi
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Forward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
                 //rotate shoulders
-                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
-                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
 
                 //right hand is at upper position           
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
@@ -305,8 +305,8 @@ public class Controller : MonoBehaviour
             {
                 //no need to apply rotation force to poi, we want them to follow the hands, relative velocity is zero
                 //rotate shoulders
-                bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
-                bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
 
                 //right hand is at lower position
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
@@ -339,14 +339,14 @@ public class Controller : MonoBehaviour
             if (trickStage == 0)
             {
                 //rotate arms up
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Right);
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Right);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Right);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Right);
                 //rotate hands against arm rotation to keep props in plane
-                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, SpinDirections.Left);
-                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, SpinDirections.Left);
+                bodyParts.leftHandSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Left);
+                bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Left);
                 //rotate props
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
 
                 //right hand is at upper position           
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
@@ -357,14 +357,14 @@ public class Controller : MonoBehaviour
             if (trickStage == 1)
             {
                 //rotate arms down
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Left);
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Left);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Left);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Left);
                 //rotate hands against arm rotation to keep props in plane
-                bodyParts.leftHandSpin.SpinHandAroundWrist(bodyParts.leftHand, SpinDirections.Right);
-                bodyParts.rightHandSpin.SpinHandAroundWrist(bodyParts.rightHand, SpinDirections.Right);
+                bodyParts.leftHandSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Right);
+                bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Right);
                 //rotate props
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
 
                 //right hand is at lower position
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
@@ -408,11 +408,11 @@ public class Controller : MonoBehaviour
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
             bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
             //rotate arms around shoulders in opposite directions
-            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
-            bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Backward);
+            bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Forward);
+            bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Backward);
             //spin props in opposite directions to get antispin
-            bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
-            bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Forward);
+            bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
         }
         if (setupAntispinWheelPlaneFlowerSameOps)
         {
@@ -439,11 +439,11 @@ public class Controller : MonoBehaviour
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
             bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
             //rotate arms around shoulders in same directions
-            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
-            bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Forward);
+            bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Forward);
+            bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Forward);
             //spin props in opposite directions to get antispin
-            bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
-            bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+            bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
         }
         if (setupAntispinWheelPlaneFlowerSplitSame)
         {
@@ -576,15 +576,15 @@ public class Controller : MonoBehaviour
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
             bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
             //rotate shoulders around torse
-            bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Down);
-            bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Down);
+            bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Down);
+            bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Down);
             //rotate left arm around shoulder joint to counter rotation around torso
-            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Up);           
+            bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Up);           
             //rotate left arm back
-            bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+            bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Forward);
             //rotate left props to get antispin
-            bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
-            bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Up);
+            bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Up);
         }
         if (setupThreeDimFlowerXZ)
         {
@@ -629,12 +629,12 @@ public class Controller : MonoBehaviour
             if (trickStage == 0)
             {
                 //right prop: from back to down
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Forward);
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Forward);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Forward);
 
                 //spin prop anti to arms
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
 
                 ////smooth hand rotation into position
                 //if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && intermidiateStageRotationCounter < 90)
@@ -658,12 +658,12 @@ public class Controller : MonoBehaviour
             else if (trickStage == 1)
             {                
                 //right prop: from down to out
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Right);
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Right);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Right);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Right);
 
                 //spin prop anti to arms
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Left);
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Left);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Left);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Left);
 
                 if (bodyParts.rightPropRegionYZ == ZeroPointRegion.LocalForward && bodyParts.zeroPointStageUpdate)
                 {
@@ -678,12 +678,12 @@ public class Controller : MonoBehaviour
             else if (trickStage == 2)
             {
                 //right prop: from out to forward
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Down);
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Down);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Down);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Down);
 
                 //spin prop anti to arms
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Up);
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Up);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Up);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Up);
 
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalLeft && bodyParts.zeroPointStageUpdate)
                 {
@@ -697,12 +697,12 @@ public class Controller : MonoBehaviour
             else if (trickStage == 3)
             {
                 //right prop: forward to up
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Forward);
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Forward);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Forward);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Forward);
 
                 //spin prop anti to arms
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
 
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
                 {
@@ -716,12 +716,12 @@ public class Controller : MonoBehaviour
             else if (trickStage == 4)
             {
                 //right prop: up to out
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Left);
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Left);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Left);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Left);
 
                 //spin prop anti to arms
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Right);
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Right);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Right);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Right);
 
                 if (bodyParts.rightPropRegionYZ == ZeroPointRegion.LocalForward && bodyParts.zeroPointStageUpdate)
                 {
@@ -736,12 +736,12 @@ public class Controller : MonoBehaviour
             else if (trickStage == 5)
             {
                 //right prop: out to back
-                bodyParts.rightArmSpin.SpinArmAroundShoulder(bodyParts.rightShoulder, SpinDirections.Up);
-                bodyParts.leftArmSpin.SpinArmAroundShoulder(bodyParts.leftShoulder, SpinDirections.Up);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Up);
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Up);
 
                 //spin prop anti to arms
-                bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Down);
-                bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Down);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Down);
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Down);
 
                 if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalRight && bodyParts.zeroPointStageUpdate)
                 {
@@ -777,11 +777,11 @@ public class Controller : MonoBehaviour
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
         bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
         //spin prop around hand
-        bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
-        bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Backward);
+        bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+        bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
         //rotate shoulders
-        bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
-        bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Forward);
+        bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+        bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
     }
 
     private void InspinAntispinWheelPlaneFlowerOpsDirection()
@@ -790,11 +790,11 @@ public class Controller : MonoBehaviour
         bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
         bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
         //spin prop around hand
-        bodyParts.leftPropSpin.SpinProp(bodyParts.leftHand, SpinDirections.Backward);
-        bodyParts.rightPropSpin.SpinProp(bodyParts.rightHand, SpinDirections.Forward);
+        bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+        bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
         //rotate shoulders
-        bodyParts.leftShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
-        bodyParts.rightShoulderSpin.SpinShoulderAroundTorso(bodyParts.torso, SpinDirections.Backward);
+        bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+        bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
     }
 
 

@@ -24,25 +24,25 @@ public class BodyParts : MonoBehaviour
     public GameObject torso;
     public static BodyParts instance;
     [Header("Left Arm Spins (Unity Sets)")]
-    public PropSpins leftPropSpin;
+    public RotateBodyPart leftPropSpin;
     public TrailRenderer leftPropTrail;
     public Vector2 leftPropPosXY;
     public Vector2 leftPropPosXZ;
     public Vector2 leftPropPosYZ;
-    public ShoulderSpins leftShoulderSpin;
-    public ForearmSpins leftForearmSpin;
-    public ArmSpins leftArmSpin;
-    public HandSpins leftHandSpin;
+    public RotateBodyPart leftShoulderSpin;
+    public RotateBodyPart leftForearmSpin;
+    public RotateBodyPart leftArmSpin;
+    public RotateBodyPart leftHandSpin;
     [Header("Right Arm Spins (Unity Sets)")]
-    public PropSpins rightPropSpin;
+    public RotateBodyPart rightPropSpin;
     public TrailRenderer rightPropTrail;
     public Vector2 rightPropPosXY;
     public Vector2 rightPropPosXZ;
     public Vector2 rightPropPosYZ;
-    public ShoulderSpins rightShoulderSpin;
-    public ForearmSpins rightForearmSpin;
-    public ArmSpins rightArmSpin;
-    public HandSpins rightHandSpin;
+    public RotateBodyPart rightShoulderSpin;
+    public RotateBodyPart rightForearmSpin;
+    public RotateBodyPart rightArmSpin;
+    public RotateBodyPart rightHandSpin;
     [Header("other")]
     public string leftPropZeroPointRegionDebugText = "";
     public string rightPropZeroPointRegionDebugText = "";
@@ -83,6 +83,7 @@ public class BodyParts : MonoBehaviour
     public ZeroPointRegion rightPropRegionYZ;
     public bool zeroPointStageUpdate = false;
 
+    //convert all of these into Vector2
     private float posLeftX = 0f;
     private float posLeftY = 0f;
     private float posLeftY_YZ;
@@ -114,19 +115,19 @@ public class BodyParts : MonoBehaviour
         instance = this;
 
         //left side spins
-        leftPropSpin = leftProp.GetComponent<PropSpins>();
+        leftPropSpin = leftProp.GetComponent<RotateBodyPart>();
         leftPropTrail = leftProp.GetComponent<TrailRenderer>();
-        leftShoulderSpin = leftShoulder.GetComponent<ShoulderSpins>();
-        leftForearmSpin = leftForeArm.GetComponent<ForearmSpins>();
-        leftArmSpin = leftArm.GetComponent<ArmSpins>();
-        leftHandSpin = leftHand.GetComponent<HandSpins>();
+        leftShoulderSpin = leftShoulder.GetComponent<RotateBodyPart>();
+        leftForearmSpin = leftForeArm.GetComponent<RotateBodyPart>();
+        leftArmSpin = leftArm.GetComponent<RotateBodyPart>();
+        leftHandSpin = leftHand.GetComponent<RotateBodyPart>();
         //right side spins
-        rightPropSpin = rightProp.GetComponent<PropSpins>();
+        rightPropSpin = rightProp.GetComponent<RotateBodyPart>();
         rightPropTrail = rightProp.GetComponent<TrailRenderer>();
-        rightShoulderSpin = rightShoulder.GetComponent<ShoulderSpins>();
-        rightForearmSpin = rightForeArm.GetComponent<ForearmSpins>();
-        rightArmSpin = rightArm.GetComponent<ArmSpins>();
-        rightHandSpin = rightHand.GetComponent<HandSpins>();
+        rightShoulderSpin = rightShoulder.GetComponent<RotateBodyPart>();
+        rightForearmSpin = rightForeArm.GetComponent<RotateBodyPart>();
+        rightArmSpin = rightArm.GetComponent<RotateBodyPart>();
+        rightHandSpin = rightHand.GetComponent<RotateBodyPart>();
     }
 
     private void Start()
