@@ -94,12 +94,14 @@ MonoBehaviour:
   globalSpeedSlider: {fileID: 0}
   trailSpeedSlider: {fileID: 0}
   reverseDirectionToggle: {fileID: 0}
-  hooperWallPlane: {fileID: 1240433403522898, guid: 2678cc3c88c8b754aa8b0008303598d4,
+  hooperWallPlane: {fileID: 1381490606475644, guid: 2678cc3c88c8b754aa8b0008303598d4,
     type: 2}
-  hooperWheelPlane: {fileID: 1345048230657648, guid: 1a6b509923b63d84188d3dfd64667291,
+  hooperWheelPlane: {fileID: 1545114337376698, guid: 1a6b509923b63d84188d3dfd64667291,
     type: 2}
   poiWallPlane: {fileID: 1505051613699848, guid: 5d986e0fe1f602243a066eedf6b585f1,
     type: 2}
   poiWheelPlane: {fileID: 1629828770615508, guid: 6e2a37205ce09c5479643123b83ae222,
     type: 2}
   bodyParts: {fileID: 0}
+  halfTrailSpeed: 0
+  halfTrailSpeedUsed: 0

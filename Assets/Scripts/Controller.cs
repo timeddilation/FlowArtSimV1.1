@@ -22,7 +22,6 @@ public class Controller : MonoBehaviour
     private GameObject thisSpinner;
     private EnvironmentVariables envVariables;
     private BodyParts bodyParts;
-    private CardinalPoints cardinalPoints;
     #endregion
     #region State Engine
     //TODO: Build state engine
@@ -81,7 +80,8 @@ public class Controller : MonoBehaviour
 
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
-        cardinalPoints = CardinalPoints.instance;
+
+        SetSpinnerProps("Hoops");
     }
 
     private void Update()
@@ -826,7 +826,6 @@ public class Controller : MonoBehaviour
         {
             bodyParts.zeroPointPosition = 0f;
             BodyParts.instance = null;
-            CardinalPoints.instance = null;
             envVariables.bodyParts = null;
             Destroy(thisSpinner);
             thisSpinner = null;
