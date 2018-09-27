@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class BodyParts : MonoBehaviour
 {    
     [Header("Left Side")]
@@ -43,37 +45,14 @@ public class BodyParts : MonoBehaviour
     public RotateBodyPart rightForearmSpin;
     public RotateBodyPart rightArmSpin;
     public RotateBodyPart rightHandSpin;
-    [Header("other")]
+    [Header("Other")]
     public string leftPropZeroPointRegionDebugText = "";
     public string rightPropZeroPointRegionDebugText = "";
     public float zeroPointPosition = 0f;
-    //XY coords
-    private Vector2 localRightStartXY = new Vector2(-55, -1);
-    private Vector2 localRightEndXY = new Vector2(-55, 1);
-    private Vector2 localLeftStartXY = new Vector2(55, -1);
-    private Vector2 localLeftEndXY = new Vector2(55, 1);
-    private Vector2 localDownStartXY = new Vector2(-1, -55);
-    private Vector2 localDownEndXY = new Vector2(1, -55);
-    private Vector2 localUpStartXY = new Vector2(-1, 55);
-    private Vector2 localUpEndXY = new Vector2(1, 55);
-    //XZ coords
-    private Vector2 localRightStartXZ = new Vector2(-55, -1);
-    private Vector2 localRightEndXZ = new Vector2(-55, 1);
-    private Vector2 localLeftStartXZ = new Vector2(55, -1);
-    private Vector2 localLeftEndXZ = new Vector2(55, -1);
-    private Vector2 localForwardStartXZ = new Vector2(-1, -55);
-    private Vector2 localForwardEndXZ = new Vector2(1, -55);
-    private Vector2 localBackStartXZ = new Vector2(-1, 55);
-    private Vector2 localBackEndXZ = new Vector2(1, 55);
-    //YZ coords
-    private Vector2 localForwardStartYZ = new Vector2(-1, -55);
-    private Vector2 localForwardEndYZ = new Vector2(1, -55);
-    private Vector2 localBackStartYZ = new Vector2(-1, 55);
-    private Vector2 localBackEndYZ = new Vector2(1, 55);
-    private Vector2 localUpStartYZ = new Vector2(55, -1);
-    private Vector2 localUpEndYZ = new Vector2(55, 1);
-    private Vector2 localDownStartYZ = new Vector2(-55, -1);
-    private Vector2 localDownEndYZ = new Vector2(-55, 1);
+
+    private PlaneRegionsXY planeRegionsXY;
+    private PlaneRegionsXZ planeRegionsXZ;
+    private PlaneRegionsYZ planeRegionsYZ;
 
     public ZeroPointRegion leftPropRegionXY;
     public ZeroPointRegion leftPropRegionXZ;
@@ -132,6 +111,10 @@ public class BodyParts : MonoBehaviour
 
     private void Start()
     {
+        planeRegionsXY = PlaneRegionsXY.instance;
+        planeRegionsXZ = PlaneRegionsXZ.instance;
+        planeRegionsYZ = PlaneRegionsYZ.instance;
+
         GetVector2PoiPosition();
     }
 
@@ -148,7 +131,6 @@ public class BodyParts : MonoBehaviour
 
         leftPropZeroPointRegionDebugText = leftPropPosXY.x.ToString() + " , " + leftPropPosXY.y.ToString();
         rightPropZeroPointRegionDebugText = rightPropPosYZ.x.ToString() + " , " + rightPropPosYZ.y.ToString();
-        //rightPropZeroPointRegionDebugText = rightProp.transform.position.x.ToString() + " , " + rightProp.transform.position.y.ToString() + " , " + rightProp.transform.position.z.ToString();
     }
 
     private void GetVector2PoiPosition()
@@ -169,26 +151,26 @@ public class BodyParts : MonoBehaviour
         zeroPointStageUpdate = false;
 
         //check for local right
-        if ((propPosition.x < localRightStartXY.x && propPosition.y > localRightStartXY.y)
-            || (propPosition.x < localRightEndXY.x && propPosition.y < localRightEndXY.y))
+        if ((propPosition.x < planeRegionsXY.localRightStart.x && propPosition.y > planeRegionsXY.localRightStart.y)
+            || (propPosition.x < planeRegionsXY.localRightEnd.x && propPosition.y < planeRegionsXY.localRightEnd.y))
         {
             region = ZeroPointRegion.LocalRight;
         }
         //check for local left
-        else if ((propPosition.x > localLeftStartXY.x && propPosition.y > localLeftStartXY.y)
-            || (propPosition.x > localLeftEndXY.x && propPosition.y < localLeftEndXY.y))
+        else if ((propPosition.x > planeRegionsXY.localLeftStart.x && propPosition.y > planeRegionsXY.localLeftStart.y)
+            || (propPosition.x > planeRegionsXY.localLeftEnd.x && propPosition.y < planeRegionsXY.localLeftEnd.y))
         {
             region = ZeroPointRegion.LocalLeft;
         }
         //check for local down
-        else if ((propPosition.x > localDownStartXY.x && propPosition.y < localDownStartXY.y)
-            || (propPosition.x < localDownEndXY.x && propPosition.y < localDownEndXY.y))
+        else if ((propPosition.x > planeRegionsXY.localDownStart.x && propPosition.y < planeRegionsXY.localDownStart.y)
+            || (propPosition.x < planeRegionsXY.localDownEnd.x && propPosition.y < planeRegionsXY.localDownEnd.y))
         {
             region = ZeroPointRegion.LocalDown;
         }
         //check for local up
-        else if ((propPosition.x > localUpStartXY.x && propPosition.y > localUpStartXY.y)
-            || (propPosition.x < localUpEndXY.x && propPosition.y > localUpEndXY.y))
+        else if ((propPosition.x > planeRegionsXY.localUpStart.x && propPosition.y > planeRegionsXY.localUpStart.y)
+            || (propPosition.x < planeRegionsXY.localUpEnd.x && propPosition.y > planeRegionsXY.localUpEnd.y))
         {
             region = ZeroPointRegion.LocalUp;
         }
@@ -261,26 +243,26 @@ public class BodyParts : MonoBehaviour
         ZeroPointRegion region = ZeroPointRegion.None;
         
         //check for local forward
-        if ((propPosition.x > localForwardStartXZ.x && propPosition.y < localForwardStartXZ.y)
-            || (propPosition.x < localForwardEndXZ.x && propPosition.y < localForwardEndXZ.y))
+        if ((propPosition.x > planeRegionsXZ.localForwardStart.x && propPosition.y < planeRegionsXZ.localForwardStart.y)
+            || (propPosition.x < planeRegionsXZ.localForwardEnd.x && propPosition.y < planeRegionsXZ.localForwardEnd.y))
         {
             region = ZeroPointRegion.LocalForward;
         }
         //check for local back
-        else if ((propPosition.x > localBackStartXZ.x && propPosition.y > localBackStartXZ.y)
-            || (propPosition.x < localBackEndXZ.x && propPosition.y > localBackEndXZ.y))
+        else if ((propPosition.x > planeRegionsXZ.localBackStart.x && propPosition.y > planeRegionsXZ.localBackStart.y)
+            || (propPosition.x < planeRegionsXZ.localBackEnd.x && propPosition.y > planeRegionsXZ.localBackEnd.y))
         {
             region = ZeroPointRegion.LocalBackward;
         }
         //check for local left
-        else if ((propPosition.x > localLeftStartXZ.x && propPosition.y > localLeftStartXZ.y)
-            || (propPosition.x > localLeftEndXZ.x && propPosition.y < localLeftEndXZ.y))
+        else if ((propPosition.x > planeRegionsXZ.localLeftStart.x && propPosition.y > planeRegionsXZ.localLeftStart.y)
+            || (propPosition.x > planeRegionsXZ.localLeftEnd.x && propPosition.y < planeRegionsXZ.localLeftEnd.y))
         {
             region = ZeroPointRegion.LocalLeft;
         }
         //check for local right
-        else if ((propPosition.x < localRightStartXZ.x && propPosition.y > localRightStartXZ.y)
-            || (propPosition.x < localRightEndXZ.x && propPosition.y < localRightEndXZ.y))
+        else if ((propPosition.x < planeRegionsXZ.localRightStart.x && propPosition.y > planeRegionsXZ.localRightStart.y)
+            || (propPosition.x < planeRegionsXZ.localRightEnd.x && propPosition.y < planeRegionsXZ.localRightEnd.y))
         {
             region = ZeroPointRegion.LocalRight;
         }
@@ -322,26 +304,26 @@ public class BodyParts : MonoBehaviour
         ZeroPointRegion region = ZeroPointRegion.None;
 
         //check for local down
-        if ((propPosition.x < localDownStartYZ.x && propPosition.y > localDownStartYZ.y)
-            || (propPosition.x < localDownEndYZ.x && propPosition.y < localDownEndYZ.y))
+        if ((propPosition.x < planeRegionsYZ.localDownStart.x && propPosition.y > planeRegionsYZ.localDownStart.y)
+            || (propPosition.x < planeRegionsYZ.localDownEnd.x && propPosition.y < planeRegionsYZ.localDownEnd.y))
         {
             region = ZeroPointRegion.LocalDown;
         }
         //check for local up
-        else if ((propPosition.x > localUpStartYZ.x && propPosition.y > localUpStartYZ.y)
-            || (propPosition.x > localUpEndYZ.x && propPosition.y < localUpEndYZ.y))
+        else if ((propPosition.x > planeRegionsYZ.localUpStart.x && propPosition.y > planeRegionsYZ.localUpStart.y)
+            || (propPosition.x > planeRegionsYZ.localUpEnd.x && propPosition.y < planeRegionsYZ.localUpEnd.y))
         {
             region = ZeroPointRegion.LocalUp;
         }
         //check for local forward
-        else if ((propPosition.x > localForwardStartYZ.x && propPosition.y < localForwardStartYZ.y)
-            || (propPosition.x < localForwardEndYZ.x && propPosition.y < localForwardEndYZ.y))
+        else if ((propPosition.x > planeRegionsYZ.localForwardStart.x && propPosition.y < planeRegionsYZ.localForwardStart.y)
+            || (propPosition.x < planeRegionsYZ.localForwardEnd.x && propPosition.y < planeRegionsYZ.localForwardEnd.y))
         {
             region = ZeroPointRegion.LocalForward;
         }
         //check for local back
-        else if ((propPosition.x > localBackStartYZ.x && propPosition.y > localBackStartYZ.y)
-            || (propPosition.x < localBackEndYZ.x && propPosition.y > localBackEndYZ.y))
+        else if ((propPosition.x > planeRegionsYZ.localBackStart.x && propPosition.y > planeRegionsYZ.localBackStart.y)
+            || (propPosition.x < planeRegionsYZ.localBackEnd.x && propPosition.y > planeRegionsYZ.localBackEnd.y))
         {
             region = ZeroPointRegion.LocalBackward;
         }

@@ -204,7 +204,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4209654566154556}
   - component: {fileID: 114078198970507852}
-  - component: {fileID: 114324463556976934}
   m_Layer: 0
   m_Name: HoopSpinnerWallPlane
   m_TagString: Player
@@ -2738,23 +2737,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleKey: m
---- !u!114 &114324463556976934
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1381490606475644}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19db1e51defdc5f45b0530825d7cf5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localLeft: {fileID: 0}
-  localRight: {fileID: 0}
-  localUp: {fileID: 0}
-  localDown: {fileID: 0}
-  localForward: {fileID: 0}
-  localBack: {fileID: 0}
 --- !u!114 &114397235069054306
 MonoBehaviour:
   m_ObjectHideFlags: 1

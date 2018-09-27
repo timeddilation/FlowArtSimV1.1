@@ -67,6 +67,9 @@
     <Compile Include="Assets\Scripts\EnvironmentVariables.cs" />
     <Compile Include="Assets\Scripts\FreeMovementCam.cs" />
     <Compile Include="Assets\Scripts\MenuControls.cs" />
+    <Compile Include="Assets\Scripts\PlanarRegions\PlaneRegionsXY.cs" />
+    <Compile Include="Assets\Scripts\PlanarRegions\PlaneRegionsXZ.cs" />
+    <Compile Include="Assets\Scripts\PlanarRegions\PlaneRegionsYZ.cs" />
     <Compile Include="Assets\Scripts\RotateBodyPart.cs" />
     <Compile Include="Assets\Scripts\ToggleTrailActivity.cs" />
     <Reference Include="UnityEditor.StandardEvents">

@@ -225,7 +225,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4376778850824508}
   - component: {fileID: 114588757372143796}
-  - component: {fileID: 114581467563086310}
   m_Layer: 0
   m_Name: PoiSpinnerWheelPlane
   m_TagString: Player
@@ -1639,23 +1638,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 100
   rotationSpeedModifier: 1
---- !u!114 &114581467563086310
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1629828770615508}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19db1e51defdc5f45b0530825d7cf5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localLeft: {fileID: 0}
-  localRight: {fileID: 0}
-  localUp: {fileID: 0}
-  localDown: {fileID: 0}
-  localForward: {fileID: 0}
-  localBack: {fileID: 0}
 --- !u!114 &114588757372143796
 MonoBehaviour:
   m_ObjectHideFlags: 1

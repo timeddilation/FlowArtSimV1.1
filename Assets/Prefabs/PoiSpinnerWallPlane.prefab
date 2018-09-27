@@ -132,7 +132,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4260942897912036}
   - component: {fileID: 114175677844946842}
-  - component: {fileID: 114219500107366976}
   m_Layer: 0
   m_Name: PoiSpinnerWallPlane
   m_TagString: Player
@@ -1667,23 +1666,6 @@ MonoBehaviour:
   rightPropRegionXZ: 0
   rightPropRegionYZ: 0
   zeroPointStageUpdate: 0
---- !u!114 &114219500107366976
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1505051613699848}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 19db1e51defdc5f45b0530825d7cf5ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  localLeft: {fileID: 0}
-  localRight: {fileID: 0}
-  localUp: {fileID: 0}
-  localDown: {fileID: 0}
-  localForward: {fileID: 0}
-  localBack: {fileID: 0}
 --- !u!114 &114235470187944190
 MonoBehaviour:
   m_ObjectHideFlags: 1

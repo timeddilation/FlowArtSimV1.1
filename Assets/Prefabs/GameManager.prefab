@@ -22,6 +22,8 @@ GameObject:
   - component: {fileID: 114899438636291528}
   - component: {fileID: 114031227305784338}
   - component: {fileID: 114636997953517698}
+  - component: {fileID: 114856230482959474}
+  - component: {fileID: 114403179924545420}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -63,6 +65,26 @@ MonoBehaviour:
   spinnerWheelPlane: {fileID: 1345048230657648, guid: 1a6b509923b63d84188d3dfd64667291,
     type: 2}
   cam: {fileID: 0}
+--- !u!114 &114403179924545420
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025997839596168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5336a3842401bf747a4a6d99bc7d39e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propReach: 55
+  localRightStart: {x: 0, y: 0}
+  localRightEnd: {x: 0, y: 0}
+  localLeftStart: {x: 0, y: 0}
+  localLeftEnd: {x: 0, y: 0}
+  localForwardStart: {x: 0, y: 0}
+  localForwardEnd: {x: 0, y: 0}
+  localBackStart: {x: 0, y: 0}
+  localBackEnd: {x: 0, y: 0}
 --- !u!114 &114636997953517698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -77,6 +99,26 @@ MonoBehaviour:
   mainCamera: {fileID: 0}
   angledCamera: {fileID: 0}
   secondCameraView: {fileID: 8400000, guid: 05787c7cee2559d4a8d5319744cf286d, type: 2}
+--- !u!114 &114856230482959474
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025997839596168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2704bf6bfa8c8bd4fac353f1dce90e68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propReach: 55
+  localRightStart: {x: 0, y: 0}
+  localRightEnd: {x: 0, y: 0}
+  localLeftStart: {x: 0, y: 0}
+  localLeftEnd: {x: 0, y: 0}
+  localUpStart: {x: 0, y: 0}
+  localUpEnd: {x: 0, y: 0}
+  localDownStart: {x: 0, y: 0}
+  localDownEnd: {x: 0, y: 0}
 --- !u!114 &114899438636291528
 MonoBehaviour:
   m_ObjectHideFlags: 1
