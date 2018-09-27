@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114636997953517698}
   - component: {fileID: 114856230482959474}
   - component: {fileID: 114403179924545420}
+  - component: {fileID: 114861013939087118}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -115,6 +116,26 @@ MonoBehaviour:
   localRightEnd: {x: 0, y: 0}
   localLeftStart: {x: 0, y: 0}
   localLeftEnd: {x: 0, y: 0}
+  localUpStart: {x: 0, y: 0}
+  localUpEnd: {x: 0, y: 0}
+  localDownStart: {x: 0, y: 0}
+  localDownEnd: {x: 0, y: 0}
+--- !u!114 &114861013939087118
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025997839596168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da58997a44c3294ba7e7cc8b418db37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  propReach: 55
+  localForwardStart: {x: 0, y: 0}
+  localForwardEnd: {x: 0, y: 0}
+  localBackStart: {x: 0, y: 0}
+  localBackEnd: {x: 0, y: 0}
   localUpStart: {x: 0, y: 0}
   localUpEnd: {x: 0, y: 0}
   localDownStart: {x: 0, y: 0}
