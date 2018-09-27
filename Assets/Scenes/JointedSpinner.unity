@@ -283,12 +283,12 @@ Prefab:
     - target: {fileID: 224824650774816812, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.48027402
+      value: 0.60693514
       objectReference: {fileID: 0}
     - target: {fileID: 224371080427263394, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 250.3
+      value: 189.30006
       objectReference: {fileID: 0}
     - target: {fileID: 224824650774816812, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
@@ -512,7 +512,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 3a4286027a2bf514e98fd71d93b47970, type: 2}
+  - {fileID: 2100000, guid: 3d178909981564f4597f0d27941bc2fe, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -989,7 +989,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: ce4a710707530e74eaf420b214ac418a, type: 2}
+  - {fileID: 2100000, guid: c8302878c9a904c4486743e30513d6f2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1641,7 +1641,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 327fe0cbc05ac934091942c924cb0d25, type: 2}
+  - {fileID: 2100000, guid: ec64f24d5711b064aad9ffd34bb99cd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
