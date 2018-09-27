@@ -24,6 +24,7 @@ public class BodyParts : MonoBehaviour
     public GameObject rightProp;
     [Header("Self (Unity Sets)")]
     public GameObject torso;
+    public RotateBodyPart torsoSpin;
     public static BodyParts instance;
     [Header("Left Arm Spins (Unity Sets)")]
     public RotateBodyPart leftPropSpin;
@@ -93,6 +94,8 @@ public class BodyParts : MonoBehaviour
         }
         instance = this;
 
+        //torso spins
+        torsoSpin = torso.GetComponent<RotateBodyPart>();
         //left side spins
         leftPropSpin = leftProp.GetComponent<RotateBodyPart>();
         leftPropTrail = leftProp.GetComponent<TrailRenderer>();

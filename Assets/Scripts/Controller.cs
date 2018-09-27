@@ -26,6 +26,9 @@ public class Controller : MonoBehaviour
     #region State Engine
     //TODO: Build state engine
 
+    private bool setupTestTrick = false;
+    private bool doingTestTrick = false;
+
     private bool setupAntiSpinPointsSameOps = false;
     private bool doingAntiSpinPointsSameOps = false;
 
@@ -35,6 +38,9 @@ public class Controller : MonoBehaviour
     private bool setupAntiSpinWallPlaneFlower = false;
     private bool doingAntiSpinWallPlaneFlower = false;
 
+    private bool setupStandardTriquetra = false;
+    private bool doingStandardTriquetra = false;
+
     private bool setupButterflyTaceVertical = false;
     private bool doingButterflyTaceVertical = false;
 
@@ -43,6 +49,9 @@ public class Controller : MonoBehaviour
 
     private bool setupAntispinWheelPlaneFlowerSplitSame = false;
     private bool doingAntispinWheelPlaneFlowerSplitSame = false;
+
+    private bool setupInspinWheelPlaneFlowerSameSame = false;
+    private bool doingInspinWheelPlaneFlowerSameSame = false;
 
     private bool setupInspinAntispinWheelPlaneFlowerSplitOps = false;
     private bool doingInspinAntispinWheelPlaneFlowerSplitOps = false;
@@ -64,7 +73,7 @@ public class Controller : MonoBehaviour
 
     private int trickStage = 0;
     private int trickCycles = 0;
-    private float intermidiateStageRotationCounter = 0f;
+    //private float intermidiateStageRotationCounter = 0f;
     #endregion
 
     private void Start()
@@ -93,7 +102,11 @@ public class Controller : MonoBehaviour
             canvas.enabled = !canvas.enabled;
         }
 
-        if (setupAntiSpinPointsSameOps || doingAntiSpinPointsSameOps)
+        if (setupTestTrick || doingTestTrick)
+        {
+            TestTrick();
+        }
+        else if (setupAntiSpinPointsSameOps || doingAntiSpinPointsSameOps)
         {
             AntiSpinPointsSameOps();
         }
@@ -105,6 +118,10 @@ public class Controller : MonoBehaviour
         {
             AntiSpinWallPlaneFlower();
         }
+        else if (setupStandardTriquetra || doingStandardTriquetra)
+        {
+            StandardTriquetra();
+        }
         else if (setupAntispinWheelPlaneFlowerSameOps || doingAntispinWheelPlaneFlowerSameOps)
         {
             AntispinWheelPlaneFlowerSameOps();
@@ -112,6 +129,10 @@ public class Controller : MonoBehaviour
         else if (setupAntispinWheelPlaneFlowerSplitSame || doingAntispinWheelPlaneFlowerSplitSame)
         {
             AntispinWheelPlaneFlowerSplitSame();
+        }
+        else if (setupInspinWheelPlaneFlowerSameSame || doingInspinWheelPlaneFlowerSameSame)
+        {
+            InspinWheelPlaneFlowerSameSame();
         }
         else if (setupInspinAntispinWheelPlaneFlowerSplitOps || doingInspinAntispinWheelPlaneFlowerSplitOps)
         {
@@ -144,6 +165,58 @@ public class Controller : MonoBehaviour
         else
         {
             return;
+        }
+    }
+
+    public void TestTrick()
+    {
+        if (!setupTestTrick && !doingTestTrick)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupTestTrick = true;
+        }
+        if (doingTestTrick)
+        {
+            //pibot body around in circle
+            bodyParts.leftShoulderSpin.rotationSpeedModifier = 2f;
+            bodyParts.rightShoulderSpin.rotationSpeedModifier = 2f;
+
+            bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Up);
+            bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Up);
+            //set speed modifier on props to 2 to get 2 points on inspin
+            //bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
+            //bodyParts.rightPropSpin.rotationSpeedModifier = 2f;
+
+            //rotate props in opposite directions
+            //bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+            //bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
+
+            //rotate arms in opposite directions, same direction as holding prop
+            //bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Forward);
+            bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Backward);
+
+            //counter rotations to keep props in plane
+            bodyParts.rightHandSpin.rotationSpeedModifier = 2f;
+            bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightWrist, SpinDirections.Down);
+            //bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Right);
+        }
+        if (setupTestTrick)
+        {
+            //rotate both arms to have prop on left side of body
+            bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, Vector3.back, 180f);
+            //rotate both props to inspin starting position
+            //bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, Vector3.forward, 90f);
+            //bodyParts.rightProp.transform.RotateAround(bodyParts.rightHand.transform.position, Vector3.forward, 90f);
+            //rotate both hand to be on inside of body
+            bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.up, 180f);
+            bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.up, 180f);
+
+            setupTestTrick = false;
+            doingTestTrick = true;
+
+            thisSimulationName.text = "Test Trick";
+            thisSimulationDescription.text = "";
         }
     }
 
@@ -325,6 +398,37 @@ public class Controller : MonoBehaviour
         }       
     }
 
+    public void StandardTriquetra()
+    {
+        if (!setupStandardTriquetra && !doingStandardTriquetra)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupStandardTriquetra = true;
+        }
+        if (doingStandardTriquetra)
+        {
+            //rotate arms back
+            bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Backward);
+            bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Backward);
+            //set speed modifier to 3 for 3 points in triquetra
+            bodyParts.rightPropSpin.rotationSpeedModifier = 3f;
+            bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
+        }
+        if (setupStandardTriquetra)
+        {
+            //rotate both arms to have prop above head
+            bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, Vector3.back, 90f);
+            bodyParts.leftArm.transform.RotateAround(bodyParts.leftShoulder.transform.position, Vector3.forward, 90f);
+
+            setupStandardTriquetra = false;
+            doingStandardTriquetra = true;
+
+            thisSimulationName.text = "Triquetra";
+            thisSimulationDescription.text = "";
+        }
+    }
+
     public void ButterflyTaceVertical()
     {
         if (!setupButterflyTaceVertical && !doingButterflyTaceVertical)
@@ -452,6 +556,40 @@ public class Controller : MonoBehaviour
 
             thisSimulationName.text = "Wheel Plaine Antispine Flower";
             thisSimulationDescription.text = "Split Time / Same Direction";
+        }
+    }
+
+    public void InspinWheelPlaneFlowerSameSame()
+    {
+        if (!setupInspinWheelPlaneFlowerSameSame && !doingInspinWheelPlaneFlowerSameSame)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupInspinWheelPlaneFlowerSameSame = true;
+            envVariables.halfTrailSpeed = true;
+        }
+        if (doingInspinWheelPlaneFlowerSameSame)
+        {
+            //set rotation speed modifier on props to 2 for 2 points on the inspin
+            bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
+            bodyParts.rightPropSpin.rotationSpeedModifier = 2f;
+            //rotate props forward
+            bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
+            bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
+            //rotate arms forward
+            bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Backward);
+            bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Backward);
+        }
+        if (setupInspinWheelPlaneFlowerSameSame)
+        {
+            bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, Vector3.forward, 180f);
+            bodyParts.rightProp.transform.RotateAround(bodyParts.rightHand.transform.position, Vector3.forward, 180f);
+
+            setupInspinWheelPlaneFlowerSameSame = false;
+            doingInspinWheelPlaneFlowerSameSame = true;
+
+            thisSimulationName.text = "Inspin Wheel Plane Flower";
+            thisSimulationDescription.text = "Same Time / Same Direction";
         }
     }
 
@@ -835,11 +973,14 @@ public class Controller : MonoBehaviour
 
             trickStage = 0;
             trickCycles = 0;
+            doingTestTrick = false;
             doingAntiSpinPointsSameOps = false;
             doingAntiSpinPointsSplitOps = false;
             doingAntiSpinWallPlaneFlower = false;
+            doingStandardTriquetra = false;
             doingAntispinWheelPlaneFlowerSameOps = false;
             doingAntispinWheelPlaneFlowerSplitSame = false;
+            doingInspinWheelPlaneFlowerSameSame = false;
             doingInspinAntispinWheelPlaneFlowerSplitOps = false;
             doingInspinAntispinWheelPlaneFlowerSameOps = false;
             doingInspinAntispinWheelPlaneFlowerSameSame = false;

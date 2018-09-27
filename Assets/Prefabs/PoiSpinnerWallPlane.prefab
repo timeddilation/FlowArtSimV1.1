@@ -132,6 +132,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4260942897912036}
   - component: {fileID: 114175677844946842}
+  - component: {fileID: 114271615201613444}
   m_Layer: 0
   m_Name: PoiSpinnerWallPlane
   m_TagString: Player
@@ -1638,6 +1639,7 @@ MonoBehaviour:
   rightHand: {fileID: 1574871658479766}
   rightProp: {fileID: 1928968403268764}
   torso: {fileID: 0}
+  torsoSpin: {fileID: 0}
   leftPropSpin: {fileID: 0}
   leftPropTrail: {fileID: 0}
   leftPropPosXY: {x: 0, y: 0}
@@ -1672,6 +1674,19 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294226751480680}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf1b5e99648cdd4ab1e07f35ba0dcce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
+--- !u!114 &114271615201613444
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1505051613699848}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bf1b5e99648cdd4ab1e07f35ba0dcce, type: 3}

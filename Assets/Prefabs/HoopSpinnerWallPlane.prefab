@@ -204,6 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4209654566154556}
   - component: {fileID: 114078198970507852}
+  - component: {fileID: 114725716130875954}
   m_Layer: 0
   m_Name: HoopSpinnerWallPlane
   m_TagString: Player
@@ -2050,7 +2051,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 6
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 1
@@ -2151,7 +2152,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 5
+  m_Time: 6
   m_Parameters:
     serializedVersion: 2
     widthMultiplier: 1
@@ -2658,33 +2659,34 @@ MonoBehaviour:
   rightWrist: {fileID: 1229658034997906}
   rightHand: {fileID: 1902051314355202}
   rightProp: {fileID: 1689475824194606}
-  torso: {fileID: 0}
-  leftPropSpin: {fileID: 0}
-  leftPropTrail: {fileID: 0}
-  leftPropPosXY: {x: 0, y: 0}
-  leftPropPosXZ: {x: 0, y: 0}
-  leftPropPosYZ: {x: 0, y: 0}
-  leftShoulderSpin: {fileID: 0}
-  leftForearmSpin: {fileID: 0}
-  leftArmSpin: {fileID: 0}
-  leftHandSpin: {fileID: 0}
-  rightPropSpin: {fileID: 0}
-  rightPropTrail: {fileID: 0}
-  rightPropPosXY: {x: 0, y: 0}
-  rightPropPosXZ: {x: 0, y: 0}
-  rightPropPosYZ: {x: 0, y: 0}
-  rightShoulderSpin: {fileID: 0}
-  rightForearmSpin: {fileID: 0}
-  rightArmSpin: {fileID: 0}
-  rightHandSpin: {fileID: 0}
-  leftPropZeroPointRegionDebugText: 
-  rightPropZeroPointRegionDebugText: 
+  torso: {fileID: 1381490606475644}
+  torsoSpin: {fileID: 0}
+  leftPropSpin: {fileID: 114156300225226046}
+  leftPropTrail: {fileID: 96263140009095642}
+  leftPropPosXY: {x: 69.00001, y: 0}
+  leftPropPosXZ: {x: 69.00001, y: -3.0000057}
+  leftPropPosYZ: {x: 0, y: -3.0000057}
+  leftShoulderSpin: {fileID: 114026424127923836}
+  leftForearmSpin: {fileID: 114517657989909262}
+  leftArmSpin: {fileID: 114584762752145808}
+  leftHandSpin: {fileID: 114417555983752934}
+  rightPropSpin: {fileID: 114226492060148828}
+  rightPropTrail: {fileID: 96298574243866634}
+  rightPropPosXY: {x: -69.00001, y: 0}
+  rightPropPosXZ: {x: -69.00001, y: -4.4999943}
+  rightPropPosYZ: {x: 0, y: -4.4999943}
+  rightShoulderSpin: {fileID: 114551740570984638}
+  rightForearmSpin: {fileID: 114774662102617262}
+  rightArmSpin: {fileID: 114404855536889726}
+  rightHandSpin: {fileID: 114744994251986900}
+  leftPropZeroPointRegionDebugText: (69.0, 0.0, -3.0)
+  rightPropZeroPointRegionDebugText: (-69.0, 0.0, -4.5)
   zeroPointPosition: 0
-  leftPropRegionXY: 0
+  leftPropRegionXY: 3
   leftPropRegionXZ: 0
   leftPropRegionYZ: 0
-  rightPropRegionXY: 0
-  rightPropRegionXZ: 0
+  rightPropRegionXY: 4
+  rightPropRegionXZ: 4
   rightPropRegionYZ: 0
   zeroPointStageUpdate: 0
 --- !u!114 &114116176641901064
@@ -2838,6 +2840,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleKey: m
+--- !u!114 &114725716130875954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1381490606475644}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf1b5e99648cdd4ab1e07f35ba0dcce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114744994251986900
 MonoBehaviour:
   m_ObjectHideFlags: 1

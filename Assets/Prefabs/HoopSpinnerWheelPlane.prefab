@@ -281,6 +281,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4292174381596544}
   - component: {fileID: 114163413753810286}
+  - component: {fileID: 114452449796905000}
   m_Layer: 0
   m_Name: HoopSpinnerWheelPlane
   m_TagString: Player
@@ -2724,6 +2725,7 @@ MonoBehaviour:
   rightHand: {fileID: 1465498008050690}
   rightProp: {fileID: 1176072094343214}
   torso: {fileID: 0}
+  torsoSpin: {fileID: 0}
   leftPropSpin: {fileID: 0}
   leftPropTrail: {fileID: 0}
   leftPropPosXY: {x: 0, y: 0}
@@ -2790,6 +2792,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toggleKey: m
+--- !u!114 &114452449796905000
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1545114337376698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf1b5e99648cdd4ab1e07f35ba0dcce, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rotationSpeed: 100
+  rotationSpeedModifier: 1
 --- !u!114 &114457361699813268
 MonoBehaviour:
   m_ObjectHideFlags: 1
