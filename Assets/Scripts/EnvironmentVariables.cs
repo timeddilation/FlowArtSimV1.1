@@ -42,6 +42,9 @@ public class EnvironmentVariables : MonoBehaviour
     public Slider trailSpeedSlider;
     public Toggle reverseDirectionToggle;
 
+    public GameObject planeMarkers;
+    public Toggle showPlaneMarkersToggle;
+
     [Header("Spinner Prefabs")]
     public GameObject hooperWallPlane;
     public GameObject hooperWheelPlane;
@@ -69,22 +72,34 @@ public class EnvironmentVariables : MonoBehaviour
         bodyParts = BodyParts.instance;
 
         globalSpeedSlider.value = globalSpeed;
+        trailSpeedSlider.value = propTrailSpeed;
+
+        planeMarkers.gameObject.SetActive(false);
+
         globalSpeedSlider.onValueChanged.AddListener(delegate
         {
             GlobalSpeedSliderChanged(globalSpeedSlider);
         });
-
-        trailSpeedSlider.value = propTrailSpeed;
+        
         trailSpeedSlider.onValueChanged.AddListener(delegate
         {
             TrailSpeedSliderChanged(trailSpeedSlider);
+        });
+
+        reverseDirectionToggle.onValueChanged.AddListener(delegate
+        {
+            UpdateTrickDirection(reverseDirectionToggle);
+        });
+
+        showPlaneMarkersToggle.onValueChanged.AddListener(delegate
+        {
+            ShowPlaneMarkersChanged(showPlaneMarkersToggle);
         });
     }
 
     private void Update()
     {
         UpdatePoiTrailSpeed();
-        UpdateTrickDirection();
     }
 
     private void GlobalSpeedSliderChanged(Slider slider)
@@ -95,7 +110,6 @@ public class EnvironmentVariables : MonoBehaviour
     private void TrailSpeedSliderChanged(Slider slider)
     {
         propTrailSpeed = slider.value;
-        UpdateTrickDirection();
         halfTrailSpeedUsed = false;
     }
 
@@ -111,15 +125,27 @@ public class EnvironmentVariables : MonoBehaviour
         bodyParts.rightPropTrail.time = propTrailSpeed;
     }
 
-    private void UpdateTrickDirection()
+    private void UpdateTrickDirection(Toggle toggle)
     {
-        if (reverseDirectionToggle.isOn && globalSpeed > 0)
+        if (toggle.isOn && globalSpeed > 0)
         {
             globalSpeed = globalSpeed * -1;
         }
-        else if (!reverseDirectionToggle.isOn && globalSpeed < 0)
+        else if (!toggle.isOn && globalSpeed < 0)
         {
             globalSpeed = globalSpeed * -1;
+        }
+    }
+
+    private void ShowPlaneMarkersChanged(Toggle toggle)
+    {
+        if (toggle.isOn)
+        {
+            planeMarkers.gameObject.SetActive(true);
+        }
+        else
+        {
+            planeMarkers.gameObject.SetActive(false);
         }
     }
 }

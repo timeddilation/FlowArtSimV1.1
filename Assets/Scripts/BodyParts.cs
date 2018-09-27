@@ -62,7 +62,7 @@ public class BodyParts : MonoBehaviour
     public ZeroPointRegion rightPropRegionYZ;
     public bool zeroPointStageUpdate = false;
 
-    //convert all of these into Vector2
+    //TODO: convert all of these into Vector2
     private float posLeftX = 0f;
     private float posLeftY = 0f;
     private float posLeftY_YZ;
@@ -126,11 +126,10 @@ public class BodyParts : MonoBehaviour
         rightPropRegionXY = TrackZeroPointRegionXY(rightPropPosXY, PropSide.Right);
 
         rightPropRegionXZ = TrackZeroPointRegionXZ(rightPropPosXZ, PropSide.Right);
-
         rightPropRegionYZ = TrackZeroPointRegionYZ(rightPropPosYZ, PropSide.Right);
 
-        leftPropZeroPointRegionDebugText = leftPropPosXY.x.ToString() + " , " + leftPropPosXY.y.ToString();
-        rightPropZeroPointRegionDebugText = rightPropPosYZ.x.ToString() + " , " + rightPropPosYZ.y.ToString();
+        leftPropZeroPointRegionDebugText = leftProp.transform.position.ToString();
+        rightPropZeroPointRegionDebugText = rightProp.transform.position.ToString();
     }
 
     private void GetVector2PoiPosition()

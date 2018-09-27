@@ -7,7 +7,7 @@ public class MenuControls : MonoBehaviour
 {
     [Header("Menu Open and Close")]
     public float menuCollapseSpeed = 5f;
-    public float collapsedMenuBufferSize = 150;
+    public float collapsedMenuBufferSize = 180;
 
     [Header("Static Unity Objects")]
     public ScrollRect scrollbarRect;
@@ -69,7 +69,7 @@ public class MenuControls : MonoBehaviour
                 resizingWindow = false;
             }
             //hide menu and scroll bar slightly before menu has finished collapsing
-            else if ((hieghtBuffer - myRectTransform.offsetMin.y) < 5f)
+            else if ((hieghtBuffer - myRectTransform.offsetMin.y) < 10f)
             {
                 scrollMenuHidden = true;
                 ToggleScrollMenu();
