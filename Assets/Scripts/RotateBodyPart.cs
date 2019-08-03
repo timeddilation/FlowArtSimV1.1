@@ -22,7 +22,7 @@ public class RotateBodyPart : MonoBehaviour {
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.forward,
-                    //(rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                    //(rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed); //dont use delta time
                     (rotationSpeed * rotationSpeedModifier) * environmentVariables.globalSpeed);
                 break;
             case SpinDirections.Backward:

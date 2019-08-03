@@ -298,17 +298,17 @@ Prefab:
     - target: {fileID: 224824650774816812, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_AnchorMin.y
-      value: 0.47797135
+      value: 0.7077099
       objectReference: {fileID: 0}
     - target: {fileID: 224824650774816812, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_AnchorMax.y
-      value: 0.8721848
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224371080427263394, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 395.3
+      value: 177.79993
       objectReference: {fileID: 0}
     - target: {fileID: 224524335072917980, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 2}
@@ -846,6 +846,11 @@ Prefab:
         type: 2}
       propertyPath: propTrailSpeed
       value: 2.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 114899438636291528, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
+        type: 2}
+      propertyPath: regionDetectionThreshold
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd, type: 2}

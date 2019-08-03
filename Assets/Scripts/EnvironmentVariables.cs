@@ -37,6 +37,7 @@ public class EnvironmentVariables : MonoBehaviour
     [Header("Simulation Tweaks")]
     public float globalSpeed = 1f;
     public float propTrailSpeed = 6f;
+    public float regionDetectionThreshold = 1f;
     public string spinnerProps = "Hoops";
     public Slider globalSpeedSlider;
     public Slider trailSpeedSlider;
