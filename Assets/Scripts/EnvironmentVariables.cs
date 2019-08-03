@@ -63,9 +63,11 @@ public class EnvironmentVariables : MonoBehaviour
     [Header("Unity Gernerated Things")]
     public float trickStepper = 0f;
     public int eigthSteps = 0;
+    public int stepsInTrick = 8; //tricks update this value with whatever their steps in the trick are to reset the steps counter
     public BodyParts bodyParts;
     public bool halfTrailSpeed = false;
     public bool halfTrailSpeedUsed = false;
+    public bool reverseDirection = false;
 
     public static EnvironmentVariables instance;
 
@@ -119,12 +121,9 @@ public class EnvironmentVariables : MonoBehaviour
         //trick stepper tracker
         if (trickStepper >= 360)
         {
-            //int tripsAroundCircle = Convert.ToInt32(Math.Floor(trickStepper / 360));
-            //float reducedTrickStepper = trickStepper % tripsAroundCircle;
-            //trickStepper = reducedTrickStepper
             trickStepper = 0f;
         }
-        if (trickStepper == 0)
+        if (eigthSteps == stepsInTrick)
         {
             eigthSteps = 0;
         }
@@ -134,16 +133,12 @@ public class EnvironmentVariables : MonoBehaviour
         {
             GlobalSpeedSliderChanged(globalSpeedSlider);
         }
-
     }
 
     private void LateUpdate()
     {
         trickStepper += globalSpeed;
-        if (trickStepper % 45 == 0)
-        {
-            eigthSteps++;
-        }
+        eigthSteps = Convert.ToInt32(Math.Floor(trickStepper / 45));
     }
 
     private void GlobalSpeedSliderChanged(Slider slider)
@@ -171,10 +166,10 @@ public class EnvironmentVariables : MonoBehaviour
                 case 4:
                     globalSpeed = 1.5f;
                     break;
+                //case 5:
+                //    globalSpeed = 2f;
+                //    break;
                 case 5:
-                    globalSpeed = 2f;
-                    break;
-                case 6:
                     globalSpeed = 3f;
                     break;
                 default:
@@ -204,13 +199,15 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void UpdateTrickDirection(Toggle toggle)
     {
-        if (toggle.isOn && globalSpeed > 0)
+        if (toggle.isOn && !reverseDirection)
         {
-            globalSpeed = globalSpeed * -1;
+            reverseDirection = true;
+            trickStepper = Math.Abs(360 - trickStepper);
         }
-        else if (!toggle.isOn && globalSpeed < 0)
+        else if (!toggle.isOn && reverseDirection)
         {
-            globalSpeed = globalSpeed * -1;
+            reverseDirection = false;
+            trickStepper = Math.Abs(360 - trickStepper);
         }
     }
 

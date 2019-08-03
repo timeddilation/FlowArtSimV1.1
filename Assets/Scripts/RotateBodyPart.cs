@@ -16,43 +16,48 @@ public class RotateBodyPart : MonoBehaviour {
 
     public void RotateBodyPartAround(GameObject bodyPart, SpinDirections dir)
     {
+        float speedMultiplier = environmentVariables.globalSpeed;
+        if (environmentVariables.reverseDirection)
+        {
+            speedMultiplier = environmentVariables.globalSpeed * -1;
+        }
         switch (dir)
         {
             case SpinDirections.Forward:
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.forward,
-                    baseRotationSpeed * rotationSpeedModifier * environmentVariables.globalSpeed);
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
                 break;
             case SpinDirections.Backward:
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.back,
-                    baseRotationSpeed * rotationSpeedModifier * environmentVariables.globalSpeed);
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
                 break;
             case SpinDirections.Left:
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.left,
-                    baseRotationSpeed * rotationSpeedModifier * environmentVariables.globalSpeed);
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
                 break;
             case SpinDirections.Right:
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.right,
-                    baseRotationSpeed * rotationSpeedModifier * environmentVariables.globalSpeed);
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
                 break;
             case SpinDirections.Up:
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.up,
-                    baseRotationSpeed * rotationSpeedModifier * environmentVariables.globalSpeed);
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
                 break;
             case SpinDirections.Down:
                 gameObject.transform.RotateAround(
                     bodyPart.transform.position,
                     Vector3.down,
-                    baseRotationSpeed * rotationSpeedModifier * environmentVariables.globalSpeed);
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
                 break;
             default:
                 break;
