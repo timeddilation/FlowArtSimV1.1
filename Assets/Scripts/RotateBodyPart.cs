@@ -6,57 +6,61 @@ public class RotateBodyPart : MonoBehaviour {
 
     private EnvironmentVariables environmentVariables;
 
-    public float rotationSpeed = 100f;
+    private readonly float baseRotationSpeed = 1f;
     public float rotationSpeedModifier = 1f;
 
     private void Awake()
     {
-        environmentVariables = EnvironmentVariables.instance;
+        environmentVariables = EnvironmentVariables.instance; //need for global speed scale value
     }
 
     public void RotateBodyPartAround(GameObject bodyPart, SpinDirections dir)
     {
-        if (dir == SpinDirections.Forward)
+        float speedMultiplier = environmentVariables.globalSpeed;
+        if (environmentVariables.reverseDirection)
         {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.forward,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+            speedMultiplier = environmentVariables.globalSpeed * -1;
         }
-        else if (dir == SpinDirections.Backward)
+        switch (dir)
         {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.back,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Left)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.left,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Right)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.right,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Up)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.up,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Down)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.down,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+            case SpinDirections.Forward:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.forward,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Backward:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.back,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Left:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.left,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Right:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.right,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Up:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.up,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Down:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.down,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            default:
+                break;
         }
     }
 }

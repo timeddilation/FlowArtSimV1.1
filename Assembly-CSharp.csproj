@@ -61,6 +61,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Debugger.cs" />
     <Compile Include="Assets\Scripts\BodyParts.cs" />
     <Compile Include="Assets\Scripts\CamControls.cs" />
     <Compile Include="Assets\Scripts\Controller.cs" />
@@ -72,6 +73,7 @@
     <Compile Include="Assets\Scripts\PlanarRegions\PlaneRegionsYZ.cs" />
     <Compile Include="Assets\Scripts\RotateBodyPart.cs" />
     <Compile Include="Assets\Scripts\ToggleTrailActivity.cs" />
+    <Compile Include="Assets\TimeSpan.cs" />
     <Reference Include="UnityEditor.StandardEvents">
       <HintPath>F:/AppFiles/UnityProjects/FlowArtSimV1.1/Library/ScriptAssemblies/UnityEditor.StandardEvents.dll</HintPath>
     </Reference>

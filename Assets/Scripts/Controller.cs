@@ -1,7 +1,33 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+
+public enum Tricks
+{
+    None,
+    TestTrick,
+    //stall moves
+    ButterflyTraceVertical,
+    //antispin variations
+    AntispinPointsSplitOps,
+    AntispinPointsSameOps,
+    AntispinWallPlaneFlower,
+    AntispinWallPlaneFlowerWithInSpin,
+    Triquetra,
+    //wheel plane flowers
+    AntispinWheelPlaneFlowerSameOps,
+    AntispinWheelPlaneFlowerSplitSame,
+    InspinWheelPlaneFlowerSameSame,
+    InspinVsAntispinFlowerSameOps,
+    InspinVsAntispinFlowerSameSame,
+    InspinVsAntispinFlowerSplitOps,
+    InspinVsAntispinFlowerSplitSame,
+    //3D tricks
+    ThreedFlowerXZ,
+    ThreedDrills
+}
 
 public class Controller : MonoBehaviour
 {
@@ -25,55 +51,12 @@ public class Controller : MonoBehaviour
     #endregion
     #region State Engine
     //TODO: Build state engine
-
-    private bool setupTestTrick = false;
-    private bool doingTestTrick = false;
-
-    private bool setupAntiSpinPointsSameOps = false;
-    private bool doingAntiSpinPointsSameOps = false;
-
-    private bool setupAntiSpinPointsSplitOps = false;
-    private bool doingAntiSpinPointsSplitOps = false;
-
-    private bool setupAntiSpinWallPlaneFlower = false;
-    private bool doingAntiSpinWallPlaneFlower = false;
-
-    private bool setupStandardTriquetra = false;
-    private bool doingStandardTriquetra = false;
-
-    private bool setupButterflyTaceVertical = false;
-    private bool doingButterflyTaceVertical = false;
-
-    private bool setupAntispinWheelPlaneFlowerSameOps = false;
-    private bool doingAntispinWheelPlaneFlowerSameOps = false;
-
-    private bool setupAntispinWheelPlaneFlowerSplitSame = false;
-    private bool doingAntispinWheelPlaneFlowerSplitSame = false;
-
-    private bool setupInspinWheelPlaneFlowerSameSame = false;
-    private bool doingInspinWheelPlaneFlowerSameSame = false;
-
-    private bool setupInspinAntispinWheelPlaneFlowerSplitOps = false;
-    private bool doingInspinAntispinWheelPlaneFlowerSplitOps = false;
-
-    private bool setupInspinAntispinWheelPlaneFlowerSameOps = false;
-    private bool doingInspinAntispinWheelPlaneFlowerSameOps = false;
-
-    private bool setupInspinAntispinWheelPlaneFlowerSameSame = false;
-    private bool doingInspinAntispinWheelPlaneFlowerSameSame = false;
-
-    private bool setupInspinAntispinWheelPlaneFlowerSplitSame = false;
-    private bool doingInspinAntispinWheelPlaneFlowerSplitSame = false;
-
-    private bool setupThreeDimFlowerXZ = false;
-    private bool doingThreeDimFlowerXZ = false;
-
-    private bool setupThreeDimDrills = false;
-    private bool doingThreeDimDrills = false;
+    private Tricks trick = Tricks.None;
+    private bool setupTrick = false;
+    private bool doingTrick = false;
 
     private int trickStage = 0;
-    private int trickCycles = 0;
-    //private float intermidiateStageRotationCounter = 0f;
+    private int lastFrameTrickStage = 0;
     #endregion
 
     private void Start()
@@ -90,93 +73,106 @@ public class Controller : MonoBehaviour
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
 
-        SetSpinnerProps("Hoops");
+        //default value in this function is currently set to hoops if none is provided.
+        SetSpinnerProps(SpinnerProps.None);
     }
 
     private void Update()
     {
         UpdateDebugMenu();
+        RunTrick();
 
         if (Input.GetKeyDown("f1"))
         {
             canvas.enabled = !canvas.enabled;
-        }
+        }        
+    }
 
-        if (setupTestTrick || doingTestTrick)
-        {
-            TestTrick();
-        }
-        else if (setupAntiSpinPointsSameOps || doingAntiSpinPointsSameOps)
-        {
-            AntiSpinPointsSameOps();
-        }
-        else if (setupAntiSpinPointsSplitOps || doingAntiSpinPointsSplitOps)
-        {
-            AntiSpinPointsSplitOps();
-        }
-        else if (setupAntiSpinWallPlaneFlower || doingAntiSpinWallPlaneFlower)
-        {
-            AntiSpinWallPlaneFlower();
-        }
-        else if (setupStandardTriquetra || doingStandardTriquetra)
-        {
-            StandardTriquetra();
-        }
-        else if (setupAntispinWheelPlaneFlowerSameOps || doingAntispinWheelPlaneFlowerSameOps)
-        {
-            AntispinWheelPlaneFlowerSameOps();
-        }
-        else if (setupAntispinWheelPlaneFlowerSplitSame || doingAntispinWheelPlaneFlowerSplitSame)
-        {
-            AntispinWheelPlaneFlowerSplitSame();
-        }
-        else if (setupInspinWheelPlaneFlowerSameSame || doingInspinWheelPlaneFlowerSameSame)
-        {
-            InspinWheelPlaneFlowerSameSame();
-        }
-        else if (setupInspinAntispinWheelPlaneFlowerSplitOps || doingInspinAntispinWheelPlaneFlowerSplitOps)
-        {
-            InspinAntispinWheelPlaneFlowerSplitOps();
-        }
-        else if (setupInspinAntispinWheelPlaneFlowerSameOps || doingInspinAntispinWheelPlaneFlowerSameOps)
-        {
-            InspinAntispinWheelPlaneFlowerSameOps();
-        }
-        else if (setupInspinAntispinWheelPlaneFlowerSameSame || doingInspinAntispinWheelPlaneFlowerSameSame)
-        {
-            InspinAntispinWheelPlaneFlowerSameSame();
-        }
-        else if (setupInspinAntispinWheelPlaneFlowerSplitSame || doingInspinAntispinWheelPlaneFlowerSplitSame)
-        {
-            InspinAntispinWheelPlaneFlowerSplitSame();
-        }
-        else if (setupButterflyTaceVertical || doingButterflyTaceVertical)
-        {
-            ButterflyTaceVertical();
-        }
-        else if(setupThreeDimFlowerXZ || doingThreeDimFlowerXZ)
-        {
-            ThreeDimFlowerXZ();
-        }
-        else if(setupThreeDimDrills || doingThreeDimDrills)
-        {
-            ThreeDimDrills();
-        }
+    private void LateUpdate()
+    {
+        lastFrameTrickStage = trickStage;
+    }
+
+    private bool EighthStepUpdate()
+    {
+        //BUG: Needs to account for when switching to a different trick to not flag this as TRUE
+        if (lastFrameTrickStage != trickStage)
+            return true;
         else
+            return false;
+    }
+
+    private void RunTrick()
+    {
+        switch (trick)
         {
-            return;
+            case Tricks.TestTrick:
+                TestTrick();
+                break;
+            //stall moves
+            case Tricks.ButterflyTraceVertical:
+                ButterflyTaceVertical();
+                break;
+            //antispin variations
+            case Tricks.AntispinPointsSplitOps:
+                AntiSpinPointsSplitOps();
+                break;
+            case Tricks.AntispinPointsSameOps:
+                AntiSpinPointsSameOps();
+                break;
+            case Tricks.AntispinWallPlaneFlower:
+                AntiSpinWallPlaneFlower();
+                break;
+            case Tricks.AntispinWallPlaneFlowerWithInSpin:
+                AntiSpinWallPlaneFlowerWithInSpin();
+                break;
+            case Tricks.Triquetra:
+                StandardTriquetra();
+                break;
+            //wheel plane flowers
+            case Tricks.AntispinWheelPlaneFlowerSameOps:
+                AntispinWheelPlaneFlowerSameOps();
+                break;
+            case Tricks.AntispinWheelPlaneFlowerSplitSame:
+                AntispinWheelPlaneFlowerSplitSame();
+                break;
+            case Tricks.InspinWheelPlaneFlowerSameSame:
+                InspinWheelPlaneFlowerSameSame();
+                break;
+            case Tricks.InspinVsAntispinFlowerSameOps:
+                InspinAntispinWheelPlaneFlowerSameOps();
+                break;
+            case Tricks.InspinVsAntispinFlowerSameSame:
+                InspinAntispinWheelPlaneFlowerSameSame();
+                break;
+            case Tricks.InspinVsAntispinFlowerSplitOps:
+                InspinAntispinWheelPlaneFlowerSplitOps();
+                break;
+            case Tricks.InspinVsAntispinFlowerSplitSame:
+                InspinAntispinWheelPlaneFlowerSplitSame();
+                break;
+            //3D tricks
+            case Tricks.ThreedFlowerXZ:
+                ThreeDimFlowerXZ();
+                break;
+            case Tricks.ThreedDrills:
+                ThreeDimDrills();
+                break;
+            default:
+                break;
         }
     }
 
     public void TestTrick()
     {
-        if (!setupTestTrick && !doingTestTrick)
+        if (trick != Tricks.TestTrick)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupTestTrick = true;
+            setupTrick = true;
+            trick = Tricks.TestTrick;
         }
-        if (doingTestTrick)
+        if (doingTrick)
         {
             //pibot body around in circle
             bodyParts.leftShoulderSpin.rotationSpeedModifier = 2f;
@@ -201,7 +197,7 @@ public class Controller : MonoBehaviour
             bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightWrist, SpinDirections.Down);
             //bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Right);
         }
-        if (setupTestTrick)
+        if (setupTrick)
         {
             //rotate both arms to have prop on left side of body
             bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, Vector3.back, 180f);
@@ -212,85 +208,90 @@ public class Controller : MonoBehaviour
             bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.up, 180f);
             bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.up, 180f);
 
-            setupTestTrick = false;
-            doingTestTrick = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Test Trick";
             thisSimulationDescription.text = "";
         }
     }
 
-    public void AntiSpinPointsSameOps()
+    //stall moves
+    public void ButterflyTaceVertical()
     {
-        if (!setupAntiSpinPointsSameOps && !doingAntiSpinPointsSameOps)
+        if (trick != Tricks.ButterflyTraceVertical)
         {
             ClearSpinner();
-            SetSpinner(spinnerWheelPlane);
-            setupAntiSpinPointsSameOps = true;
+            SetSpinner(spinnerWallPlane);
+            setupTrick = true;
+            trick = Tricks.ButterflyTraceVertical;
             envVariables.halfTrailSpeed = true;
         }
-
-        if (doingAntiSpinPointsSameOps)
+        if (doingTrick)
         {
+            if ((envVariables.eigthSteps >= 0 && envVariables.eigthSteps < 4) || envVariables.eigthSteps == 8)
+                trickStage = 0;
+            else
+                trickStage = 1;
+
             if (trickStage == 0)
             {
-                //set poi speed modifier to 4 to get 4 zero points on each arm rotation
-                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
-                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
-                //spin poi
+                //rotate arms up
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Right);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Right);
+                //rotate hands against arm rotation to keep props in plane
+                bodyParts.leftHandSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Left);
+                bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Left);
+                //rotate props
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
-                //rotate shoulders
-                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
-                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
-
-                //right hand is at upper position           
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                }
             }
-            else if (trickStage == 1)
+            if (trickStage == 1)
             {
-                //kill velocity on both props
-                bodyParts.leftPropSpin.rotationSpeedModifier = 0f;
-                bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
-                //rotate shoulders in opposite directions
-                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
-                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
-
-                //right hand is at lower position
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
-                {
-                    trickStage = 0;
-                }
+                //rotate arms down
+                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Left);
+                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Left);
+                //rotate hands against arm rotation to keep props in plane
+                bodyParts.leftHandSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Right);
+                bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Right);
+                //rotate props
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
             }
         }
-        if (setupAntiSpinPointsSameOps)
+        if (setupTrick)
         {
-            //need to give it a cycle for the new spinner to be instantiated
-            doingAntiSpinPointsSameOps = true;
-            setupAntiSpinPointsSameOps = false;
-            //rotate shoulders to have right hand down and left hand up
-            bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
-            bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+            //rotate shoulders to lower position
+            bodyParts.leftArm.transform.RotateAround(bodyParts.leftShoulder.transform.position, new Vector3(0, 0, 1f), -105);
+            bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, new Vector3(0, 0, 1f), 105f);
+            //rotate props to match additional rotation of arms
+            bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 1f), 15f);
+            bodyParts.rightProp.transform.RotateAround(bodyParts.rightHand.transform.position, new Vector3(0, 0, 1f), -15f);
 
-            thisSimulationName.text = "Antispin Points";
-            thisSimulationDescription.text = "Same Time / Opposite Direction";
+            setupTrick = false;
+            doingTrick = true;
+            thisSimulationName.text = "Butterfly Tracing Vertically";
         }
     }
 
+    //antispin variations
     public void AntiSpinPointsSplitOps()
     {
-        if (!setupAntiSpinPointsSplitOps && !doingAntiSpinPointsSplitOps)
+        if (trick != Tricks.AntispinPointsSplitOps)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupAntiSpinPointsSplitOps = true;
+            setupTrick = true;
+            trick = Tricks.AntispinPointsSplitOps;
             envVariables.halfTrailSpeed = true;
         }
-        if (doingAntiSpinPointsSplitOps)
+        if (doingTrick)
         {
+            if ((envVariables.eigthSteps >= 0 && envVariables.eigthSteps < 4) || envVariables.eigthSteps == 8)
+                trickStage = 0;
+            else
+                trickStage = 1;
+
             if (trickStage == 0)
             {
                 //set poi speed modifier to 4 to get 4 zero points on left arm rotation
@@ -303,12 +304,6 @@ public class Controller : MonoBehaviour
                 //rotate shoulders
                 bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
                 bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
-
-                //right hand is at upper position           
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                }
             }
             else if (trickStage == 1)
             {
@@ -322,19 +317,13 @@ public class Controller : MonoBehaviour
                 //rotate shoulders in opposite directions
                 bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
                 bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
-
-                //right hand is at lower position
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
-                {
-                    trickStage = 0;
-                }
             }
         }
-        if (setupAntiSpinPointsSplitOps)
+        if (setupTrick)
         {
             //need to give it a cycle for the new spinner to be instantiated
-            doingAntiSpinPointsSplitOps = true;
-            setupAntiSpinPointsSplitOps = false;
+            doingTrick = true;
+            setupTrick = false;
             //rotate shoulders to have right hand down and left hand up
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
@@ -344,17 +333,76 @@ public class Controller : MonoBehaviour
         }
     }
 
+    public void AntiSpinPointsSameOps()
+    {
+        if (trick != Tricks.AntispinPointsSameOps)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupTrick = true;
+            trick = Tricks.AntispinPointsSameOps;
+            envVariables.halfTrailSpeed = true;
+        }
+
+        if (doingTrick)
+        {
+            if ((envVariables.eigthSteps >= 0 && envVariables.eigthSteps < 4) || envVariables.eigthSteps == 8)
+                trickStage = 0;
+            else
+                trickStage = 1;
+
+            if (trickStage == 0)
+            {
+                //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+                //spin poi
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+            }
+            else if (trickStage == 1)
+            {
+                //kill velocity on both props
+                bodyParts.leftPropSpin.rotationSpeedModifier = 0f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 0f;
+                //rotate shoulders in opposite directions
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+            }
+        }
+        if (setupTrick)
+        {
+            //need to give it a cycle for the new spinner to be instantiated
+            doingTrick = true;
+            setupTrick = false;
+            //rotate shoulders to have right hand down and left hand up
+            bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+            bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
+
+            thisSimulationName.text = "Antispin Points";
+            thisSimulationDescription.text = "Same Time / Opposite Direction";
+        }
+    }
+
     public void AntiSpinWallPlaneFlower()
     {
-        if (!setupAntiSpinWallPlaneFlower && !doingAntiSpinWallPlaneFlower)
+        if (trick != Tricks.AntispinWallPlaneFlower)
         {
             ClearSpinner();
             SetSpinner(spinnerWallPlane);
-            setupAntiSpinWallPlaneFlower = true;
+            setupTrick = true;
+            trick = Tricks.AntispinWallPlaneFlower;
         }       
 
-        if (doingAntiSpinWallPlaneFlower)
+        if (doingTrick)
         {
+            if (envVariables.eigthSteps < 2 || envVariables.eigthSteps >= 6)
+                trickStage = 0;
+            else
+                trickStage = 1;
 
             if (trickStage == 0)
             {
@@ -367,12 +415,6 @@ public class Controller : MonoBehaviour
                 //rotate shoulders
                 bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
                 bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
-
-                //right hand is at upper position           
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                }
             }
             else if (trickStage == 1)
             {
@@ -380,33 +422,78 @@ public class Controller : MonoBehaviour
                 //rotate shoulders
                 bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
                 bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
-
-                //right hand is at lower position
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
-                {
-                    trickStage = 0;
-                }
             }
         }
-        if (setupAntiSpinWallPlaneFlower)
+        if (setupTrick)
         {
             //need to give it a cycle for the new spinner to be instantiated
-            doingAntiSpinWallPlaneFlower = true;
-            setupAntiSpinWallPlaneFlower = false;
-
+            doingTrick = true;
+            setupTrick = false;
             thisSimulationName.text = "Wall Plane Antispin Flower";
         }       
     }
 
+    public void AntiSpinWallPlaneFlowerWithInSpin()
+    {
+        if (trick != Tricks.AntispinWallPlaneFlowerWithInSpin)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWallPlane);
+            setupTrick = true;
+            trick = Tricks.AntispinWallPlaneFlowerWithInSpin;
+        }
+
+        if (doingTrick)
+        {
+            if (envVariables.eigthSteps < 2 || envVariables.eigthSteps >= 6)
+                trickStage = 0;
+            else
+                trickStage = 1;
+
+            if (trickStage == 0)
+            {
+                //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+                //spin poi
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+            }
+            else if (trickStage == 1)
+            {
+                //set rotation speed modifier on props to 2 for 2 points on the inspin
+                bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 2f;
+                //rotate props forward
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
+                //rotate arms forward
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+            }
+        }
+        if (setupTrick)
+        {
+            //need to give it a cycle for the new spinner to be instantiated
+            doingTrick = true;
+            setupTrick = false;
+            thisSimulationName.text = "Wall Plane Antispin Flower with In Spin";
+        }
+    }
+
     public void StandardTriquetra()
     {
-        if (!setupStandardTriquetra && !doingStandardTriquetra)
+        if (trick != Tricks.Triquetra)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupStandardTriquetra = true;
+            setupTrick = true;
+            trick = Tricks.Triquetra;
         }
-        if (doingStandardTriquetra)
+        if (doingTrick)
         {
             //rotate arms back
             bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Backward);
@@ -415,80 +502,17 @@ public class Controller : MonoBehaviour
             bodyParts.rightPropSpin.rotationSpeedModifier = 3f;
             bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
         }
-        if (setupStandardTriquetra)
+        if (setupTrick)
         {
             //rotate both arms to have prop above head
             bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, Vector3.back, 90f);
             bodyParts.leftArm.transform.RotateAround(bodyParts.leftShoulder.transform.position, Vector3.forward, 90f);
 
-            setupStandardTriquetra = false;
-            doingStandardTriquetra = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Triquetra";
             thisSimulationDescription.text = "";
-        }
-    }
-
-    public void ButterflyTaceVertical()
-    {
-        if (!setupButterflyTaceVertical && !doingButterflyTaceVertical)
-        {
-            ClearSpinner();
-            SetSpinner(spinnerWallPlane);
-            setupButterflyTaceVertical = true;
-            envVariables.halfTrailSpeed = true;
-        }
-        if (doingButterflyTaceVertical)
-        {
-            if (trickStage == 0)
-            {
-                //rotate arms up
-                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Right);
-                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Right);
-                //rotate hands against arm rotation to keep props in plane
-                bodyParts.leftHandSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Left);
-                bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Left);
-                //rotate props
-                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
-
-                //right hand is at upper position           
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                }
-            }
-            if (trickStage == 1)
-            {
-                //rotate arms down
-                bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Left);
-                bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Left);
-                //rotate hands against arm rotation to keep props in plane
-                bodyParts.leftHandSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Right);
-                bodyParts.rightHandSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Right);
-                //rotate props
-                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
-                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
-
-                //right hand is at lower position
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
-                {
-                    trickStage = 0;
-                }
-            }
-        }
-        if (setupButterflyTaceVertical)
-        {
-            //rotate shoulders to lower position
-            bodyParts.leftArm.transform.RotateAround(bodyParts.leftShoulder.transform.position, new Vector3(0, 0, 1f), -105);
-            bodyParts.rightArm.transform.RotateAround(bodyParts.rightShoulder.transform.position, new Vector3(0, 0, 1f), 105f);
-            //rotate props to match additional rotation of arms
-            bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 1f), 15f);
-            bodyParts.rightProp.transform.RotateAround(bodyParts.rightHand.transform.position, new Vector3(0, 0, 1f), -15f);
-
-            setupButterflyTaceVertical = false;
-            doingButterflyTaceVertical = true;
-            thisSimulationName.text = "Butterfly Tracing Vertically";
         }
     }
 
@@ -497,16 +521,18 @@ public class Controller : MonoBehaviour
 
     //}
 
+    //wheel plane flowers
     public void AntispinWheelPlaneFlowerSameOps()
     {
-        if (!setupAntispinWheelPlaneFlowerSameOps && !doingAntispinWheelPlaneFlowerSameOps)
+        if (trick != Tricks.AntispinWheelPlaneFlowerSameOps)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupAntispinWheelPlaneFlowerSameOps = true;
+            setupTrick = true;
+            trick = Tricks.AntispinWheelPlaneFlowerSameOps;
             envVariables.halfTrailSpeed = true;
         }
-        if (doingAntispinWheelPlaneFlowerSameOps)
+        if (doingTrick)
         {
             //set prop speed modifier to 4 to get 4 zero points
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
@@ -518,10 +544,10 @@ public class Controller : MonoBehaviour
             bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
             bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
         }
-        if (setupAntispinWheelPlaneFlowerSameOps)
+        if (setupTrick)
         {
-            setupAntispinWheelPlaneFlowerSameOps = false;
-            doingAntispinWheelPlaneFlowerSameOps = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Wheel Plaine Antispine Flower";
             thisSimulationDescription.text = "Same Time / Opposite Direction";
@@ -530,14 +556,15 @@ public class Controller : MonoBehaviour
 
     public void AntispinWheelPlaneFlowerSplitSame()
     {
-        if (!setupAntispinWheelPlaneFlowerSplitSame && !doingAntispinWheelPlaneFlowerSplitSame)
+        if (trick != Tricks.AntispinWheelPlaneFlowerSplitSame)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupAntispinWheelPlaneFlowerSplitSame = true;
+            setupTrick = true;
+            trick = Tricks.AntispinWheelPlaneFlowerSplitSame;
             envVariables.halfTrailSpeed = true;
         }
-        if (doingAntispinWheelPlaneFlowerSplitSame)
+        if (doingTrick)
         {
             //set prop speed modifier to 4 to get 4 zero points
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
@@ -549,10 +576,10 @@ public class Controller : MonoBehaviour
             bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
             bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
         }
-        if (setupAntispinWheelPlaneFlowerSplitSame)
+        if (setupTrick)
         {
-            setupAntispinWheelPlaneFlowerSplitSame = false;
-            doingAntispinWheelPlaneFlowerSplitSame = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Wheel Plaine Antispine Flower";
             thisSimulationDescription.text = "Split Time / Same Direction";
@@ -561,14 +588,15 @@ public class Controller : MonoBehaviour
 
     public void InspinWheelPlaneFlowerSameSame()
     {
-        if (!setupInspinWheelPlaneFlowerSameSame && !doingInspinWheelPlaneFlowerSameSame)
+        if (trick != Tricks.InspinWheelPlaneFlowerSameSame)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupInspinWheelPlaneFlowerSameSame = true;
+            setupTrick = true;
+            trick = Tricks.InspinWheelPlaneFlowerSameSame;
             envVariables.halfTrailSpeed = true;
         }
-        if (doingInspinWheelPlaneFlowerSameSame)
+        if (doingTrick)
         {
             //set rotation speed modifier on props to 2 for 2 points on the inspin
             bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
@@ -580,57 +608,33 @@ public class Controller : MonoBehaviour
             bodyParts.leftArmSpin.RotateBodyPartAround(bodyParts.leftShoulder, SpinDirections.Backward);
             bodyParts.rightArmSpin.RotateBodyPartAround(bodyParts.rightShoulder, SpinDirections.Backward);
         }
-        if (setupInspinWheelPlaneFlowerSameSame)
+        if (setupTrick)
         {
             bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, Vector3.forward, 180f);
             bodyParts.rightProp.transform.RotateAround(bodyParts.rightHand.transform.position, Vector3.forward, 180f);
 
-            setupInspinWheelPlaneFlowerSameSame = false;
-            doingInspinWheelPlaneFlowerSameSame = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Inspin Wheel Plane Flower";
             thisSimulationDescription.text = "Same Time / Same Direction";
         }
     }
 
-    public void InspinAntispinWheelPlaneFlowerSplitOps()
-    {
-        if (!setupInspinAntispinWheelPlaneFlowerSplitOps && !doingInspinAntispinWheelPlaneFlowerSplitOps)
-        {
-            ClearSpinner();
-            SetSpinner(spinnerWheelPlane);
-            setupInspinAntispinWheelPlaneFlowerSplitOps = true;
-        }
-        if (doingInspinAntispinWheelPlaneFlowerSplitOps)
-        {
-            InspinAntispinWheelPlaneFlowerOpsDirection();
-        }
-        if (setupInspinAntispinWheelPlaneFlowerSplitOps)
-        {
-            //put left hand (inSpin hand) in Inspin starting location
-            bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
-            //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlaneFlowerSplitOps = false;
-            doingInspinAntispinWheelPlaneFlowerSplitOps = true;
-
-            thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
-            thisSimulationDescription.text = "Split Time / Opposite Direction";
-        }
-    }
-
     public void InspinAntispinWheelPlaneFlowerSameOps()
     {
-        if (!setupInspinAntispinWheelPlaneFlowerSameOps && !doingInspinAntispinWheelPlaneFlowerSameOps)
+        if (trick != Tricks.InspinVsAntispinFlowerSameOps)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupInspinAntispinWheelPlaneFlowerSameOps = true;
+            setupTrick = true;
+            trick = Tricks.InspinVsAntispinFlowerSameOps;
         }
-        if (doingInspinAntispinWheelPlaneFlowerSameOps)
+        if (doingTrick)
         {
             InspinAntispinWheelPlaneFlowerOpsDirection();
         }
-        if (setupInspinAntispinWheelPlaneFlowerSameOps)
+        if (setupTrick)
         {
             //put left hand (inSpin hand) in Inspin starting location
             bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
@@ -638,8 +642,8 @@ public class Controller : MonoBehaviour
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlaneFlowerSameOps = false;
-            doingInspinAntispinWheelPlaneFlowerSameOps = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Same Time / Opposite Direction";
@@ -648,43 +652,71 @@ public class Controller : MonoBehaviour
 
     public void InspinAntispinWheelPlaneFlowerSameSame()
     {
-        if (!setupInspinAntispinWheelPlaneFlowerSameSame && !doingInspinAntispinWheelPlaneFlowerSameSame)
+        if (trick != Tricks.InspinVsAntispinFlowerSameSame)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupInspinAntispinWheelPlaneFlowerSameSame = true;
+            setupTrick = true;
+            trick = Tricks.InspinVsAntispinFlowerSameSame;
         }
-        if (doingInspinAntispinWheelPlaneFlowerSameSame)
+        if (doingTrick)
         {
             InspinAntispinWheelPlaneFlowerSameDirection();
         }
-        if (setupInspinAntispinWheelPlaneFlowerSameSame)
+        if (setupTrick)
         {
             //rotate shoulders to lower position
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), -90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlaneFlowerSameSame = false;
-            doingInspinAntispinWheelPlaneFlowerSameSame = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Same Time / Same Direction";
         }
     }
 
-    public void InspinAntispinWheelPlaneFlowerSplitSame()
+    public void InspinAntispinWheelPlaneFlowerSplitOps()
     {
-        if (!setupInspinAntispinWheelPlaneFlowerSplitSame && !doingInspinAntispinWheelPlaneFlowerSplitSame)
+        if (trick != Tricks.InspinVsAntispinFlowerSplitOps)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupInspinAntispinWheelPlaneFlowerSplitSame = true;
+            setupTrick = true;
+            trick = Tricks.InspinVsAntispinFlowerSplitOps;
         }
-        if (doingInspinAntispinWheelPlaneFlowerSplitSame)
+        if (doingTrick)
+        {
+            InspinAntispinWheelPlaneFlowerOpsDirection();
+        }
+        if (setupTrick)
+        {
+            //put left hand (inSpin hand) in Inspin starting location
+            bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
+            //need to give it a cycle for the new spinner to be instantiated
+            setupTrick = false;
+            doingTrick = true;
+
+            thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
+            thisSimulationDescription.text = "Split Time / Opposite Direction";
+        }
+    }
+
+    public void InspinAntispinWheelPlaneFlowerSplitSame()
+    {
+        if (trick != Tricks.InspinVsAntispinFlowerSplitSame)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWheelPlane);
+            setupTrick = true;
+            trick = Tricks.InspinVsAntispinFlowerSplitSame;
+        }
+        if (doingTrick)
         {
             InspinAntispinWheelPlaneFlowerSameDirection();
         }
-        if (setupInspinAntispinWheelPlaneFlowerSplitSame)
+        if (setupTrick)
         {
             //put left hand (inSpin hand) in Inspin starting location
             bodyParts.leftProp.transform.RotateAround(bodyParts.leftHand.transform.position, new Vector3(0, 0, 180f), 180f);
@@ -692,23 +724,25 @@ public class Controller : MonoBehaviour
             bodyParts.leftShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), -90f);
             bodyParts.rightShoulder.transform.RotateAround(bodyParts.torso.transform.position, new Vector3(0, 0, 90f), 90f);
             //need to give it a cycle for the new spinner to be instantiated
-            setupInspinAntispinWheelPlaneFlowerSplitSame = false;
-            doingInspinAntispinWheelPlaneFlowerSplitSame = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "Wheel Plane Inspin vs. Antispin Flower";
             thisSimulationDescription.text = "Split Time / Same Direction";
         }
     }
 
+    //3D tricks
     public void ThreeDimFlowerXZ()
     {
-        if (!setupThreeDimFlowerXZ && !doingThreeDimFlowerXZ)
+        if (trick != Tricks.ThreedFlowerXZ)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupThreeDimFlowerXZ = true;
+            setupTrick = true;
+            trick = Tricks.ThreedFlowerXZ;
         }
-        if (doingThreeDimFlowerXZ)
+        if (doingTrick)
         {
             //set speed modifiers on both props to 4 to get our 4 stall/zero points
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
@@ -724,7 +758,7 @@ public class Controller : MonoBehaviour
             bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
             bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Up);
         }
-        if (setupThreeDimFlowerXZ)
+        if (setupTrick)
         {
             //rotate right hand 90degrees to hold prop on Z plane
             bodyParts.rightHand.transform.RotateAround(
@@ -742,8 +776,8 @@ public class Controller : MonoBehaviour
                 Vector3.forward,
                 90f);
 
-            setupThreeDimFlowerXZ = false;
-            doingThreeDimFlowerXZ = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "3D Flower XZ-Planes";
             thisSimulationDescription.text = "";
@@ -752,18 +786,80 @@ public class Controller : MonoBehaviour
 
     public void ThreeDimDrills()
     {
-        if (!setupThreeDimDrills && !doingThreeDimDrills)
+        if (trick != Tricks.ThreedDrills)
         {
             ClearSpinner();
             SetSpinner(spinnerWheelPlane);
-            setupThreeDimDrills = true;
+            setupTrick = true;
+            trick = Tricks.ThreedDrills;
+            envVariables.stepsInTrick = 12;
         }
-        if (doingThreeDimDrills)
+        if (doingTrick)
         {
             //set speed modifier on props to 4 to get 4 zeropoint
             bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
             bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
 
+            if (envVariables.eigthSteps >= 0 && envVariables.eigthSteps < 2)
+            {
+                trickStage = 0;
+                if (EighthStepUpdate())
+                {
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.right, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.right, 90f);
+                }
+            }
+            else if (envVariables.eigthSteps >= 2 && envVariables.eigthSteps < 4)
+            {
+                trickStage = 1;
+                if (EighthStepUpdate())
+                {
+                    //TODO: Smooth rotation into position
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.down, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.down, 90f);
+                }
+            }
+            else if (envVariables.eigthSteps >= 4 && envVariables.eigthSteps < 6)
+            {
+                trickStage = 2;
+                if (EighthStepUpdate())
+                {
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.forward, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.forward, 90f);
+                }
+            }
+            else if (envVariables.eigthSteps >= 6 && envVariables.eigthSteps < 8)
+            {
+                trickStage = 3;
+                if (EighthStepUpdate())
+                {
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.left, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.left, 90f);
+                }
+            }
+            else if (envVariables.eigthSteps >= 8 && envVariables.eigthSteps < 10)
+            {
+                trickStage = 4;
+                if (EighthStepUpdate())
+                {
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.up, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.up, 90f);
+                }                
+            }
+            else if (envVariables.eigthSteps >= 10 && envVariables.eigthSteps < 12)
+            {
+                trickStage = 5;
+                if (EighthStepUpdate())
+                {
+                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.forward, 90f);
+                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.forward, 90f);
+                }                
+            }
+            else if (envVariables.eigthSteps == 12)
+            {
+                trickStage = 0;
+            }
+            //do the actual things during the stages
             if (trickStage == 0)
             {
                 //right prop: from back to down
@@ -782,16 +878,6 @@ public class Controller : MonoBehaviour
 
                 //    intermidiateStageRotationCounter += 15;
                 //}
-
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-
-                    //rotate hands
-                    //TODO: Smooth rotation into position
-                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.down, 90f);
-                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.down, 90f);
-                }
             }
             else if (trickStage == 1)
             {                
@@ -802,16 +888,6 @@ public class Controller : MonoBehaviour
                 //spin prop anti to arms
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Left);
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Left);
-
-                if (bodyParts.rightPropRegionYZ == ZeroPointRegion.LocalForward && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                    bodyParts.zeroPointPosition = -8f;
-                    //rotate hands
-                    //TODO: Smooth rotation into position
-                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.forward, 90f);
-                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.forward, 90f);
-                }
             }
             else if (trickStage == 2)
             {
@@ -822,15 +898,6 @@ public class Controller : MonoBehaviour
                 //spin prop anti to arms
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Up);
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Up);
-
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalLeft && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                    bodyParts.zeroPointPosition = 0f;
-                    //TODO: Smooth rotation into position
-                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.left, 90f);
-                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.left, 90f);
-                }
             }
             else if (trickStage == 3)
             {
@@ -841,15 +908,6 @@ public class Controller : MonoBehaviour
                 //spin prop anti to arms
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Backward);
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Backward);
-
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                    //rotate hands
-                    //TODO: Smooth rotation into position
-                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.up, 90f);
-                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.up, 90f);
-                }
             }
             else if (trickStage == 4)
             {
@@ -860,16 +918,6 @@ public class Controller : MonoBehaviour
                 //spin prop anti to arms
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Right);
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Right);
-
-                if (bodyParts.rightPropRegionYZ == ZeroPointRegion.LocalForward && bodyParts.zeroPointStageUpdate)
-                {
-                    ++trickStage;
-                    bodyParts.zeroPointPosition = -8f;
-                    //rotate hands
-                    //TODO: Smooth rotation into position
-                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.forward, 90f);
-                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.forward, 90f);
-                }
             }
             else if (trickStage == 5)
             {
@@ -880,34 +928,19 @@ public class Controller : MonoBehaviour
                 //spin prop anti to arms
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Down);
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Down);
-
-                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalRight && bodyParts.zeroPointStageUpdate)
-                {
-                    trickStage = 0;
-                    ++trickCycles;
-                    bodyParts.zeroPointPosition = 0f;
-                    if (trickCycles == 2)
-                    {
-                        doingThreeDimDrills = false;
-                        ThreeDimDrills();
-                        return;
-                    }
-                    //TODO: Smooth rotation into position
-                    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.right, 90f);
-                    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.right, 90f);
-                }
             }
         }
-        if (setupThreeDimDrills)
+        if (setupTrick)
         {
-            setupThreeDimDrills = false;
-            doingThreeDimDrills = true;
+            setupTrick = false;
+            doingTrick = true;
 
             thisSimulationName.text = "3D Drills";
             thisSimulationDescription.text = "";
         }
     }
 
+    //re-usables
 
     private void InspinAntispinWheelPlaneFlowerSameDirection()
     {
@@ -936,25 +969,43 @@ public class Controller : MonoBehaviour
     }
 
 
-
+    //misc controls
     private void PropDropdownValueChanged(Dropdown change)
     {
-        SetSpinnerProps(change.captionText.text);
+        SpinnerProps selectedProp = SpinnerProps.None;
+        switch (change.captionText.text)
+        {
+            case "Hoops":
+                selectedProp = SpinnerProps.Hoops;
+                break;
+            case "Poi":
+                selectedProp = SpinnerProps.Poi;
+                break;
+            default:
+                selectedProp = SpinnerProps.Hoops;
+                break;
+        }
+        SetSpinnerProps(selectedProp);
         ClearSpinner();
         SetSpinner(spinnerWallPlane);
     }
 
-    private void SetSpinnerProps(string propName)
+    private void SetSpinnerProps(SpinnerProps propName)
     {
-        if (propName == "Hoops")
+        switch (propName)
         {
-            spinnerWallPlane = envVariables.hooperWallPlane;
-            spinnerWheelPlane = envVariables.hooperWheelPlane;
-        }
-        else if (propName == "Poi")
-        {
-            spinnerWallPlane = envVariables.poiWallPlane;
+            case SpinnerProps.Hoops:
+                spinnerWallPlane = envVariables.hooperWallPlane;
+                spinnerWheelPlane = envVariables.hooperWheelPlane;
+            break;
+            case SpinnerProps.Poi:
+                spinnerWallPlane = envVariables.poiWallPlane;
             spinnerWheelPlane = envVariables.poiWheelPlane;
+            break;
+            default:
+                spinnerWallPlane = envVariables.hooperWallPlane;
+            spinnerWheelPlane = envVariables.hooperWheelPlane;
+            break;
         }
     }
 
@@ -970,24 +1021,15 @@ public class Controller : MonoBehaviour
             envVariables.halfTrailSpeed = false;
             envVariables.halfTrailSpeedUsed = false;
             envVariables.propTrailSpeed = envVariables.trailSpeedSlider.value;
+            //re-initialize trick cycle counters
+            envVariables.trickStepper = 0f;
+            envVariables.eigthSteps = 0;
+            envVariables.stepsInTrick = 8;
 
             trickStage = 0;
-            trickCycles = 0;
-            doingTestTrick = false;
-            doingAntiSpinPointsSameOps = false;
-            doingAntiSpinPointsSplitOps = false;
-            doingAntiSpinWallPlaneFlower = false;
-            doingStandardTriquetra = false;
-            doingAntispinWheelPlaneFlowerSameOps = false;
-            doingAntispinWheelPlaneFlowerSplitSame = false;
-            doingInspinWheelPlaneFlowerSameSame = false;
-            doingInspinAntispinWheelPlaneFlowerSplitOps = false;
-            doingInspinAntispinWheelPlaneFlowerSameOps = false;
-            doingInspinAntispinWheelPlaneFlowerSameSame = false;
-            doingInspinAntispinWheelPlaneFlowerSplitSame = false;
-            doingButterflyTaceVertical = false;
-            doingThreeDimFlowerXZ = false;
-            doingThreeDimDrills = false;
+            //trickCycles = 0;
+            doingTrick = false;
+            trick = Tricks.None;
 
             thisSimulationName.text = "Not Currently Simulating";
             thisSimulationDescription.text = "";
@@ -1020,12 +1062,11 @@ public class Controller : MonoBehaviour
 
         if (bodyParts != null)
         {
-            //debugText = "Left Prop Rot: " + bodyParts.leftPropPos.ToString()
-            //    + "\r\nRight Prop Rot: " + bodyParts.rightPropPos.ToString();
-            //debugText = "Left Prop Rot: " + bodyParts.leftProp.transform.rotation.eulerAngles
-            //    + "\r\nRight Prop Rot: " + bodyParts.rightProp.transform.rotation.eulerAngles;
             debugText = "Left Prop Point: " + bodyParts.leftPropZeroPointRegionDebugText
-                + "\r\nRight Prop Point: " + bodyParts.rightPropZeroPointRegionDebugText;
+                + "\r\nRight Prop Point: " + bodyParts.rightPropZeroPointRegionDebugText
+                + "\r\nTrick Stepper: " + envVariables.trickStepper.ToString()
+                + "\r\nEigth Steps: " + envVariables.eigthSteps.ToString()
+                + "\r\nTrick Stage: " + trickStage.ToString();
         }
 
         debugMenu.text = debugText;

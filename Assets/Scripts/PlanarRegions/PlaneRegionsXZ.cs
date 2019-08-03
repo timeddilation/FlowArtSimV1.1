@@ -19,6 +19,8 @@ public class PlaneRegionsXZ : MonoBehaviour
     public Vector2 localBackStart;
     public Vector2 localBackEnd;
 
+    private EnvironmentVariables envVariables;
+
     private void Awake()
     {
         if (instance != null)
@@ -30,16 +32,18 @@ public class PlaneRegionsXZ : MonoBehaviour
 
     private void Start()
     {
-        localRightStart = new Vector2(-55, -1);
-        localRightEnd = new Vector2(-55, 1);
+        envVariables = EnvironmentVariables.instance;
 
-        localLeftStart = new Vector2(55, -1);
-        localLeftEnd = new Vector2(55, -1);
+        localRightStart = new Vector2(-55, -envVariables.regionDetectionThreshold);
+        localRightEnd = new Vector2(-55, envVariables.regionDetectionThreshold);
 
-        localForwardStart = new Vector2(-1, -55);
-        localForwardEnd = new Vector2(1, -55);
+        localLeftStart = new Vector2(55, -envVariables.regionDetectionThreshold);
+        localLeftEnd = new Vector2(55, -envVariables.regionDetectionThreshold);
 
-        localBackStart = new Vector2(-1, 55);
-        localBackEnd = new Vector2(1, 55);
+        localForwardStart = new Vector2(-envVariables.regionDetectionThreshold, -55);
+        localForwardEnd = new Vector2(envVariables.regionDetectionThreshold, -55);
+
+        localBackStart = new Vector2(-envVariables.regionDetectionThreshold, 55);
+        localBackEnd = new Vector2(envVariables.regionDetectionThreshold, 55);
     }
 }

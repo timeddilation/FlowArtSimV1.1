@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,11 +33,19 @@ public enum PropSide
     Right = 2
 }
 
+public enum SpinnerProps
+{
+    None = 0,
+    Hoops = 1,
+    Poi = 2
+}
+
 public class EnvironmentVariables : MonoBehaviour
 {
     [Header("Simulation Tweaks")]
     public float globalSpeed = 1f;
     public float propTrailSpeed = 6f;
+    public float regionDetectionThreshold = 1f;
     public string spinnerProps = "Hoops";
     public Slider globalSpeedSlider;
     public Slider trailSpeedSlider;
@@ -52,11 +61,18 @@ public class EnvironmentVariables : MonoBehaviour
     public GameObject poiWheelPlane;
 
     [Header("Unity Gernerated Things")]
+    public float trickStepper = 0f;
+    public int eigthSteps = 0;
+    public int stepsInTrick = 8; //tricks update this value with whatever their steps in the trick are to reset the steps counter
     public BodyParts bodyParts;
     public bool halfTrailSpeed = false;
     public bool halfTrailSpeedUsed = false;
+    public bool reverseDirection = false;
 
     public static EnvironmentVariables instance;
+
+    //tracker for when to change global speed
+    private bool speedSliderChanged = false;
 
     private void Awake()
     {
@@ -71,7 +87,8 @@ public class EnvironmentVariables : MonoBehaviour
     {
         bodyParts = BodyParts.instance;
 
-        globalSpeedSlider.value = globalSpeed;
+        //globalSpeedSlider.value = globalSpeed;
+        GlobalSpeedSliderChanged(globalSpeedSlider);
         trailSpeedSlider.value = propTrailSpeed;
 
         planeMarkers.gameObject.SetActive(false);
@@ -100,11 +117,63 @@ public class EnvironmentVariables : MonoBehaviour
     private void Update()
     {
         UpdatePoiTrailSpeed();
+
+        //trick stepper tracker
+        if (trickStepper >= (stepsInTrick * 45)) //trick steps are broken up into bits of 45 degrees
+        {
+            trickStepper = 0f;
+        }
+        if (eigthSteps == stepsInTrick)
+        {
+            eigthSteps = 0;
+        }
+       
+        //update global speed if needing to
+        if (speedSliderChanged)
+        {
+            GlobalSpeedSliderChanged(globalSpeedSlider);
+        }
+    }
+
+    private void LateUpdate()
+    {
+        trickStepper += globalSpeed;
+        eigthSteps = Convert.ToInt32(Math.Floor(trickStepper / 45));
     }
 
     private void GlobalSpeedSliderChanged(Slider slider)
     {
-        globalSpeed = slider.value;
+        speedSliderChanged = true;
+        //only update global speed slider if trickStepper is divisble by 3 with a remainder of 0
+        //this ensures we can always compare the trickStepper up-to 1/8 parts of the circle
+        if (trickStepper % 3 == 0)
+        {
+            speedSliderChanged = false;
+            switch (Convert.ToInt32(Math.Floor(slider.value)))
+            {
+                case 0:
+                    globalSpeed = 0f;
+                    break;
+                case 1:
+                    globalSpeed = 0.25f;
+                    break;
+                case 2:
+                    globalSpeed = 0.5f;
+                    break;
+                case 3:
+                    globalSpeed = 1f;
+                    break;
+                case 4:
+                    globalSpeed = 1.5f;
+                    break;
+                case 5:
+                    globalSpeed = 3f;
+                    break;
+                default:
+                    globalSpeed = 1f;
+                    break;
+            }
+        }     
     }
 
     private void TrailSpeedSliderChanged(Slider slider)
@@ -127,13 +196,15 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void UpdateTrickDirection(Toggle toggle)
     {
-        if (toggle.isOn && globalSpeed > 0)
+        if (toggle.isOn && !reverseDirection)
         {
-            globalSpeed = globalSpeed * -1;
+            reverseDirection = true;
+            trickStepper = Math.Abs(360 - trickStepper);
         }
-        else if (!toggle.isOn && globalSpeed < 0)
+        else if (!toggle.isOn && reverseDirection)
         {
-            globalSpeed = globalSpeed * -1;
+            reverseDirection = false;
+            trickStepper = Math.Abs(360 - trickStepper);
         }
     }
 
