@@ -38,6 +38,9 @@ public class Controller : MonoBehaviour
     private bool setupAntiSpinWallPlaneFlower = false;
     private bool doingAntiSpinWallPlaneFlower = false;
 
+    private bool setupAntiSpinWallPlaneFlowerWithInSpin = false;
+    private bool doingAntiSpinWallPlaneFlowerWithInSpin = false;
+
     private bool setupStandardTriquetra = false;
     private bool doingStandardTriquetra = false;
 
@@ -101,7 +104,7 @@ public class Controller : MonoBehaviour
         {
             canvas.enabled = !canvas.enabled;
         }
-
+        //TODO: Switch case
         if (setupTestTrick || doingTestTrick)
         {
             TestTrick();
@@ -117,6 +120,10 @@ public class Controller : MonoBehaviour
         else if (setupAntiSpinWallPlaneFlower || doingAntiSpinWallPlaneFlower)
         {
             AntiSpinWallPlaneFlower();
+        }
+        else if (setupAntiSpinWallPlaneFlowerWithInSpin || doingAntiSpinWallPlaneFlowerWithInSpin)
+        {
+            AntiSpinWallPlaneFlowerWithInSpin();
         }
         else if (setupStandardTriquetra || doingStandardTriquetra)
         {
@@ -396,6 +403,70 @@ public class Controller : MonoBehaviour
 
             thisSimulationName.text = "Wall Plane Antispin Flower";
         }       
+    }
+
+    public void AntiSpinWallPlaneFlowerWithInSpin()
+    {
+        if (!setupAntiSpinWallPlaneFlowerWithInSpin && !doingAntiSpinWallPlaneFlowerWithInSpin)
+        {
+            ClearSpinner();
+            SetSpinner(spinnerWallPlane);
+            setupAntiSpinWallPlaneFlowerWithInSpin = true;
+        }
+
+        if (doingAntiSpinWallPlaneFlowerWithInSpin)
+        {
+
+            if (trickStage == 0)
+            {
+                //set poi speed modifier to 4 to get 4 zero points on each arm rotation
+                bodyParts.leftPropSpin.rotationSpeedModifier = 4f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 4f;
+                //spin poi
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
+                //rotate shoulders
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Backward);
+
+                //right hand is at upper position           
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalUp && bodyParts.zeroPointStageUpdate)
+                {
+                    ++trickStage;
+                }
+            }
+            else if (trickStage == 1)
+            {
+                ////no need to apply rotation force to poi, we want them to follow the hands, relative velocity is zero
+                ////rotate shoulders
+                //bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                //bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+
+                //set rotation speed modifier on props to 2 for 2 points on the inspin
+                bodyParts.leftPropSpin.rotationSpeedModifier = 2f;
+                bodyParts.rightPropSpin.rotationSpeedModifier = 2f;
+                //rotate props forward
+                bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Forward);
+                bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Forward);
+                //rotate arms forward
+                bodyParts.leftShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+                bodyParts.rightShoulderSpin.RotateBodyPartAround(bodyParts.torso, SpinDirections.Forward);
+
+                //right hand is at lower position
+                if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalDown && bodyParts.zeroPointStageUpdate)
+                {
+                    trickStage = 0;
+                }
+            }
+        }
+        if (setupAntiSpinWallPlaneFlowerWithInSpin)
+        {
+            //need to give it a cycle for the new spinner to be instantiated
+            doingAntiSpinWallPlaneFlowerWithInSpin = true;
+            setupAntiSpinWallPlaneFlowerWithInSpin = false;
+
+            thisSimulationName.text = "Wall Plane Antispin Flower";
+        }
     }
 
     public void StandardTriquetra()
