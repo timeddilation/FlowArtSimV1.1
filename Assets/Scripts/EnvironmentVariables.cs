@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -79,7 +80,8 @@ public class EnvironmentVariables : MonoBehaviour
     {
         bodyParts = BodyParts.instance;
 
-        globalSpeedSlider.value = globalSpeed;
+        //globalSpeedSlider.value = globalSpeed;
+        GlobalSpeedSliderChanged(globalSpeedSlider);
         trailSpeedSlider.value = propTrailSpeed;
 
         planeMarkers.gameObject.SetActive(false);
@@ -112,7 +114,34 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void GlobalSpeedSliderChanged(Slider slider)
     {
-        globalSpeed = slider.value;
+        //globalSpeed = slider.value;
+        switch (Convert.ToInt32(Math.Floor(slider.value)))
+        {
+            case 0:
+                globalSpeed = 0f;
+                break;
+            case 1:
+                globalSpeed = 0.25f;
+                break;
+            case 2:
+                globalSpeed = 0.5f;
+                break;
+            case 3:
+                globalSpeed = 1f;
+                break;
+            case 4:
+                globalSpeed = 1.5f;
+                break;
+            case 5:
+                globalSpeed = 2f;
+                break;
+            case 6:
+                globalSpeed = 3f;
+                break;
+            default:
+                globalSpeed = 1f;
+                break;
+        }
     }
 
     private void TrailSpeedSliderChanged(Slider slider)

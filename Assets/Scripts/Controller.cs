@@ -82,6 +82,15 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
+        //trick stepper tracker
+        trickStepper += envVariables.globalSpeed;
+        if (trickStepper > 360)
+        {
+            int tripsAroundCircle = Convert.ToInt32(Math.Floor(trickStepper / 360));
+            float reducedTrickStepper = trickStepper % tripsAroundCircle;
+            trickStepper = reducedTrickStepper;
+        }
+
         UpdateDebugMenu();
 
         if (Input.GetKeyDown("f1"))
@@ -1084,14 +1093,6 @@ public class Controller : MonoBehaviour
     private void UpdateDebugMenu()
     {
         string debugText = "";
-
-        trickStepper += envVariables.globalSpeed;
-        if (trickStepper > 360)
-        {
-            int tripsAroundCircle = Convert.ToInt32(Math.Floor(trickStepper / 360));
-            float reducedTrickStepper = trickStepper % tripsAroundCircle;
-            trickStepper = reducedTrickStepper;
-        }
 
         if (bodyParts != null)
         {
