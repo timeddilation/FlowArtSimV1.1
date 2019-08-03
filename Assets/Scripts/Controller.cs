@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -75,7 +76,8 @@ public class Controller : MonoBehaviour
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
 
-        SetSpinnerProps("Hoops");
+        //default value in this function is currentl set to hoops if none is provided.
+        SetSpinnerProps(SpinnerProps.None);
     }
 
     private void Update()
@@ -997,22 +999,40 @@ public class Controller : MonoBehaviour
 
     private void PropDropdownValueChanged(Dropdown change)
     {
-        SetSpinnerProps(change.captionText.text);
+        SpinnerProps selectedProp = SpinnerProps.None;
+        switch (change.captionText.text)
+        {
+            case "Hoops":
+                selectedProp = SpinnerProps.Hoops;
+                break;
+            case "Poi":
+                selectedProp = SpinnerProps.Poi;
+                break;
+            default:
+                selectedProp = SpinnerProps.Hoops;
+                break;
+        }
+        SetSpinnerProps(selectedProp);
         ClearSpinner();
         SetSpinner(spinnerWallPlane);
     }
 
-    private void SetSpinnerProps(string propName)
+    private void SetSpinnerProps(SpinnerProps propName)
     {
-        if (propName == "Hoops")
+        switch (propName)
         {
-            spinnerWallPlane = envVariables.hooperWallPlane;
-            spinnerWheelPlane = envVariables.hooperWheelPlane;
-        }
-        else if (propName == "Poi")
-        {
-            spinnerWallPlane = envVariables.poiWallPlane;
+            case SpinnerProps.Hoops:
+                spinnerWallPlane = envVariables.hooperWallPlane;
+                spinnerWheelPlane = envVariables.hooperWheelPlane;
+            break;
+            case SpinnerProps.Poi:
+                spinnerWallPlane = envVariables.poiWallPlane;
             spinnerWheelPlane = envVariables.poiWheelPlane;
+            break;
+            default:
+                spinnerWallPlane = envVariables.hooperWallPlane;
+            spinnerWheelPlane = envVariables.hooperWheelPlane;
+            break;
         }
     }
 
@@ -1066,6 +1086,12 @@ public class Controller : MonoBehaviour
         string debugText = "";
 
         trickStepper += envVariables.globalSpeed;
+        if (trickStepper > 360)
+        {
+            int tripsAroundCircle = Convert.ToInt32(Math.Floor(trickStepper / 360));
+            float reducedTrickStepper = trickStepper % tripsAroundCircle;
+            trickStepper = reducedTrickStepper;
+        }
 
         if (bodyParts != null)
         {

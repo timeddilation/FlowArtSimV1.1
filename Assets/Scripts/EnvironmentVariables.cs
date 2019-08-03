@@ -32,6 +32,13 @@ public enum PropSide
     Right = 2
 }
 
+public enum SpinnerProps
+{
+    None = 0,
+    Hoops = 1,
+    Poi = 2
+}
+
 public class EnvironmentVariables : MonoBehaviour
 {
     [Header("Simulation Tweaks")]
