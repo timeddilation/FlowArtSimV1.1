@@ -16,47 +16,47 @@ public class RotateBodyPart : MonoBehaviour {
 
     public void RotateBodyPartAround(GameObject bodyPart, SpinDirections dir)
     {
-        if (dir == SpinDirections.Forward)
+        switch (dir)
         {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.forward,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Backward)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.back,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Left)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.left,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Right)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.right,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Up)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.up,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
-        }
-        else if (dir == SpinDirections.Down)
-        {
-            gameObject.transform.RotateAround(
-                bodyPart.transform.position,
-                Vector3.down,
-                (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+            case SpinDirections.Forward:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.forward,
+                    (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                    //(rotationSpeed * rotationSpeedModifier) * environmentVariables.globalSpeed);
+                break;
+            case SpinDirections.Backward:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.back,
+                    (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                break;
+            case SpinDirections.Left:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.left,
+                    (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                break;
+            case SpinDirections.Right:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.right,
+                    (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                break;
+            case SpinDirections.Up:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.up,
+                    (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                break;
+            case SpinDirections.Down:
+                gameObject.transform.RotateAround(
+                    bodyPart.transform.position,
+                    Vector3.down,
+                    (rotationSpeed * rotationSpeedModifier) * Time.deltaTime * environmentVariables.globalSpeed);
+                break;
+            default:
+                break;
         }
     }
 }

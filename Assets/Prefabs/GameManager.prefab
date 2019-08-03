@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 114856230482959474}
   - component: {fileID: 114403179924545420}
   - component: {fileID: 114861013939087118}
+  - component: {fileID: 114624997730707830}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -86,6 +87,17 @@ MonoBehaviour:
   localForwardEnd: {x: 0, y: 0}
   localBackStart: {x: 0, y: 0}
   localBackEnd: {x: 0, y: 0}
+--- !u!114 &114624997730707830
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1025997839596168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 006eb1e5fb8122045ae30e5ed9673c41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114636997953517698
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -157,6 +169,8 @@ MonoBehaviour:
   globalSpeedSlider: {fileID: 0}
   trailSpeedSlider: {fileID: 0}
   reverseDirectionToggle: {fileID: 0}
+  planeMarkers: {fileID: 0}
+  showPlaneMarkersToggle: {fileID: 0}
   hooperWallPlane: {fileID: 1381490606475644, guid: 2678cc3c88c8b754aa8b0008303598d4,
     type: 2}
   hooperWheelPlane: {fileID: 1545114337376698, guid: 1a6b509923b63d84188d3dfd64667291,
