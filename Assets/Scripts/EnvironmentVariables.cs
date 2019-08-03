@@ -119,7 +119,7 @@ public class EnvironmentVariables : MonoBehaviour
         UpdatePoiTrailSpeed();
 
         //trick stepper tracker
-        if (trickStepper >= 360)
+        if (trickStepper >= (stepsInTrick * 45)) //trick steps are broken up into bits of 45 degrees
         {
             trickStepper = 0f;
         }
@@ -166,9 +166,6 @@ public class EnvironmentVariables : MonoBehaviour
                 case 4:
                     globalSpeed = 1.5f;
                     break;
-                //case 5:
-                //    globalSpeed = 2f;
-                //    break;
                 case 5:
                     globalSpeed = 3f;
                     break;

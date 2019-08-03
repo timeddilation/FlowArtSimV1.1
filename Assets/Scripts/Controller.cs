@@ -73,7 +73,7 @@ public class Controller : MonoBehaviour
         envVariables = EnvironmentVariables.instance;
         bodyParts = BodyParts.instance;
 
-        //default value in this function is currentl set to hoops if none is provided.
+        //default value in this function is currently set to hoops if none is provided.
         SetSpinnerProps(SpinnerProps.None);
     }
 
@@ -858,11 +858,6 @@ public class Controller : MonoBehaviour
             else if (envVariables.eigthSteps == 12)
             {
                 trickStage = 0;
-                //if (EighthStepUpdate())
-                //{
-                //    bodyParts.rightHand.transform.RotateAround(bodyParts.rightWrist.transform.position, Vector3.right, 90f);
-                //    bodyParts.leftHand.transform.RotateAround(bodyParts.leftWrist.transform.position, Vector3.right, 90f);
-                //}                
             }
             //do the actual things during the stages
             if (trickStage == 0)
@@ -933,19 +928,6 @@ public class Controller : MonoBehaviour
                 //spin prop anti to arms
                 bodyParts.rightPropSpin.RotateBodyPartAround(bodyParts.rightHand, SpinDirections.Down);
                 bodyParts.leftPropSpin.RotateBodyPartAround(bodyParts.leftHand, SpinDirections.Down);
-
-                //if (bodyParts.rightPropRegionXY == ZeroPointRegion.LocalRight && bodyParts.zeroPointStageUpdate)
-                //{
-                //    trickStage = 0;
-                //    ++trickCycles;
-                //    bodyParts.zeroPointPosition = 0f;
-                //    if (trickCycles == 2)
-                //    {
-                //        doingTrick = false;
-                //        ThreeDimDrills();
-                //        return;
-                //    }
-                //}
             }
         }
         if (setupTrick)
@@ -987,7 +969,7 @@ public class Controller : MonoBehaviour
     }
 
 
-
+    //misc controls
     private void PropDropdownValueChanged(Dropdown change)
     {
         SpinnerProps selectedProp = SpinnerProps.None;
@@ -1080,10 +1062,6 @@ public class Controller : MonoBehaviour
 
         if (bodyParts != null)
         {
-            //debugText = "Left Prop Rot: " + bodyParts.leftPropPos.ToString()
-            //    + "\r\nRight Prop Rot: " + bodyParts.rightPropPos.ToString();
-            //debugText = "Left Prop Rot: " + bodyParts.leftProp.transform.rotation.eulerAngles
-            //    + "\r\nRight Prop Rot: " + bodyParts.rightProp.transform.rotation.eulerAngles;
             debugText = "Left Prop Point: " + bodyParts.leftPropZeroPointRegionDebugText
                 + "\r\nRight Prop Point: " + bodyParts.rightPropZeroPointRegionDebugText
                 + "\r\nTrick Stepper: " + envVariables.trickStepper.ToString()

@@ -11,7 +11,7 @@ public class RotateBodyPart : MonoBehaviour {
 
     private void Awake()
     {
-        environmentVariables = EnvironmentVariables.instance; //need to global speed scale value
+        environmentVariables = EnvironmentVariables.instance; //need for global speed scale value
     }
 
     public void RotateBodyPartAround(GameObject bodyPart, SpinDirections dir)
