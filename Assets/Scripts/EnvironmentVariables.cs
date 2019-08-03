@@ -61,11 +61,16 @@ public class EnvironmentVariables : MonoBehaviour
     public GameObject poiWheelPlane;
 
     [Header("Unity Gernerated Things")]
+    public float trickStepper = 0f;
+    public int eigthSteps = 0;
     public BodyParts bodyParts;
     public bool halfTrailSpeed = false;
     public bool halfTrailSpeedUsed = false;
 
     public static EnvironmentVariables instance;
+
+    //tracker for when to change global speed
+    private bool speedSliderChanged = false;
 
     private void Awake()
     {
@@ -110,38 +115,73 @@ public class EnvironmentVariables : MonoBehaviour
     private void Update()
     {
         UpdatePoiTrailSpeed();
+
+        //trick stepper tracker
+        if (trickStepper >= 360)
+        {
+            //int tripsAroundCircle = Convert.ToInt32(Math.Floor(trickStepper / 360));
+            //float reducedTrickStepper = trickStepper % tripsAroundCircle;
+            //trickStepper = reducedTrickStepper
+            trickStepper = 0f;
+        }
+        if (trickStepper == 0)
+        {
+            eigthSteps = 0;
+        }
+       
+        //update global speed if needing to
+        if (speedSliderChanged)
+        {
+            GlobalSpeedSliderChanged(globalSpeedSlider);
+        }
+
+    }
+
+    private void LateUpdate()
+    {
+        trickStepper += globalSpeed;
+        if (trickStepper % 45 == 0)
+        {
+            eigthSteps++;
+        }
     }
 
     private void GlobalSpeedSliderChanged(Slider slider)
     {
-        //globalSpeed = slider.value;
-        switch (Convert.ToInt32(Math.Floor(slider.value)))
+        speedSliderChanged = true;
+        //only update global speed slider if trickStepper is divisble by 3 with a remainder of 0
+        //this ensures we can always compare the trickStepper up-to 1/8 parts of the circle
+        if (trickStepper % 3 == 0)
         {
-            case 0:
-                globalSpeed = 0f;
-                break;
-            case 1:
-                globalSpeed = 0.25f;
-                break;
-            case 2:
-                globalSpeed = 0.5f;
-                break;
-            case 3:
-                globalSpeed = 1f;
-                break;
-            case 4:
-                globalSpeed = 1.5f;
-                break;
-            case 5:
-                globalSpeed = 2f;
-                break;
-            case 6:
-                globalSpeed = 3f;
-                break;
-            default:
-                globalSpeed = 1f;
-                break;
-        }
+            speedSliderChanged = false;
+            switch (Convert.ToInt32(Math.Floor(slider.value)))
+            {
+                case 0:
+                    globalSpeed = 0f;
+                    break;
+                case 1:
+                    globalSpeed = 0.25f;
+                    break;
+                case 2:
+                    globalSpeed = 0.5f;
+                    break;
+                case 3:
+                    globalSpeed = 1f;
+                    break;
+                case 4:
+                    globalSpeed = 1.5f;
+                    break;
+                case 5:
+                    globalSpeed = 2f;
+                    break;
+                case 6:
+                    globalSpeed = 3f;
+                    break;
+                default:
+                    globalSpeed = 1f;
+                    break;
+            }
+        }     
     }
 
     private void TrailSpeedSliderChanged(Slider slider)

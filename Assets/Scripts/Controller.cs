@@ -16,7 +16,7 @@ public enum Tricks
     AntispinWallPlaneFlower,
     AntispinWallPlaneFlowerWithInSpin,
     Triquetra,
-    //wheel planne flowers
+    //wheel plane flowers
     AntispinWheelPlaneFlowerSameOps,
     AntispinWheelPlaneFlowerSplitSame,
     InspinWheelPlaneFlowerSameSame,
@@ -55,8 +55,6 @@ public class Controller : MonoBehaviour
     private bool setupTrick = false;
     private bool doingTrick = false;
 
-    private float trickStepper = 0f;
-
     private int trickStage = 0;
     private int trickCycles = 0;
     //private float intermidiateStageRotationCounter = 0f;
@@ -82,22 +80,13 @@ public class Controller : MonoBehaviour
 
     private void Update()
     {
-        //trick stepper tracker
-        trickStepper += envVariables.globalSpeed;
-        if (trickStepper > 360)
-        {
-            int tripsAroundCircle = Convert.ToInt32(Math.Floor(trickStepper / 360));
-            float reducedTrickStepper = trickStepper % tripsAroundCircle;
-            trickStepper = reducedTrickStepper;
-        }
-
         UpdateDebugMenu();
+        RunTrick();
 
         if (Input.GetKeyDown("f1"))
         {
             canvas.enabled = !canvas.enabled;
-        }
-        RunTrick();
+        }        
     }
 
     private void RunTrick()
@@ -214,6 +203,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //stall moves
     public void ButterflyTaceVertical()
     {
         if (trick != Tricks.ButterflyTraceVertical)
@@ -278,6 +268,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //antispin variations
     public void AntiSpinPointsSplitOps()
     {
         if (trick != Tricks.AntispinPointsSplitOps)
@@ -556,6 +547,7 @@ public class Controller : MonoBehaviour
 
     //}
 
+    //wheel plane flowers
     public void AntispinWheelPlaneFlowerSameOps()
     {
         if (trick != Tricks.AntispinWheelPlaneFlowerSameOps)
@@ -766,6 +758,7 @@ public class Controller : MonoBehaviour
         }
     }
 
+    //3D tricks
     public void ThreeDimFlowerXZ()
     {
         if (trick != Tricks.ThreedFlowerXZ)
@@ -1057,8 +1050,8 @@ public class Controller : MonoBehaviour
             envVariables.halfTrailSpeed = false;
             envVariables.halfTrailSpeedUsed = false;
             envVariables.propTrailSpeed = envVariables.trailSpeedSlider.value;
-
-            trickStepper = 0f;
+            envVariables.trickStepper = 0f;
+            envVariables.eigthSteps = 0;
 
             trickStage = 0;
             trickCycles = 0;
@@ -1102,7 +1095,8 @@ public class Controller : MonoBehaviour
             //    + "\r\nRight Prop Rot: " + bodyParts.rightProp.transform.rotation.eulerAngles;
             debugText = "Left Prop Point: " + bodyParts.leftPropZeroPointRegionDebugText
                 + "\r\nRight Prop Point: " + bodyParts.rightPropZeroPointRegionDebugText
-                + "\r\nTrick Stepper: " + trickStepper.ToString();
+                + "\r\nTrick Stepper: " + envVariables.trickStepper.ToString()
+                + "\r\nEigth Steps: " + envVariables.eigthSteps.ToString();
         }
 
         debugMenu.text = debugText;
