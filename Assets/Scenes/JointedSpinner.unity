@@ -1259,6 +1259,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 431360402}
+    - target: {fileID: 114403179924545420, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114636997953517698, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
         type: 3}
       propertyPath: mainCamera
@@ -1269,6 +1274,16 @@ PrefabInstance:
       propertyPath: angledCamera
       value: 
       objectReference: {fileID: 1391898786}
+    - target: {fileID: 114856230482959474, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114861013939087118, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 114899438636291528, guid: 3843ef4ee0d89f14a85d5c8dc46e79dd,
         type: 3}
       propertyPath: globalSpeedSlider
