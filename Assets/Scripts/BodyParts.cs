@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class BodyParts : MonoBehaviour
 {    
+    private EnvironmentVariables environmentVariables;
+    private readonly float baseRotationSpeed = 1f;
     [Header("Left Side")]
     public GameObject leftShoulder;
     public GameObject leftArm;
@@ -80,6 +82,7 @@ public class BodyParts : MonoBehaviour
 
     private void Start()
     {
+        environmentVariables = EnvironmentVariables.instance; //need for global speed scale value
         GetVector2PoiPosition();
     }
 
@@ -101,5 +104,55 @@ public class BodyParts : MonoBehaviour
 
         leftPropPosYZ = new Vector2(leftProp.transform.position.y, leftProp.transform.position.z);
         rightPropPosYZ = new Vector2(rightProp.transform.position.y, rightProp.transform.position.z);
+    }
+
+    public void RotateBodyPartRelative(GameObject rotatingPart, GameObject rotatePoint, SpinDirections dir, float rotationSpeedModifier = 1f)
+    {
+        float speedMultiplier = environmentVariables.globalSpeed;
+        if (environmentVariables.reverseDirection)
+        {
+            speedMultiplier = environmentVariables.globalSpeed * -1;
+        }
+        switch (dir)
+        {
+            case SpinDirections.Forward:
+                rotatingPart.transform.RotateAround(
+                    rotatePoint.transform.position,
+                    Vector3.forward,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Backward:
+                rotatingPart.transform.RotateAround(
+                    rotatePoint.transform.position,
+                    Vector3.back,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Left:
+                rotatingPart.transform.RotateAround(
+                    rotatePoint.transform.position,
+                    Vector3.left,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Right:
+                rotatingPart.transform.RotateAround(
+                    rotatePoint.transform.position,
+                    Vector3.right,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Up:
+                rotatingPart.transform.RotateAround(
+                    rotatePoint.transform.position,
+                    Vector3.up,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            case SpinDirections.Down:
+                rotatingPart.transform.RotateAround(
+                    rotatePoint.transform.position,
+                    Vector3.down,
+                    baseRotationSpeed * rotationSpeedModifier * speedMultiplier);
+                break;
+            default:
+                break;
+        }
     }
 }
