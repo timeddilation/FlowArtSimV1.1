@@ -155,22 +155,25 @@ public class EnvironmentVariables : MonoBehaviour
                     globalSpeed = 0f;
                     break;
                 case 1:
-                    globalSpeed = 0.25f;
+                    globalSpeed = 0.125f;
                     break;
                 case 2:
-                    globalSpeed = 0.5f;
+                    globalSpeed = 0.25f;
                     break;
                 case 3:
-                    globalSpeed = 1f;
+                    globalSpeed = 0.5f;
                     break;
                 case 4:
-                    globalSpeed = 1.5f;
+                    globalSpeed = 1f;
                     break;
                 case 5:
+                    globalSpeed = 1.5f;
+                    break;
+                case 6:
                     globalSpeed = 3f;
                     break;
                 default:
-                    globalSpeed = 1f;
+                    globalSpeed = 0.5f;
                     break;
             }
         }     

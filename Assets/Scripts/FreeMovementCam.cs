@@ -5,9 +5,9 @@ using UnityEngine.EventSystems;
 
 public class FreeMovementCam : MonoBehaviour
 {
-    public float zoomSpeed = 8000f;
-    public float dragSpeed = 200f;
-    public float rotateSpeed = 150f;
+    public float zoomSpeed = 50000f;
+    public float dragSpeed = 1000f;
+    public float rotateSpeed = 500f;
     public float rotationDampening = 15f;
 
     private float lookX = 0;
