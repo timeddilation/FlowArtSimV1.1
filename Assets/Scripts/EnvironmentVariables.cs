@@ -43,7 +43,8 @@ public enum SpinnerProps
 public class EnvironmentVariables : MonoBehaviour
 {
     [Header("Simulation Tweaks")]
-    public float globalSpeed = 1f;
+    public int targetFPS = 60;
+    public float globalSpeed = 3f;
     public float propTrailSpeed = 6f;
     public float regionDetectionThreshold = 1f;
     public string spinnerProps = "Hoops";
@@ -85,6 +86,7 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void Start()
     {
+        Application.targetFrameRate = targetFPS;
         bodyParts = BodyParts.instance;
 
         //globalSpeedSlider.value = globalSpeed;
@@ -173,7 +175,7 @@ public class EnvironmentVariables : MonoBehaviour
                     globalSpeed = 3f;
                     break;
                 default:
-                    globalSpeed = 0.5f;
+                    globalSpeed = 1.5f;
                     break;
             }
         }     
@@ -221,5 +223,10 @@ public class EnvironmentVariables : MonoBehaviour
         {
             planeMarkers.gameObject.SetActive(false);
         }
+    }
+
+    public void QuitSimulation()
+    {
+        Application.Quit();
     }
 }
