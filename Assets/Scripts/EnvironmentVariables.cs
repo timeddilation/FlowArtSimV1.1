@@ -89,13 +89,12 @@ public class EnvironmentVariables : MonoBehaviour
     {
         Application.targetFrameRate = targetFPS;
         bodyParts = BodyParts.instance;
-
-        //globalSpeedSlider.value = globalSpeed;
+        //set the intiial global speed based on default value of speed slider in UI
         GlobalSpeedSliderChanged(globalSpeedSlider);
         trailSpeedSlider.value = propTrailSpeed;
 
         planeMarkers.gameObject.SetActive(false);
-
+        
         globalSpeedSlider.onValueChanged.AddListener(delegate
         {
             GlobalSpeedSliderChanged(globalSpeedSlider);
@@ -105,7 +104,7 @@ public class EnvironmentVariables : MonoBehaviour
         {
             TrailSpeedSliderChanged(trailSpeedSlider);
         });
-
+        //probably broken
         reverseDirectionToggle.onValueChanged.AddListener(delegate
         {
             UpdateTrickDirection(reverseDirectionToggle);
@@ -121,11 +120,6 @@ public class EnvironmentVariables : MonoBehaviour
     {
         UpdatePoiTrailSpeed();
 
-        //update global speed if needing to
-        if (speedSliderChanged)
-        {
-            GlobalSpeedSliderChanged(globalSpeedSlider);
-        }
         if (runningSim)
         {
             // if (trickStepper <= 1){
@@ -146,6 +140,11 @@ public class EnvironmentVariables : MonoBehaviour
             //trick stepper tracker
             eigthSteps = Convert.ToInt32(Math.Floor((trickStepper + globalSpeed) / 45)); //eigth step must be one step ahead
             trickStepper += globalSpeed;
+        }
+        //update global speed if needing to
+        if (speedSliderChanged)
+        {
+            GlobalSpeedSliderChanged(globalSpeedSlider);
         }
     }
     private void GlobalSpeedSliderChanged(Slider slider)
