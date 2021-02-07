@@ -6,6 +6,11 @@ public class SetbackStepper : StateMachineBehaviour
 {
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-       EnvironmentVariables.instance.trickStepper -= EnvironmentVariables.instance.globalSpeed;
+       if (!animator.GetBool("Reverse")) {
+           EnvironmentVariables.instance.trickStepper -= EnvironmentVariables.instance.globalSpeed;
+       } else {
+           EnvironmentVariables.instance.trickStepper += EnvironmentVariables.instance.globalSpeed;
+       }
+       
     }
 }
