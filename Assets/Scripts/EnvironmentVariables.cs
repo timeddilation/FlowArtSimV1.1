@@ -138,8 +138,14 @@ public class EnvironmentVariables : MonoBehaviour
             // if (trickStepper >= 359){
             //     print("point 4");
             // }
+            
             //trick stepper tracker
-            eigthSteps = Convert.ToInt32(Math.Floor((trickStepper + globalSpeed) / 45)); //eigth step must be one step ahead
+            //eigth step must be one step ahead
+            //only update eighth steps at increments of 45
+            if ((trickStepper + globalSpeed) % 45 == 0)
+            {
+                eigthSteps = Convert.ToInt32(Math.Floor((trickStepper + globalSpeed) / 45));
+            }
             if (!reverseDirection) {
                 trickStepper += globalSpeed;
             } else {

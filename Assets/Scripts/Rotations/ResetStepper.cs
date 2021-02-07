@@ -9,12 +9,12 @@ public class ResetStepper : StateMachineBehaviour
        if (!animator.GetBool("Reverse"))
        {
            EnvironmentVariables.instance.trickStepper = 0f;
+           EnvironmentVariables.instance.eigthSteps = 0;
        }
        //On initial enter state, the animation lags a frame behind the step counter. Corrext the counter.
        if (!animator.GetBool("Looped"))
        {
            EnvironmentVariables.instance.trickStepper -= EnvironmentVariables.instance.globalSpeed;
        }
-       EnvironmentVariables.instance.eigthSteps = 0;
     }
 }
