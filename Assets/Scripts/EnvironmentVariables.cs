@@ -62,6 +62,7 @@ public class EnvironmentVariables : MonoBehaviour
     public GameObject poiWheelPlane;
 
     [Header("Unity Gernerated Things")]
+    private bool runSimulation = false;
     public float trickStepper = 0f;
     public int eigthSteps = 0;
     public int stepsInTrick = 8; //tricks update this value with whatever their steps in the trick are to reset the steps counter
@@ -74,6 +75,7 @@ public class EnvironmentVariables : MonoBehaviour
 
     //tracker for when to change global speed
     private bool speedSliderChanged = false;
+    private List<float> validSpeedChangePoints = new List<float>(){0,90,180,270};
 
     private void Awake()
     {
@@ -120,35 +122,40 @@ public class EnvironmentVariables : MonoBehaviour
     {
         UpdatePoiTrailSpeed();
 
-        //trick stepper tracker
-        if (trickStepper >= (stepsInTrick * 45)) //trick steps are broken up into bits of 45 degrees
-        {
-            trickStepper = 0f;
-        }
-        if (eigthSteps == stepsInTrick)
-        {
-            eigthSteps = 0;
-        }
-       
         //update global speed if needing to
         if (speedSliderChanged)
         {
             GlobalSpeedSliderChanged(globalSpeedSlider);
         }
-    }
+        if (runSimulation)
+        {
+            //trick stepper tracker
+            if (trickStepper <= 1){
+                print("point 0");
+            }
+            if (trickStepper >= 89 && trickStepper <= 91){
+                print("point 1");
+            }
+            if (trickStepper >= 179 && trickStepper <= 181){
+                print("point 2");
+            }
+            if (trickStepper >= 269 && trickStepper <= 271){
+                print("point 3");
+            }
+            if (trickStepper >= 359){
+                print("point 4");
+            }
 
-    private void LateUpdate()
-    {
-        trickStepper += globalSpeed;
-        eigthSteps = Convert.ToInt32(Math.Floor(trickStepper / 45));
+            eigthSteps = Convert.ToInt32(Math.Floor((trickStepper + globalSpeed) / 45)); //eigth step must be one step ahead
+            trickStepper += globalSpeed;
+        }
     }
-
     private void GlobalSpeedSliderChanged(Slider slider)
     {
         speedSliderChanged = true;
         //only update global speed slider if trickStepper is divisble by 3 with a remainder of 0
         //this ensures we can always compare the trickStepper up-to 1/8 parts of the circle
-        if (trickStepper % 3 == 0)
+        if (validSpeedChangePoints.Contains(trickStepper))
         {
             speedSliderChanged = false;
             switch (Convert.ToInt32(Math.Floor(slider.value)))
@@ -228,5 +235,17 @@ public class EnvironmentVariables : MonoBehaviour
     public void QuitSimulation()
     {
         Application.Quit();
+    }
+    public void RunSimulation()
+    {
+        runSimulation = true;
+    }
+    public void StopSimulation()
+    {
+        runSimulation = false;
+    }
+    public bool SimIsRunning()
+    {
+        return runSimulation;
     }
 }

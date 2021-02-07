@@ -8,6 +8,7 @@ public class BodyParts : MonoBehaviour
 {    
     private EnvironmentVariables environmentVariables;
     private readonly float baseRotationSpeed = 1f;
+    private Animator animator;
     [Header("Left Side")]
     public GameObject leftShoulder;
     public GameObject leftArm;
@@ -62,6 +63,7 @@ public class BodyParts : MonoBehaviour
         }
         instance = this;
 
+        animator = gameObject.GetComponent<Animator>();
         //torso spins
         torsoSpin = torso.GetComponent<RotateBodyPart>();
         //left side spins
@@ -92,6 +94,11 @@ public class BodyParts : MonoBehaviour
 
         leftPropZeroPointRegionDebugText = leftProp.transform.position.ToString();
         rightPropZeroPointRegionDebugText = rightProp.transform.position.ToString();
+
+        if (environmentVariables.SimIsRunning())
+        {
+            animator.SetBool("Run", true);
+        }
     }
 
     private void GetVector2PoiPosition()
