@@ -4,17 +4,28 @@ using UnityEngine;
 
 public class ResetStepper : StateMachineBehaviour
 {
+    private EnvironmentVariables environmentVariables;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        environmentVariables = EnvironmentVariables.instance;
        if (!animator.GetBool("Reverse"))
        {
-           EnvironmentVariables.instance.trickStepper = 0f;
-           EnvironmentVariables.instance.eigthSteps = 0;
+           environmentVariables.trickStepper = 0f;
+           environmentVariables.eigthSteps = 0;
        }
        //On initial enter state, the animation lags a frame behind the step counter. Corrext the counter.
        if (!animator.GetBool("Looped"))
        {
-           EnvironmentVariables.instance.trickStepper -= EnvironmentVariables.instance.globalSpeed;
+           environmentVariables.trickStepper -= EnvironmentVariables.instance.globalSpeed;
        }
+    }
+
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        if(animator.GetBool("Reverse"))
+        {
+            environmentVariables.trickStepper = animator.GetInteger("EighthStepsInTrick") * 45f;
+            environmentVariables.eigthSteps = animator.GetInteger("EighthStepsInTrick");
+        }
     }
 }
