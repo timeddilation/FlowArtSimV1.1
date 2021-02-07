@@ -217,9 +217,14 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void UpdateTrickDirection(Toggle toggle)
     {
-        //reversing direction causes lag in trick stepper
+        //reversing direction causes lag in trick stepper by 2 frame
         bodyParts.InvertDirection();
         reverseDirection = toggle.isOn;
+        if (reverseDirection) {
+            trickStepper += (globalSpeed * 2);
+        } else {
+            trickStepper -= (globalSpeed * 2);
+        }
         // if (toggle.isOn && !reverseDirection)
         // {
         //     reverseDirection = true;
