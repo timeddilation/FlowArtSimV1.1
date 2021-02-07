@@ -53,6 +53,7 @@ public class BodyParts : MonoBehaviour
     public string leftPropZeroPointRegionDebugText = "";
     public string rightPropZeroPointRegionDebugText = "";
     public float zeroPointPosition = 0f;
+    private float speedMultiplier = 1f;
 
     private void Awake()
     {
@@ -107,14 +108,13 @@ public class BodyParts : MonoBehaviour
         leftPropPosYZ = new Vector2(leftProp.transform.position.y, leftProp.transform.position.z);
         rightPropPosYZ = new Vector2(rightProp.transform.position.y, rightProp.transform.position.z);
     }
-
+    public void InvertDirection()
+    {
+        speedMultiplier = environmentVariables.globalSpeed * -1;
+        animator.SetBool("Reverse", !animator.GetBool("Reverse"));
+    }
     public void RotateBodyPartRelative(GameObject rotatingPart, GameObject rotatePoint, SpinDirections dir, float rotationSpeedModifier = 1f)
     {
-        float speedMultiplier = environmentVariables.globalSpeed;
-        if (environmentVariables.reverseDirection)
-        {
-            speedMultiplier = environmentVariables.globalSpeed * -1;
-        }
         switch (dir)
         {
             case SpinDirections.Forward:

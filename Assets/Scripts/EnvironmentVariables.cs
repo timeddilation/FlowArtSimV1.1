@@ -92,9 +92,10 @@ public class EnvironmentVariables : MonoBehaviour
         //set the intiial global speed based on default value of speed slider in UI
         GlobalSpeedSliderChanged(globalSpeedSlider);
         trailSpeedSlider.value = propTrailSpeed;
+        reverseDirection = reverseDirectionToggle.isOn;
 
         planeMarkers.gameObject.SetActive(false);
-        
+
         globalSpeedSlider.onValueChanged.AddListener(delegate
         {
             GlobalSpeedSliderChanged(globalSpeedSlider);
@@ -128,9 +129,9 @@ public class EnvironmentVariables : MonoBehaviour
             // if (trickStepper >= 89 && trickStepper <= 91){
             //     print("point 1");
             // }
-            // if (trickStepper >= 179 && trickStepper <= 181){
-            //     print("point 2");
-            // }
+            if (trickStepper >= 179 && trickStepper <= 181){
+                print("point 2");
+            }
             // if (trickStepper >= 269 && trickStepper <= 271){
             //     print("point 3");
             // }
@@ -139,7 +140,12 @@ public class EnvironmentVariables : MonoBehaviour
             // }
             //trick stepper tracker
             eigthSteps = Convert.ToInt32(Math.Floor((trickStepper + globalSpeed) / 45)); //eigth step must be one step ahead
-            trickStepper += globalSpeed;
+            if (!reverseDirection) {
+                trickStepper += globalSpeed;
+            } else {
+                trickStepper -= globalSpeed;
+            }
+            
         }
         //update global speed if needing to
         if (speedSliderChanged)
@@ -205,16 +211,18 @@ public class EnvironmentVariables : MonoBehaviour
 
     private void UpdateTrickDirection(Toggle toggle)
     {
-        if (toggle.isOn && !reverseDirection)
-        {
-            reverseDirection = true;
-            trickStepper = Math.Abs(360 - trickStepper);
-        }
-        else if (!toggle.isOn && reverseDirection)
-        {
-            reverseDirection = false;
-            trickStepper = Math.Abs(360 - trickStepper);
-        }
+        bodyParts.InvertDirection();
+        reverseDirection = toggle.isOn;
+        // if (toggle.isOn && !reverseDirection)
+        // {
+        //     reverseDirection = true;
+        //     trickStepper = Math.Abs(360 - trickStepper);
+        // }
+        // else if (!toggle.isOn && reverseDirection)
+        // {
+        //     reverseDirection = false;
+        //     trickStepper = Math.Abs(360 - trickStepper);
+        // }
     }
 
     private void ShowPlaneMarkersChanged(Toggle toggle)
