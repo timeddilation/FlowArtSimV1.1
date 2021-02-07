@@ -94,11 +94,6 @@ public class BodyParts : MonoBehaviour
 
         leftPropZeroPointRegionDebugText = leftProp.transform.position.ToString();
         rightPropZeroPointRegionDebugText = rightProp.transform.position.ToString();
-
-        if (environmentVariables.SimIsRunning())
-        {
-            animator.SetBool("Run", true);
-        }
     }
 
     private void GetVector2PoiPosition()
