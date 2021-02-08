@@ -129,12 +129,12 @@ public class EnvironmentVariables : MonoBehaviour
             // if (trickStepper >= 89 && trickStepper <= 91){
             //     print("point 1");
             // }
-            // if (trickStepper >= 179 && trickStepper <= 181){
-            //     print("point 2");
-            // }
-            // if (trickStepper >= 269 && trickStepper <= 271){
-            //     print("point 3");
-            // }
+            if (trickStepper >= 179 && trickStepper <= 181){
+                print("point 2");
+            }
+            if (trickStepper >= 269 && trickStepper <= 271){
+                print("point 3");
+            }
             // if (trickStepper >= 359){
             //     print("point 4");
             // }

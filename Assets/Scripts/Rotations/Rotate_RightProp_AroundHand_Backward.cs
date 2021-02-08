@@ -19,7 +19,5 @@ public class Rotate_RightProp_AroundHand_Backward : StateMachineBehaviour
            SpinDirections.Backward,
            animator.GetInteger("Right_PropSpinModifier")
        );
-
-       animator.SetInteger("EighthStep", EnvironmentVariables.instance.eigthSteps);
     }
 }

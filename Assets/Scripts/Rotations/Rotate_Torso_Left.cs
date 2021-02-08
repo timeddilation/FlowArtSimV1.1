@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Rotate_LeftProp_AroundHand_Forward : StateMachineBehaviour
+public class Rotate_Torso_Left : StateMachineBehaviour
 {
     private BodyParts bodyParts;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -14,10 +14,10 @@ public class Rotate_LeftProp_AroundHand_Forward : StateMachineBehaviour
     {
        bodyParts.RotateBodyPartRelative
        (
-           bodyParts.leftProp,
-           bodyParts.leftHand,
-           SpinDirections.Forward,
-           animator.GetInteger("Left_PropSpinModifier")
+           bodyParts.torso,
+           bodyParts.torso,
+           SpinDirections.Down,
+           2
        );
     }
 }

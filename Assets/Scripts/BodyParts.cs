@@ -157,4 +157,8 @@ public class BodyParts : MonoBehaviour
                 break;
         }
     }
+    public void SetTrickById(int id)
+    {
+        animator.SetInteger("TrickId", id);
+    }
 }
