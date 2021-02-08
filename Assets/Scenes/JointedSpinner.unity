@@ -128,6 +128,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1961785079106550, guid: 3ecbc1bad09f0a743a08019b58f3f21a, type: 3}
+      propertyPath: m_Name
+      value: InspinWheelPlaneFlowerSameOps
+      objectReference: {fileID: 0}
     - target: {fileID: 114183979929254620, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -315,9 +319,94 @@ PrefabInstance:
       objectReference: {fileID: 1065727621}
     - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1065727621}
+      objectReference: {fileID: 682661898}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 682661896}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_IntArgument
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Mode
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Target
+      value: 
+      objectReference: {fileID: 682661896}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_MethodName
+      value: SetTrigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_StringArgument
+      value: Run
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetTrickById
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_IntArgument
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114657351409574342, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_StringArgument
+      value: Run
+      objectReference: {fileID: 0}
     - target: {fileID: 114711176936726830, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -347,6 +436,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114982727091142210, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
+        type: 3}
+      propertyPath: m_Text
+      value: Inspin Wheel Plane Flower Same/Ops
       objectReference: {fileID: 0}
     - target: {fileID: 223393411179766962, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 3}
@@ -441,7 +535,7 @@ PrefabInstance:
     - target: {fileID: 224371080427263394, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 98.950005
+      value: 170.45001
       objectReference: {fileID: 0}
     - target: {fileID: 224371080427263394, guid: 3ecbc1bad09f0a743a08019b58f3f21a,
         type: 3}
